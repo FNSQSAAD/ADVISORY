@@ -100,6 +100,28 @@
     });
   }
 
+  /* ---------- homepage hero slider ---------- */
+  var hs = $('.hslider');
+  if (hs) {
+    var hSlides = $$('.hslide', hs);
+    var hDots = $$('.hs-dots button', hs);
+    var hIdx = 0, hTimer;
+    var hGo = function (n) {
+      hIdx = (n + hSlides.length) % hSlides.length;
+      hSlides.forEach(function (s, i) { s.classList.toggle('on', i === hIdx); });
+      hDots.forEach(function (d, i) { d.classList.toggle('on', i === hIdx); });
+    };
+    var hRestart = function () { clearInterval(hTimer); hTimer = setInterval(function () { hGo(hIdx + 1); }, 6500); };
+    hDots.forEach(function (d, i) { d.addEventListener('click', function () { hGo(i); hRestart(); }); });
+    var hp = $('.hs-arrows .prev', hs), hn = $('.hs-arrows .next', hs);
+    if (hp) hp.addEventListener('click', function () { hGo(hIdx - 1); hRestart(); });
+    if (hn) hn.addEventListener('click', function () { hGo(hIdx + 1); hRestart(); });
+    hGo(0);
+    hRestart();
+    hs.addEventListener('mouseenter', function () { clearInterval(hTimer); });
+    hs.addEventListener('mouseleave', hRestart);
+  }
+
   /* ---------- hero arch slider ---------- */
   var arch = $('.arch[data-slider]');
   if (arch) {

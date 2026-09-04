@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculators — Finance Square Group</title>
-<meta name="description" content="Loan repayment and borrowing power calculators from Finance Square Group. Estimates for illustration — then a straight answer from a real advisor.">
+<title>Calculators | Finance Square Group</title>
+<meta name="description" content="Assess your eligibility and borrowing capacity. Play with the numbers, then turn estimates into a real plan on a 15-minute strategy call with Finance Square Group.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,11 +24,12 @@
 <header class="nav">
   <a class="logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group"></a>
   <nav class="nav-links" aria-label="Main">
-    <a href="index.html#services">Lending Services</a>
-    <a href="index.html#process">How We Work</a>
+    <a href="home-loans.html">Home Loans</a>
+    <a href="business-commercial-loans.html">Business &amp; Commercial</a>
+    <a href="asset-equipment-finance.html">Asset &amp; Equipment</a>
+    <a href="personal-loans.html">Personal Loans</a>
     <a href="calculators.html" class="on">Calculators</a>
-    <a href="index.html#about">About</a>
-    <a href="index.html#faq">FAQ</a>
+    <a href="about.html">About</a>
   </nav>
   <div class="nav-right">
     <a class="nav-phone" href="tel:0450355604">0450 355 604</a>
@@ -38,11 +39,13 @@
 </header>
 
 <nav class="mobile-menu" aria-label="Mobile">
-  <a href="index.html#services">Lending Services</a>
-  <a href="index.html#process">How We Work</a>
+  <a href="home-loans.html">Home Loans</a>
+  <a href="business-commercial-loans.html">Business &amp; Commercial</a>
+  <a href="asset-equipment-finance.html">Asset &amp; Equipment</a>
+  <a href="personal-loans.html">Personal Loans</a>
   <a href="calculators.html">Calculators</a>
-  <a href="index.html#about">About</a>
-  <a href="index.html#faq">FAQ</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
   <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
 </nav>
 
@@ -50,15 +53,23 @@
   <section class="page-hero">
     <div class="wrap">
       <span class="eyebrow">Calculators</span>
-      <h1>Good decisions start with <em>honest numbers.</em></h1>
-      <p>These estimates are a starting point, not an answer. When you want the real figure — tested against actual lender policy — that’s a 15-minute call.</p>
+      <h1>Assess your eligibility and <em>borrowing capacity</em></h1>
+      <p>Play with the numbers now, then use the full calculator suite below. We’ll turn estimates into a real plan on our 15-minute strategy call.</p>
+      <div class="calc-links">
+        <a href="#repayments">Borrowing Capacity</a>
+        <a href="#repayments">Budget Planner</a>
+        <a href="#repayments">Repayment</a>
+        <a href="#repayments">Lump Sum Repayment</a>
+        <a href="#repayments">Car and Truck Loan</a>
+        <a href="#repayments">Stamp Duty</a>
+        <a href="#repayments">Personal Loan</a>
+      </div>
     </div>
   </section>
 
   <div class="wrap calc-page-grid">
 
-    <!-- repayments -->
-    <div class="calc-card js-repay rv in">
+    <div class="calc-card js-repay rv in" id="repayments">
       <div class="calc-in">
         <h3>Loan repayments</h3>
         <p class="sub">What a loan costs per month, and what it costs over its lifetime.</p>
@@ -77,22 +88,21 @@
       </div>
       <div class="calc-out">
         <span class="ok">Estimated repayments</span>
-        <div class="ov co-monthly">$—</div>
+        <div class="ov co-monthly">$0</div>
         <p class="op">per month, principal and interest</p>
         <div class="sub-rows">
-          <div><span>Fortnightly equivalent</span><b class="co-fortnight">$—</b></div>
-          <div><span>Total repaid over the term</span><b class="co-total">$—</b></div>
-          <div><span>Of which interest</span><b class="co-interest">$—</b></div>
+          <div><span>Fortnightly equivalent</span><b class="co-fortnight">$0</b></div>
+          <div><span>Total repaid over the term</span><b class="co-total">$0</b></div>
+          <div><span>Of which interest</span><b class="co-interest">$0</b></div>
         </div>
-        <p class="note">Estimates only, for illustration. Not a quote or offer of credit; excludes fees. Subject to lender assessment and eligibility criteria.</p>
+        <p class="note">Estimates only, for illustrative and discussion purposes. Terms &amp; conditions and normal lending criteria apply.</p>
       </div>
     </div>
 
-    <!-- borrowing power -->
     <div class="calc-card js-borrow rv in">
       <div class="calc-in">
-        <h3>Borrowing power</h3>
-        <p class="sub">A rough range for what lenders might extend — before we test it against real policy.</p>
+        <h3>Borrowing capacity</h3>
+        <p class="sub">A rough range for what lenders might extend, before we test it against real policy.</p>
         <div class="crow">
           <label><span class="lab">Household income (yearly)</span><output class="bo-income">$150,000</output></label>
           <input type="range" class="bi-income" min="50000" max="600000" step="5000" value="150000" aria-label="Household income">
@@ -108,18 +118,18 @@
       </div>
       <div class="calc-out">
         <span class="ok">Indicative borrowing range</span>
-        <div class="ov bo-range" style="font-size:clamp(1.7rem,3vw,2.5rem)">$—</div>
-        <p class="op">which could support a purchase around <b class="bo-price">$—</b> with your deposit</p>
+        <div class="ov bo-range" style="font-size:clamp(1.7rem,3vw,2.5rem)">$0</div>
+        <p class="op">which could support a purchase around <b class="bo-price">$0</b> with your deposit</p>
         <div class="sub-rows">
           <div><span>Model</span><b>Simplified, buffered</b></div>
           <div><span>The real number</span><b>One call away</b></div>
         </div>
-        <p class="note">Generated by a simplified illustrative model — not a credit assessment, quote or offer. Actual borrowing power depends on a full assessment of your circumstances and lender eligibility criteria.</p>
+        <p class="note">Estimates only, for illustrative and discussion purposes. Terms &amp; conditions and normal lending criteria apply.</p>
       </div>
     </div>
 
     <div class="rv in" style="text-align:center;padding:20px 0 30px">
-      <p style="color:var(--ink-dim);max-width:52ch;margin:0 auto 26px">Numbers looking workable? The next step is a conversation, not an application — and it changes nothing on your credit file.</p>
+      <p style="color:var(--ink-dim);max-width:56ch;margin:0 auto 26px">We’ll turn estimates into a real plan on our 15-minute strategy call.</p>
       <a class="btn btn-navy" href="contact.html#book">Book a 15-Minute Call</a>
     </div>
 
@@ -128,9 +138,9 @@
   <section class="band">
     <img src="assets/img/keys-model-1600.jpg" srcset="assets/img/keys-model-800.jpg 800w, assets/img/keys-model-1600.jpg 1600w, assets/img/keys-model-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy">
     <div class="wrap">
-      <span class="eyebrow">From estimate to keys</span>
-      <h2>The real number is <em>one call away.</em></h2>
-      <p>Calculators are a compass, not a map. A 15-minute call tests your figures against actual lender policy — deposit, LMI, stamp duty and all — with no credit check.</p>
+      <span class="eyebrow">Qualify. Strategise. Settle.</span>
+      <h2>Ready to determine your <em>borrowing capacity?</em></h2>
+      <p>Opt in for a 15-minute call to assess your goals, your numbers, and what you’re actually trying to achieve. Our service to you is free, but other fees and lender charges may apply. No pressure, no obligation.</p>
       <a class="btn btn-gold" href="contact.html#book">Book a 15-Minute Call</a>
     </div>
   </section>
@@ -138,8 +148,37 @@
 
 <footer>
   <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group">
+        <p>Strategic Finance Planning for Ambitious Australians. Melbourne-based, working with clients Australia-wide.</p>
+      </div>
+      <div>
+        <h4>Finance</h4>
+        <a href="home-loans.html">Home Loans</a>
+        <a href="business-commercial-loans.html">Business &amp; Commercial Loans</a>
+        <a href="asset-equipment-finance.html">Asset &amp; Equipment Financing</a>
+        <a href="personal-loans.html">Personal Loans</a>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="about.html">About Us</a>
+        <a href="calculators.html">Calculators</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:0450355604">0450 355 604</a>
+        <a href="mailto:info@fnsq.com.au">info@fnsq.com.au</a>
+        <a href="contact.html#book">Book a call</a>
+        <p>Melbourne · Australia-wide</p>
+      </div>
+    </div>
     <div class="legal">
-      <p>Sioux Property Solutions Group Pty Ltd ABN 12 662 331 544 ACN 662 331 544 (Credit Representative Number 543438) is authorised under BLSSA Pty Ltd ABN 69 117 651 760 (Australian Credit Licence 391237), trading as Finance Square Group.</p>
+      <p>Sioux Property Solutions Group Pty Ltd ABN 12 662 331 544 ACN 662 331 544 (Credit Representative 543438) is an authorised credit representative of BLSSA Pty Ltd ABN 69 117 651 760, Australian Credit Licence 391237. Trading as Finance Square Group.</p>
+      <p>The information provided on this site is on the understanding that it is for illustrative and discussion purposes only. Whilst all care and attention is taken in its preparation, any party seeking to rely on its content or otherwise should make their own enquiries and research to ensure its relevance to your specific personal and business requirements and circumstances. Terms, conditions, fees and charges may apply. Normal lending criteria apply. Rates subject to change. Approved applicants only.</p>
+      <p>General information only, consider your circumstances before making financial decisions.</p>
       <p>© <span id="yr">2026</span> Finance Square Group. All rights reserved.</p>
     </div>
   </div>
