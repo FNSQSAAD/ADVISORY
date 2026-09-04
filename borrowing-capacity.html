@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borrowing Capacity Calculator | Finance Square Group</title>
+<meta name="description" content="In 60 seconds, understand how much you could borrow to buy your home or investment property. No credit check, and your result appears instantly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/brand/fnsq-logo.svg">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="strip">
+  <span>Melbourne-based · Working with clients Australia-wide</span>
+  <span class="r">
+    <span class="hide-s"><a href="mailto:info@fnsq.com.au">info@fnsq.com.au</a></span>
+    <span><a href="tel:0450355604">0450 355 604</a></span>
+  </span>
+</div>
+
+<header class="nav">
+  <a class="logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group"></a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="home-loans.html">Home Loans</a>
+    <a href="business-commercial-loans.html">Business &amp; Commercial</a>
+    <a href="asset-equipment-finance.html">Asset &amp; Equipment</a>
+    <a href="personal-loans.html">Personal Loans</a>
+    <a href="calculators.html" class="on">Calculators</a>
+    <a href="about.html">About</a>
+  </nav>
+  <div class="nav-right">
+    <a class="nav-phone" href="tel:0450355604">0450 355 604</a>
+    <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-menu" aria-label="Mobile">
+  <a href="home-loans.html">Home Loans</a>
+  <a href="business-commercial-loans.html">Business &amp; Commercial</a>
+  <a href="asset-equipment-finance.html">Asset &amp; Equipment</a>
+  <a href="personal-loans.html">Personal Loans</a>
+  <a href="calculators.html">Calculators</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
+</nav>
+
+<main>
+  <section class="page-hero with-photo">
+    <img src="assets/img/home-suburb-1600.jpg" srcset="assets/img/home-suburb-800.jpg 800w, assets/img/home-suburb-1600.jpg 1600w, assets/img/home-suburb-4k.jpg 3840w" sizes="100vw" alt="">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#e7c988">Borrowing Capacity</span>
+      <h1>How much can <em>you borrow?</em></h1>
+      <p class="sub">In 60 seconds, understand how much you can borrow to buy your dream home or investment property.</p>
+      <p>Three questions, no credit check, and your result appears straight away. We do not ask for your details to show you the number.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:60px">
+    <div class="wrap">
+      <div class="tool-shell" id="bc-tool">
+        <div class="wz-head">
+          <span class="wz-count">Step 1 of 4</span>
+          <span class="wz-secure">No credit check · Nothing leaves your browser</span>
+        </div>
+        <div class="wz-bar"><i></i></div>
+        <div class="wz-body">
+
+          <!-- STEP 1: income -->
+          <section class="wz-step on">
+            <h2>Your income</h2>
+            <p class="q">What is your total household income each year before tax?</p>
+            <div class="wz-field">
+              <label for="bc-income">Household income, before tax</label>
+              <div class="wz-input">
+                <span class="pre">$</span>
+                <input id="bc-income" type="tel" inputmode="numeric" data-money data-required value="200,000" placeholder="200,000" aria-label="Household income before tax">
+                <span class="suf">per year</span>
+              </div>
+              <span class="err">Please enter your household income.</span>
+              <p class="wz-hint">Include base salary, regular overtime and bonuses, and business income before tax. If two of you are borrowing, add both incomes together.</p>
+            </div>
+            <div class="wz-nav">
+              <span></span>
+              <button class="btn btn-navy wz-next" type="button">Next</button>
+            </div>
+          </section>
+
+          <!-- STEP 2: expenses -->
+          <section class="wz-step">
+            <h2>Your expenses</h2>
+            <p class="q">What are your monthly household expenses?</p>
+            <div class="wz-field">
+              <label for="bc-expenses">Household living expenses</label>
+              <div class="wz-input">
+                <span class="pre">$</span>
+                <input id="bc-expenses" type="tel" inputmode="numeric" data-money data-required value="4,000" placeholder="4,000" aria-label="Monthly household expenses">
+                <span class="suf">per month</span>
+              </div>
+              <span class="err">Please enter your monthly expenses.</span>
+              <p class="wz-hint">Groceries, utilities, transport, insurance, childcare, subscriptions and general living costs. Leave out rent you will stop paying, and leave out the new home loan itself.</p>
+            </div>
+            <div class="wz-nav">
+              <button class="wz-back" type="button">← Back</button>
+              <button class="btn btn-navy wz-next" type="button">Next</button>
+            </div>
+          </section>
+
+          <!-- STEP 3: household -->
+          <section class="wz-step">
+            <h2>Your household</h2>
+            <p class="q">How many people are in your household?</p>
+            <div class="wz-field">
+              <label>Adults and dependants living with you</label>
+              <div class="wz-choice compact" id="bc-people" data-value="2">
+                <button type="button" data-v="1">1</button>
+                <button type="button" data-v="2" class="on">2</button>
+                <button type="button" data-v="3">3</button>
+                <button type="button" data-v="4">4</button>
+                <button type="button" data-v="5">5</button>
+                <button type="button" data-v="6">6+</button>
+              </div>
+              <p class="wz-hint">Household size sets the minimum living-expense benchmark lenders apply, so it changes the answer more than most people expect.</p>
+            </div>
+            <div class="wz-nav">
+              <button class="wz-back" type="button">← Back</button>
+              <button class="btn btn-gold wz-next" type="button">See my borrowing capacity</button>
+            </div>
+          </section>
+
+          <!-- STEP 4: result -->
+          <section class="wz-step" id="bc-result">
+            <div class="wz-result-top">
+              <span class="rk">Indicative borrowing capacity</span>
+              <div class="rv-big" id="bc-range">$0</div>
+              <p class="rsub">Based on a household of <span id="bc-people-out">2 people</span>, assessed the way a lender would, including the serviceability buffer.</p>
+            </div>
+
+            <div style="padding-top:26px">
+              <div class="wz-slider">
+                <label><span class="lab">Interest rate used</span><output id="bc-rate-out">6.10% p.a.</output></label>
+                <input type="range" id="bc-rate" min="4.50" max="9.00" step="0.05" value="6.10" aria-label="Interest rate">
+              </div>
+
+              <div class="wz-rows">
+                <div><span>Central estimate</span><b id="bc-mid">$0</b></div>
+                <div><span>Estimated repayment on that loan</span><b id="bc-repay">$0</b></div>
+                <div><span>Net household income, monthly</span><b id="bc-net">$0</b></div>
+                <div><span>Living expenses used in the assessment</span><b id="bc-exp">$0</b></div>
+                <div><span>Monthly surplus available</span><b id="bc-surplus">$0</b></div>
+                <div><span>Assessment rate, including the 3.00% buffer</span><b id="bc-assess">0%</b></div>
+              </div>
+
+              <div class="wz-callout" id="bc-floor-note" style="display:none"></div>
+              <div class="wz-callout" id="bc-zero" style="display:none">On these numbers there is no surplus left after living expenses, so a lender would not be able to service a loan yet. That is worth a conversation rather than a dead end, because the way income is presented often changes the outcome.</div>
+
+              <div class="wz-cta">
+                <a class="btn btn-navy" href="contact.html?goal=Buy%20my%20first%20home#book">Book a 15-Minute Call</a>
+                <a class="btn btn-line" href="loan-health-check.html">Check my current loan</a>
+                <button class="wz-back btn btn-line" type="button" style="border-color:var(--line)">Adjust my answers</button>
+              </div>
+
+              <div class="wz-assume">
+                <p><b>How this is calculated.</b> Your income is converted to an after-tax figure using the ATO resident tax rates plus the 2% Medicare levy, split across two earners where your household has two or more people. Living expenses are the higher of what you entered and a benchmark for your household size, which is how lenders treat them. The repayment is then tested at your chosen rate plus a 3.00 percentage point serviceability buffer over 30 years, in line with APRA guidance, and 95% of your surplus is treated as available. The range reflects how widely lender policy varies.</p>
+                <p style="margin-top:12px">Estimates only, for illustrative and discussion purposes. This is not an offer of credit or an assessment of eligibility. It does not take into account your full circumstances, existing debts, credit history or lender-specific policy. Terms, conditions, fees and charges may apply. Normal lending criteria apply. Approved applicants only.</p>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta cta-photo">
+    <img src="assets/img/syd-bridge-1600.jpg" srcset="assets/img/syd-bridge-800.jpg 800w, assets/img/syd-bridge-1600.jpg 1600w, assets/img/syd-bridge-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy">
+    <div class="wrap">
+      <span class="eyebrow rv">Qualify. Strategise. Settle.</span>
+      <h2 class="rv">A number is a start. A <em>strategy</em> is the point.</h2>
+      <p class="rv d1">We will pressure-test this figure against real lender policy, including the lenders who read self-employed and complex income properly.</p>
+      <div class="hero-ctas rv d1">
+        <a class="btn btn-gold" href="contact.html#book">Book a 15-Minute Call</a>
+        <a class="btn btn-line-cream" href="tel:0450355604">Or call 0450 355 604</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group">
+        <p>Strategic Finance Planning for Ambitious Australians. Melbourne-based, working with clients Australia-wide.</p>
+      </div>
+      <div>
+        <h4>Finance</h4>
+        <a href="home-loans.html">Home Loans</a>
+        <a href="business-commercial-loans.html">Business &amp; Commercial Loans</a>
+        <a href="asset-equipment-finance.html">Asset &amp; Equipment Financing</a>
+        <a href="personal-loans.html">Personal Loans</a>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <a href="borrowing-capacity.html">Borrowing Capacity</a>
+        <a href="loan-health-check.html">Loan Health Check</a>
+        <a href="calculators.html">Calculators</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:0450355604">0450 355 604</a>
+        <a href="mailto:info@fnsq.com.au">info@fnsq.com.au</a>
+        <a href="contact.html#book">Book a call</a>
+        <p>Melbourne · Australia-wide</p>
+      </div>
+    </div>
+    <div class="legal">
+      <p>Sioux Property Solutions Group Pty Ltd ABN 12 662 331 544 ACN 662 331 544 (Credit Representative 543438) is an authorised credit representative of BLSSA Pty Ltd ABN 69 117 651 760, Australian Credit Licence 391237. Trading as Finance Square Group.</p>
+      <p>Calculators are illustrative only and are calculated based on the accuracy of the information entered. They are not an offer or acceptance of loan eligibility. All information is of a general nature and does not take into account your personal needs and requirements. The figures shown in the calculators do not constitute financial advice. Lender policy, terms and conditions, fees and charges apply.</p>
+      <p>General information only, consider your circumstances before making financial decisions.</p>
+      <p>© <span id="yr">2026</span> Finance Square Group. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/tools.js"></script>
+</body>
+</html>
