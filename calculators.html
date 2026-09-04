@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculators — Finance Square Group</title>
+<meta name="description" content="Loan repayment and borrowing power calculators from Finance Square Group. Estimates for illustration — then a straight answer from a real advisor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/brand/fnsq-logo.svg">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="strip">
+  <span>Melbourne-based · Working with clients Australia-wide</span>
+  <span class="r">
+    <span class="hide-s"><a href="mailto:info@fnsq.com.au">info@fnsq.com.au</a></span>
+    <span><a href="tel:0450355604">0450 355 604</a></span>
+  </span>
+</div>
+
+<header class="nav">
+  <a class="logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group"></a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="index.html#services">Lending Services</a>
+    <a href="index.html#process">How We Work</a>
+    <a href="calculators.html" class="on">Calculators</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#faq">FAQ</a>
+  </nav>
+  <div class="nav-right">
+    <a class="nav-phone" href="tel:0450355604">0450 355 604</a>
+    <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-menu" aria-label="Mobile">
+  <a href="index.html#services">Lending Services</a>
+  <a href="index.html#process">How We Work</a>
+  <a href="calculators.html">Calculators</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#faq">FAQ</a>
+  <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Calculators</span>
+      <h1>Good decisions start with <em>honest numbers.</em></h1>
+      <p>These estimates are a starting point, not an answer. When you want the real figure — tested against actual lender policy — that’s a 15-minute call.</p>
+    </div>
+  </section>
+
+  <div class="wrap calc-page-grid">
+
+    <!-- repayments -->
+    <div class="calc-card js-repay rv in">
+      <div class="calc-in">
+        <h3>Loan repayments</h3>
+        <p class="sub">What a loan costs per month, and what it costs over its lifetime.</p>
+        <div class="crow">
+          <label><span class="lab">Loan amount</span><output class="co-amount">$650,000</output></label>
+          <input type="range" class="ci-amount" min="100000" max="2500000" step="10000" value="650000" aria-label="Loan amount">
+        </div>
+        <div class="crow">
+          <label><span class="lab">Interest rate</span><output class="co-rate">5.99% p.a.</output></label>
+          <input type="range" class="ci-rate" min="4.5" max="9" step="0.05" value="5.99" aria-label="Interest rate">
+        </div>
+        <div class="crow">
+          <label><span class="lab">Loan term</span><output class="co-term">30 years</output></label>
+          <input type="range" class="ci-term" min="10" max="30" step="1" value="30" aria-label="Loan term">
+        </div>
+      </div>
+      <div class="calc-out">
+        <span class="ok">Estimated repayments</span>
+        <div class="ov co-monthly">$—</div>
+        <p class="op">per month, principal and interest</p>
+        <div class="sub-rows">
+          <div><span>Fortnightly equivalent</span><b class="co-fortnight">$—</b></div>
+          <div><span>Total repaid over the term</span><b class="co-total">$—</b></div>
+          <div><span>Of which interest</span><b class="co-interest">$—</b></div>
+        </div>
+        <p class="note">Estimates only, for illustration. Not a quote or offer of credit; excludes fees. Subject to lender assessment and eligibility criteria.</p>
+      </div>
+    </div>
+
+    <!-- borrowing power -->
+    <div class="calc-card js-borrow rv in">
+      <div class="calc-in">
+        <h3>Borrowing power</h3>
+        <p class="sub">A rough range for what lenders might extend — before we test it against real policy.</p>
+        <div class="crow">
+          <label><span class="lab">Household income (yearly)</span><output class="bo-income">$150,000</output></label>
+          <input type="range" class="bi-income" min="50000" max="600000" step="5000" value="150000" aria-label="Household income">
+        </div>
+        <div class="crow">
+          <label><span class="lab">Living expenses (monthly)</span><output class="bo-exp">$4,000 /mo</output></label>
+          <input type="range" class="bi-exp" min="1500" max="15000" step="100" value="4000" aria-label="Monthly expenses">
+        </div>
+        <div class="crow">
+          <label><span class="lab">Deposit saved</span><output class="bo-dep">$140,000</output></label>
+          <input type="range" class="bi-dep" min="20000" max="1000000" step="10000" value="140000" aria-label="Deposit">
+        </div>
+      </div>
+      <div class="calc-out">
+        <span class="ok">Indicative borrowing range</span>
+        <div class="ov bo-range" style="font-size:clamp(1.7rem,3vw,2.5rem)">$—</div>
+        <p class="op">which could support a purchase around <b class="bo-price">$—</b> with your deposit</p>
+        <div class="sub-rows">
+          <div><span>Model</span><b>Simplified, buffered</b></div>
+          <div><span>The real number</span><b>One call away</b></div>
+        </div>
+        <p class="note">Generated by a simplified illustrative model — not a credit assessment, quote or offer. Actual borrowing power depends on a full assessment of your circumstances and lender eligibility criteria.</p>
+      </div>
+    </div>
+
+    <div class="rv in" style="text-align:center;padding:20px 0 30px">
+      <p style="color:var(--ink-dim);max-width:52ch;margin:0 auto 26px">Numbers looking workable? The next step is a conversation, not an application — and it changes nothing on your credit file.</p>
+      <a class="btn btn-navy" href="contact.html#book">Book a 15-Minute Call</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="legal">
+      <p>Sioux Property Solutions Group Pty Ltd ABN 12 662 331 544 ACN 662 331 544 (Credit Representative Number 543438) is authorised under BLSSA Pty Ltd ABN 69 117 651 760 (Australian Credit Licence 391237), trading as Finance Square Group.</p>
+      <p>© <span id="yr">2026</span> Finance Square Group. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+</body>
+</html>
