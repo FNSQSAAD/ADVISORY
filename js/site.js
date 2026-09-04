@@ -100,5 +100,51 @@
     });
   }
 
+  /* ---------- hero arch slider ---------- */
+  var arch = $('.arch[data-slider]');
+  if (arch) {
+    var aSlides = $$('.arch-slide', arch);
+    var aDots = $$('.arch-dots button');
+    var aIdx = 0, aTimer;
+    var aGo = function (n) {
+      aIdx = (n + aSlides.length) % aSlides.length;
+      aSlides.forEach(function (s, i) { s.classList.toggle('on', i === aIdx); });
+      aDots.forEach(function (d, i) { d.classList.toggle('on', i === aIdx); });
+    };
+    var aRestart = function () { clearInterval(aTimer); aTimer = setInterval(function () { aGo(aIdx + 1); }, 5500); };
+    aDots.forEach(function (d, i) { d.addEventListener('click', function () { aGo(i); aRestart(); }); });
+    aGo(0);
+    aRestart();
+  }
+
+  /* ---------- journeys carousel arrows ---------- */
+  var jn = $('.jn-scroll');
+  if (jn) {
+    var step = function () { var c = $('.jn-card'); return c ? c.offsetWidth + 24 : 420; };
+    var jp = $('.jn-nav .prev'), jx = $('.jn-nav .next');
+    if (jp) jp.addEventListener('click', function () { jn.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (jx) jx.addEventListener('click', function () { jn.scrollBy({ left: step(), behavior: 'smooth' }); });
+  }
+
+  /* ---------- testimonial slider ---------- */
+  var ts = $('.tslider');
+  if (ts) {
+    var tslides = $$('.tslide', ts);
+    var tdots = $$('.tdots button', ts);
+    var tidx = 0, ttimer;
+    var tgo = function (n) {
+      tidx = (n + tslides.length) % tslides.length;
+      tslides.forEach(function (s, i) { s.classList.toggle('on', i === tidx); });
+      tdots.forEach(function (d, i) { d.classList.toggle('on', i === tidx); });
+    };
+    var trestart = function () { clearInterval(ttimer); ttimer = setInterval(function () { tgo(tidx + 1); }, 6000); };
+    tdots.forEach(function (d, i) { d.addEventListener('click', function () { tgo(i); trestart(); }); });
+    var tp = $('.tarrows .prev', ts), tn = $('.tarrows .next', ts);
+    if (tp) tp.addEventListener('click', function () { tgo(tidx - 1); trestart(); });
+    if (tn) tn.addEventListener('click', function () { tgo(tidx + 1); trestart(); });
+    tgo(0);
+    trestart();
+  }
+
   var yr = $('#yr'); if (yr) yr.textContent = new Date().getFullYear();
 })();
