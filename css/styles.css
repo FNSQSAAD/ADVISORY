@@ -821,3 +821,45 @@ footer{background:var(--navy-2);color:var(--cream-tx-dim);padding:78px 0 40px}
 
 /* slider height for narrower desktops (must follow base rule) */
 @media(max-width:1250px) and (min-width:1081px){ .hslider{min-height:800px} }
+
+/* ============================================================
+   MOCKUP RESTYLE (2026-09-05): Priya card, numbered tiles,
+   split checklist sections
+   ============================================================ */
+
+/* Priya: content left, square photo + navy name plate right */
+.founder2-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:6vw;align-items:center}
+.founder2 .onwhat{font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.founder2 .quote{font-family:var(--serif);font-weight:600;font-style:italic;font-size:clamp(1.15rem,2vw,1.5rem);color:var(--navy);border-left:2px solid var(--gold);padding-left:22px;line-height:1.6;margin:0 0 26px}
+.founder2 .attrib{font-weight:600;color:var(--navy)}
+.founder2 .lic{font-size:.8rem;color:var(--ink-faint);margin-top:8px}
+.founder2 .cred-row{margin-top:30px}
+.f2-photo{position:relative;justify-self:end;width:min(100%,460px);margin-bottom:30px}
+.f2-photo>img{width:100%;aspect-ratio:1/1.18;object-fit:cover;object-position:center 18%}
+.nameplate{position:absolute;left:-34px;bottom:-30px;background:var(--navy);color:var(--cream-tx);padding:22px 28px;min-width:255px;border-top:3px solid var(--gold);box-shadow:0 24px 50px -22px rgba(19,38,68,.45)}
+.nameplate b{font-family:var(--serif);font-weight:700;font-size:1.15rem;display:block;color:#fff;margin-bottom:8px}
+.nameplate span{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-tx-dim);line-height:2}
+
+/* numbered chip on service tiles */
+.tile .ph{position:relative}
+.tile .no{position:absolute;left:16px;top:16px;background:var(--navy);color:var(--cream-tx);font-weight:600;font-size:.8rem;letter-spacing:.06em;padding:8px 13px;z-index:2}
+
+/* split photo + checklist sections */
+.sc{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center}
+.sc-photo img{width:100%;aspect-ratio:1/1.02;object-fit:cover}
+.sc h2{font-size:clamp(1.9rem,3.5vw,2.8rem);margin:0 0 24px}
+.sc p{color:var(--ink-dim);line-height:1.85;margin-bottom:18px}
+.sc .btn{margin-top:10px}
+.sc .subhead{font-family:var(--serif);font-weight:700;font-size:clamp(1.3rem,2.3vw,1.75rem);color:var(--navy);margin-bottom:24px}
+.checks{list-style:none;margin:6px 0 22px}
+.checks li{position:relative;padding-left:44px;margin-bottom:16px;color:var(--ink-dim);line-height:1.7}
+.checks li::before{content:"";position:absolute;left:0;top:1px;width:27px;height:27px;border-radius:50%;background:rgba(168,124,46,.18)}
+.checks li::after{content:"";position:absolute;left:8px;top:9px;width:12px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+.quiz-note{font-size:.9rem;color:var(--ink-dim);margin-top:18px}
+
+@media(max-width:1080px){
+  .founder2-grid{grid-template-columns:1fr;gap:76px}
+  .f2-photo{justify-self:center}
+  .nameplate{left:0;bottom:-26px}
+  .sc{grid-template-columns:1fr;gap:44px}
+}
