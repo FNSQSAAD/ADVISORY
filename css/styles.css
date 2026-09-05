@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    FINANCE SQUARE GROUP — "ADVISORY"
    Concept 5: classic Australian mortgage advisory.
    Cream · deep navy · antique gold. Playfair Display + Inter.
@@ -504,26 +504,43 @@ footer{background:var(--navy-2);color:var(--cream-tx-dim);padding:78px 0 40px}
    FULL SITE BUILD — doc content pages (2026-09-04)
    ============================================================ */
 
-/* ---------- hero slider (homepage, 4 slides with copy) ---------- */
-.hslider{position:relative;min-height:640px;background:var(--navy);overflow:hidden}
-.hslide{position:absolute;inset:0;opacity:0;transition:opacity 1s var(--ease);pointer-events:none}
+/* ---------- hero slider: light split layout, copy separate from image ---------- */
+.hslider{position:relative;min-height:720px;background:var(--cream);border-bottom:1px solid var(--line);overflow:hidden}
+.hslide{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease);pointer-events:none;display:grid;grid-template-columns:1.02fr .98fr}
 .hslide.on{opacity:1;z-index:2;pointer-events:auto}
-.hslide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-.hslide::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(14,28,51,.93) 0%,rgba(14,28,51,.72) 48%,rgba(14,28,51,.35) 100%)}
-.hslide .wrap{position:relative;z-index:2;padding-top:96px;padding-bottom:130px}
-.hslide h2{color:#fff;font-size:clamp(2.1rem,4.4vw,3.4rem);max-width:16ch;margin:18px 0 16px}
-.hslide .sub{color:#e7c988;font-size:clamp(1.02rem,1.6vw,1.2rem);font-weight:500;max-width:44ch;margin-bottom:16px}
-.hslide p.body{color:rgba(255,255,255,.86);max-width:52ch;line-height:1.8}
-.hslide .sml{color:rgba(255,255,255,.6);font-size:.78rem;margin-top:16px}
-.hslide .btn{margin-top:28px}
-.hs-controls{position:absolute;left:0;right:0;bottom:44px;z-index:6}
-.hs-controls .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.hs-copy{display:flex;flex-direction:column;justify-content:center;padding:84px 5vw 130px calc(max((100vw - 1240px)/2, 5vw))}
+.hs-copy .eyebrow{margin-bottom:20px}
+.hslide h2{color:var(--navy);font-size:clamp(2.1rem,4.2vw,3.3rem);max-width:16ch;margin:0 0 16px}
+.hslide .sub{color:var(--gold);font-size:clamp(1.02rem,1.55vw,1.18rem);font-weight:600;max-width:44ch;margin-bottom:16px;line-height:1.6}
+.hslide p.body{color:var(--ink-dim);max-width:52ch;line-height:1.8}
+.hslide .sml{color:var(--ink-faint);font-size:.78rem;margin-top:16px}
+.hslide .btn{margin-top:28px;align-self:flex-start}
+.hs-photo{position:relative;overflow:hidden}
+.hs-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hs-photo::before{content:"";position:absolute;left:0;top:0;bottom:0;width:90px;z-index:1;background:linear-gradient(90deg,var(--cream),rgba(251,248,241,0))}
+.hs-photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--gold);z-index:2}
+.hs-controls{position:absolute;left:0;right:0;bottom:40px;z-index:6;pointer-events:none}
+.hs-controls .wrap{display:flex;align-items:center;justify-content:flex-start;gap:26px;flex-wrap:wrap}
+.hs-controls .hs-dots,.hs-controls .hs-arrows{pointer-events:auto}
 .hs-dots{display:flex;gap:10px}
-.hs-dots button{width:38px;height:3px;background:rgba(255,255,255,.35);transition:background .3s}
-.hs-dots button.on{background:#e7c988}
+.hs-dots button{width:38px;height:3px;background:var(--line);transition:background .3s}
+.hs-dots button.on{background:var(--gold)}
 .hs-arrows{display:flex;gap:10px}
-.hs-arrows button{width:44px;height:44px;border:1px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;transition:all .3s}
-.hs-arrows button:hover{background:#fff;color:var(--navy)}
+.hs-arrows button{width:44px;height:44px;border:1px solid var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);background:var(--cream);transition:all .3s}
+.hs-arrows button:hover{background:var(--navy);color:var(--cream-tx)}
+
+/* ---------- Priya band: full-bleed navy with photo, hero-style ---------- */
+.pband{position:relative;display:grid;grid-template-columns:1.05fr .95fr;background:var(--navy);color:var(--cream-tx);overflow:hidden}
+.pband-copy{padding:clamp(70px,7vw,110px) 4vw clamp(70px,7vw,110px) calc(max((100vw - 1240px)/2, 5vw));display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.pband .onwhat{font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#e7c988;margin-bottom:22px}
+.pband blockquote{font-family:var(--serif);font-weight:500;font-style:italic;font-size:clamp(1.35rem,2.5vw,1.9rem);line-height:1.55;color:#fff;max-width:30ch}
+.pband .attrib{margin-top:26px;font-weight:600;color:#fff}
+.pband .lic{font-size:.78rem;color:var(--cream-tx-dim);margin-top:8px}
+.pband .btn{margin-top:30px;align-self:flex-start}
+.pband-photo{position:relative;min-height:420px}
+.pband-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%}
+.pband-photo::before{content:"";position:absolute;left:0;top:0;bottom:0;width:38%;z-index:1;background:linear-gradient(90deg,var(--navy),rgba(19,38,68,0))}
+.pband-photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--gold);z-index:2}
 
 /* ---------- main hero (statement) ---------- */
 .mainhero{padding:96px 0 90px}
@@ -675,10 +692,16 @@ footer{background:var(--navy-2);color:var(--cream-tx-dim);padding:78px 0 40px}
   .side-photo{position:static;max-width:460px}
   .why{grid-template-columns:1fr}
   .cols2{columns:1}
-  .hslide .wrap{padding-top:70px;padding-bottom:150px}
+  .hslide{grid-template-columns:1fr}
+  .hs-photo{display:none}
+  .hs-copy{padding:70px 5vw 150px}
+  .pband{grid-template-columns:1fr}
+  .pband-copy{padding:60px 5vw}
+  .pband-photo{min-height:340px;order:-1}
+  .pband-photo::before{background:linear-gradient(0deg,var(--navy),rgba(19,38,68,0));width:100%;top:auto;height:40%;bottom:0}
 }
 @media(max-width:720px){
-  .hslider{min-height:560px}
+  .hslider{min-height:710px}
   .tgrid{grid-template-columns:1fr}
   .journey{grid-template-columns:1fr}
   .hs-controls{bottom:26px}
@@ -795,3 +818,6 @@ footer{background:var(--navy-2);color:var(--cream-tx-dim);padding:78px 0 40px}
   .wz-rows div{flex-direction:column;gap:4px}
   .wz-rows b{text-align:left}
 }
+
+/* slider height for narrower desktops (must follow base rule) */
+@media(max-width:1250px) and (min-width:1081px){ .hslider{min-height:800px} }
