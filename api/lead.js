@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
   const payload = JSON.stringify({
     full_name: name,
     email: email,
-    phone: phone.replace(/^\+61/, '0'),
+    phone: phone.replace(/^0/, '+61'),
     message: message,
     lead_source: source
   });
