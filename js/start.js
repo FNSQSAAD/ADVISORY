@@ -243,7 +243,7 @@ function submitLead(c, el){
     if (ok){ renderResult(); return; }
     btn.disabled = false; btn.textContent = 'See my snapshot';
     var err = el.querySelector('[data-err]');
-    err.textContent = 'Something went wrong sending that. Please try again, or call us on 0450 355 604.';
+    err.textContent = 'Something went wrong sending that. Please try again, or call us on 0495 040 500.';
     err.hidden = false;
   };
   fetch('/api/lead', {
