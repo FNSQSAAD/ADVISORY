@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     full_name: name,
     email: email,
     phone: phone.replace(/^0/, '+61'),
-    message: message,
+    message: (message ? message + ' ' : '') + 'Mobile: ' + phone.replace(/^\+61/, '0') + '.',
     lead_source: source
   });
 
