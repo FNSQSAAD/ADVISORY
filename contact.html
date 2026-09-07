@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book a Call | Finance Square Group</title>
-<meta name="description" content="Book a 15-minute strategy call with Finance Square Group. No credit check, no obligation. Melbourne-based, working Australia-wide.">
+<title>Contact Us | Finance Square Group</title>
+<meta name="description" content="Call, email, or message us. Finance Square compares home, business, commercial, and asset finance across a lender panel and gives you a straight answer.">
+<meta name="keywords" content="contact finance square, talk to a mortgage broker Melbourne, mortgage broker contact Australia">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="assets/brand/fnsq-logo.svg">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
 
@@ -24,34 +26,53 @@
 <header class="nav">
   <a class="logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group"></a>
   <nav class="nav-links" aria-label="Main">
-    <a href="index.html#services">Lending Services</a>
+    <span class="dd">
+      <a href="home-loans.html">Lending Services <i class="dd-caret"></i></a>
+      <div class="dd-menu">
+        <a href="home-loans.html"><b>Home Loans</b>Purchase, refinance, investment</a>
+        <a href="first-home-buyers.html"><b>First Home Buyers</b>Your first home, with a strategy</a>
+        <a href="business-commercial-loans.html"><b>Business &amp; Commercial Loans</b>Working capital, growth, premises</a>
+        <a href="asset-equipment-finance.html"><b>Asset &amp; Equipment Finance</b>Trucks, vehicles, machinery</a>
+        <a href="personal-loans.html"><b>Personal Loans</b>Consolidation, renovations, life</a>
+      </div>
+    </span>
     <a href="index.html#process">How We Work</a>
     <a href="calculators.html">Calculators</a>
-    <a href="index.html#about">About</a>
-    <a href="index.html#faq">FAQ</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="on">Contact</a>
   </nav>
   <div class="nav-right">
     <a class="nav-phone" href="tel:+61495040500">0495 040 500</a>
-    <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
+    <a class="btn btn-navy" href="get-started.html">Book a Call</a>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <nav class="mobile-menu" aria-label="Mobile">
-  <a href="index.html#services">Lending Services</a>
-  <a href="index.html#process">How We Work</a>
+  <span class="mm-lab">Lending Services</span>
+  <a class="mm-sub" href="home-loans.html">Home Loans</a>
+  <a class="mm-sub" href="first-home-buyers.html">First Home Buyers</a>
+  <a class="mm-sub" href="business-commercial-loans.html">Business &amp; Commercial Loans</a>
+  <a class="mm-sub" href="asset-equipment-finance.html">Asset &amp; Equipment Finance</a>
+  <a class="mm-sub" href="personal-loans.html">Personal Loans</a>
   <a href="calculators.html">Calculators</a>
-  <a href="index.html#about">About</a>
-  <a href="index.html#faq">FAQ</a>
-  <a class="btn btn-navy" href="contact.html#book">Book a Call</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a class="btn btn-navy" href="get-started.html">Book a Call</a>
 </nav>
 
 <main>
   <section class="page-hero">
     <div class="wrap">
-      <span class="eyebrow">Fifteen minutes · No credit check · No obligation</span>
-      <h1>Book a <em>strategy call.</em></h1>
-      <p>Tell us a little about your move and we’ll call you within one business day to lock in a time. Prefer to talk now? <a class="textlink" href="tel:+61495040500">Call 0495 040 500</a>.</p>
+      <span class="eyebrow">Your Strategic Lending Partners</span>
+      <h1>Let’s Talk Finance &amp; <em>Strategy!</em></h1>
+      <p>Got a question? Send us an email using the form below or give us a call at <a class="textlink" href="tel:+61495040500">0495 040 500</a>.</p>
+      <p class="pline" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:22px;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)">
+        Home Loans <i style="width:4px;height:4px;background:var(--gold);border-radius:50%;display:block"></i>
+        Business &amp; Commercial Loans <i style="width:4px;height:4px;background:var(--gold);border-radius:50%;display:block"></i>
+        Asset &amp; Equipment Finance <i style="width:4px;height:4px;background:var(--gold);border-radius:50%;display:block"></i>
+        Personal Loans
+      </p>
     </div>
   </section>
 
@@ -79,12 +100,14 @@
           <div class="field">
             <label for="f-goal">What are you looking to do?</label>
             <select id="f-goal">
-              <option>Buy my first home</option>
-              <option>Upgrade my home</option>
-              <option>Refinance</option>
-              <option>Invest in property</option>
+              <option>Home loan — buy my first home</option>
+              <option>Home loan — buy my next home</option>
+              <option>Home loan — refinance</option>
+              <option>Home loan — invest in property</option>
               <option>Self-employed lending</option>
-              <option>Business or commercial finance</option>
+              <option>Business &amp; Commercial finance</option>
+              <option>Asset &amp; Equipment finance</option>
+              <option>Personal loan</option>
               <option>Not sure yet</option>
             </select>
           </div>
@@ -103,7 +126,12 @@
           <label for="f-notes">Anything we should know? <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
           <textarea id="f-notes" rows="4" placeholder="e.g. self-employed two years, looking in Melbourne’s west…"></textarea>
         </div>
-        <button class="btn btn-navy" type="submit">Request My Strategy Call</button>
+        <label class="fineprint" style="display:flex;gap:12px;align-items:flex-start;cursor:pointer">
+          <input id="f-consent" type="checkbox" style="margin-top:3px;accent-color:var(--gold);width:16px;height:16px;flex:none">
+          <span>I’m happy for Finance Square Group to contact me about my enquiry.</span>
+        </label>
+        <p class="field bad" id="f-formerr" style="display:none"><span class="err" style="display:block">Something went wrong sending that. Please try again, or call us on 0495 040 500.</span></p>
+        <button class="btn btn-navy" type="submit" id="f-submit">Request My Strategy Call</button>
         <p class="fineprint">By submitting, you’re asking us to contact you about your enquiry. No credit check is performed. We handle your details in line with our privacy policy and never sell them.</p>
       </form>
       <div class="form-ok" id="form-ok">
@@ -125,14 +153,89 @@
         <a href="mailto:info@fnsq.com.au"><span class="dk">Email</span> info@fnsq.com.au</a>
         <a href="index.html"><span class="dk">Based</span> Melbourne · Australia-wide</a>
       </div>
+      <p class="note-strip" style="margin-top:26px">Prefer to answer a few quick questions first? <a class="textlink" href="get-started.html">Start the 60-second Get Started funnel →</a></p>
     </aside>
+  </section>
+
+  <!-- ================= WHY WORK WITH US ================= -->
+  <section class="section" style="background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow">Why Work With Us?</span>
+        <h2>Clear, honest guidance — whether you proceed with us or not.</h2>
+      </div>
+      <div class="why-grid rv d1">
+        <div>
+          <h3>No Pressure or Obligation</h3>
+          <p>Get clear, honest guidance whether you choose to proceed with us or not. We’re here to help you make the right decision, not push you into one.</p>
+        </div>
+        <div>
+          <h3>Structured and clear strategy</h3>
+          <p>We compare options across our broad lender panel, so you don’t have to run from bank to bank or navigate multiple applications yourself.</p>
+        </div>
+        <div>
+          <h3>Complex Finance Is Our Comfort Zone.</h3>
+          <p>Unusual circumstances, complex income, self-employed income, specialist assets or challenging credit profiles aren’t automatically a dead end. We know how to find a way forward.</p>
+        </div>
+        <div>
+          <h3>Your Information Stays Yours.</h3>
+          <p>Your privacy and security matter. Your information is handled securely, protected by industry-standard safeguards and NOT sold to third parties.</p>
+        </div>
+      </div>
+      <p class="rv d1" style="margin-top:44px;font-family:var(--serif);font-size:1.3rem;color:var(--navy)">Whenever you’re ready, we’re here.</p>
+    </div>
+  </section>
+
+  <section class="section cta cta-photo">
+    <img src="assets/img/melb-flinders-1600.jpg" srcset="assets/img/melb-flinders-800.jpg 800w, assets/img/melb-flinders-1600.jpg 1600w, assets/img/melb-flinders-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy">
+    <div class="wrap">
+      <span class="eyebrow rv">Melbourne-based · Australia-wide</span>
+      <h2 class="rv">Whenever you’re ready, <em>we’re here.</em></h2>
+      <div class="hero-ctas rv d1">
+        <a class="btn btn-gold" href="get-started.html">Book a 15-Minute Call</a>
+        <a class="btn btn-line-cream" href="tel:+61495040500">Or call 0495 040 500</a>
+        <a class="btn btn-line-cream" href="mailto:info@fnsq.com.au">info@fnsq.com.au</a>
+      </div>
+    </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group">
+        <p>Strategic Finance Planning for Ambitious Australians. Melbourne-based, working with clients Australia-wide.</p>
+      </div>
+      <div>
+        <h4>Finance</h4>
+        <a href="home-loans.html">Home Loans</a>
+        <a href="first-home-buyers.html">First Home Buyers</a>
+        <a href="business-commercial-loans.html">Business &amp; Commercial Loans</a>
+        <a href="asset-equipment-finance.html">Asset &amp; Equipment Finance</a>
+        <a href="personal-loans.html">Personal Loans</a>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="calculators.html">Calculators</a>
+        <a href="get-started.html">Get Started</a>
+        <a href="terms.html">Terms &amp; Complaints</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:+61495040500">0495 040 500</a>
+        <a href="tel:+61450355604">0450 355 604 (direct)</a>
+        <a href="mailto:info@fnsq.com.au">info@fnsq.com.au</a>
+        <a href="contact.html">Contact us</a>
+        <p>Melbourne · Australia-wide</p>
+      </div>
+    </div>
     <div class="legal">
-      <p>Sioux Property Solutions Group Pty Ltd ABN 12 662 331 544 ACN 662 331 544 (Credit Representative Number 543438) is authorised under BLSSA Pty Ltd ABN 69 117 651 760 (Australian Credit Licence 391237), trading as Finance Square Group.</p>
+      <p>Sioux Property Solutions Group Pty Ltd ABN 12 662 331 544 ACN 662 331 544 (Credit Representative 543438) is an authorised credit representative of BLSSA Pty Ltd ABN 69 117 651 760, Australian Credit Licence 391237. Trading as Finance Square Group.</p>
+      <p>The information provided on this site is on the understanding that it is for illustrative and discussion purposes only. Whilst all care and attention is taken in its preparation, any party seeking to rely on its content or otherwise should make their own enquiries and research to ensure its relevance to your specific personal and business requirements and circumstances. Terms, conditions, fees and charges may apply. Normal lending criteria apply. Rates subject to change. Approved applicants only.</p>
+      <p>General information only, consider your circumstances before making financial decisions.</p>
       <p>© <span id="yr">2026</span> Finance Square Group. All rights reserved.</p>
     </div>
   </div>

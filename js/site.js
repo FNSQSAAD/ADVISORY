@@ -73,30 +73,69 @@
   };
   $$('.js-borrow').forEach(borrowCalc);
 
-  /* ---------- contact form ---------- */
+  /* ---------- contact form ----------
+     Same lead-generation mechanism as the Get Started funnel:
+     POST /api/lead -> GHL "New Lead Intake" inbound webhook. */
   var cform = $('#cform');
   if (cform) {
-    var goal = new URLSearchParams(location.search).get('goal');
+    var qs = new URLSearchParams(location.search);
+    var goal = qs.get('goal');
     if (goal) {
       var sel = $('#f-goal');
-      $$('option', sel).forEach(function (o) { if (o.value === goal) sel.value = goal; });
+      var hit = $$('option', sel).filter(function (o) { return o.textContent.trim() === goal.trim(); })[0];
+      if (hit) sel.value = hit.value;
     }
     cform.addEventListener('submit', function (e) {
       e.preventDefault();
       var ok = true;
       [['#f-name', function (v) { return v.trim().length >= 2; }],
-       ['#f-phone', function (v) { return /^04\d{8}$/.test(v.replace(/\s/g, '')); }],
-       ['#f-email', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }]
+       ['#f-phone', function (v) { return /^(04\d{8}|\+614\d{8})$/.test(v.replace(/[\s()-]/g, '')); }],
+       ['#f-email', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }]
       ].forEach(function (p) {
         var el = $(p[0]);
         var good = p[1](el.value);
         el.closest('.field').classList.toggle('bad', !good);
         if (!good) ok = false;
       });
+      var consent = $('#f-consent');
+      if (consent && !consent.checked) {
+        ok = false;
+        var ce = $('#f-formerr');
+        if (ce) { ce.querySelector('.err').textContent = 'Please tick the consent box so we’re allowed to contact you.'; ce.style.display = 'block'; }
+      }
       if (!ok) return;
-      cform.style.display = 'none';
-      $('#form-ok').classList.add('show');
-      $('#form-ok').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      var btn = $('#f-submit');
+      var err = $('#f-formerr');
+      if (err) err.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      var notes = ($('#f-notes') && $('#f-notes').value.trim()) || '';
+      var payload = {
+        full_name: $('#f-name').value.trim(),
+        email: $('#f-email').value.trim(),
+        phone: $('#f-phone').value.replace(/[\s()-]/g, ''),
+        message: 'Contact form. Goal: ' + $('#f-goal').value + '. Timing: ' + $('#f-when').value + '.' +
+                 (notes ? ' Notes: ' + notes : '') + ' Submitted from ' + location.host + location.pathname,
+        lead_source: 'Website Contact Form'
+      };
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) {
+        if (!r.ok) throw new Error('bad');
+        try { sessionStorage.setItem('fsqLeadName', payload.full_name.split(' ')[0]); } catch (e) {}
+        location.href = 'thank-you.html?src=contact';
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Request My Strategy Call';
+        if (err) {
+          err.querySelector('.err').textContent = 'Something went wrong sending that. Please try again, or call us on 0495 040 500.';
+          err.style.display = 'block';
+        }
+      });
     });
   }
 
