@@ -240,7 +240,10 @@ function submitLead(c, el){
     website: c.honeypot
   };
   var done = function(ok){
-    if (ok){ renderResult(); return; }
+    if (ok){
+      try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: payload.lead_source }); } catch (e) {}
+      renderResult(); return;
+    }
     btn.disabled = false; btn.textContent = 'See my snapshot';
     var err = el.querySelector('[data-err]');
     err.textContent = 'Something went wrong sending that. Please try again, or call us on 0495 040 500.';

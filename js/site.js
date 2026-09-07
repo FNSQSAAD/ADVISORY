@@ -126,6 +126,7 @@
         body: JSON.stringify(payload)
       }).then(function (r) {
         if (!r.ok) throw new Error('bad');
+        try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: payload.lead_source }); } catch (e) {}
         try { sessionStorage.setItem('fsqLeadName', payload.full_name.split(' ')[0]); } catch (e) {}
         location.href = 'thank-you.html?src=contact';
       }).catch(function () {
