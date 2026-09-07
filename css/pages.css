@@ -85,6 +85,35 @@
 .reason.wide{grid-column:1/-1}
 .reasons.three{grid-template-columns:repeat(3,1fr)}
 
+/* ---------- founder story: two-column prose + facts rail ---------- */
+.priya-cols{display:grid;grid-template-columns:1.55fr .95fr;gap:6vw;align-items:start}
+.priya-facts{background:var(--cream-2);border:1px solid var(--line);border-top:2px solid var(--gold);padding:28px 30px}
+.priya-facts h4{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px;font-family:var(--sans)}
+.priya-facts .tick-list li{font-size:.9rem;padding:12px 0}
+.priya-facts .tick-list li:last-child{border-bottom:none;padding-bottom:0}
+
+/* ---------- pull quote ---------- */
+.pullquote{
+  margin:clamp(46px,5vw,72px) auto 0;max-width:60ch;text-align:center;position:relative;
+  padding:clamp(34px,4vw,52px) clamp(24px,4vw,56px) clamp(30px,3.4vw,44px);
+  background:var(--white);border:1px solid var(--line);border-top:2px solid var(--gold)
+}
+.pullquote::before{
+  content:"“";position:absolute;top:-.30em;left:50%;transform:translateX(-50%);
+  font-family:var(--serif);font-size:4.8rem;line-height:.62;color:var(--gold);
+  background:var(--cream);padding:0 16px
+}
+.pullquote blockquote{
+  font-family:var(--serif);font-weight:500;font-style:italic;
+  font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.5;color:var(--navy)
+}
+.pullquote figcaption{
+  margin-top:24px;font-family:var(--sans);font-weight:600;font-size:.92rem;color:var(--navy)
+}
+.pullquote figcaption span{
+  display:block;margin-top:7px;font-weight:400;font-size:.76rem;line-height:1.7;color:var(--ink-faint)
+}
+
 /* ---------- misc ---------- */
 .note-strip{font-size:.8rem;color:var(--ink-faint);line-height:1.75;max-width:84ch}
 .cta-inline{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:34px}
@@ -129,7 +158,7 @@
    ============================================================ */
 .calc-tabs{display:flex;flex-wrap:wrap;border:1px solid var(--line);background:var(--white);margin-bottom:42px}
 .calc-tabs button{
-  flex:1 1 auto;padding:15px 18px;font-size:.74rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  flex:1 1 200px;padding:14px 14px;font-size:.71rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
   color:var(--ink-faint);border-right:1px solid var(--line);transition:background .25s,color .25s;white-space:nowrap
 }
 .calc-tabs button:last-child{border-right:none}
@@ -182,6 +211,51 @@
 .lvr-bar{margin-top:8px}
 .lvr-bar .bar{height:6px;background:var(--line-cream);position:relative;overflow:hidden}
 .lvr-bar .bar i{position:absolute;top:0;bottom:0;left:0;background:var(--gold);transition:width .4s var(--ease)}
+.dual{display:grid;grid-template-columns:1.15fr 1fr;gap:8px;align-items:center}
+.seg.disabled{opacity:.4;pointer-events:none}
+.seg.compact button{padding:11px 4px;font-size:.82rem}
+.link-btn{
+  background:none;border:none;padding:0;margin-top:8px;
+  font-size:.74rem;font-weight:600;color:var(--gold);
+  border-bottom:1px solid var(--line-gold);cursor:pointer;transition:color .2s
+}
+.link-btn:hover{color:var(--navy);border-color:var(--navy)}
+
+/* ---------- balance chart + graph/table switch ---------- */
+.viz{margin-top:34px;padding-top:28px;border-top:1px solid var(--line)}
+.viz-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.viz-head h4{font-family:var(--sans);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+.viz-tabs{display:flex;border:1px solid var(--line)}
+.viz-tabs button{padding:7px 16px;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);border-right:1px solid var(--line);transition:background .2s,color .2s}
+.viz-tabs button:last-child{border-right:none}
+.viz-tabs button.on{background:var(--navy);color:var(--cream-tx)}
+.viz-graph svg{width:100%;height:auto;display:block;overflow:visible}
+.viz-graph .cg{stroke:var(--line);stroke-width:1}
+.viz-graph .ca{stroke:rgba(29,36,52,.3);stroke-width:1}
+.viz-graph .cl{font-family:var(--sans);font-size:11px;fill:var(--ink-faint)}
+.viz-graph .cly{text-anchor:end}
+.viz-graph .clx{text-anchor:middle}
+.viz-graph .cline{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.viz-graph .cfill{fill:rgba(19,38,68,.07);stroke:none}
+.viz-graph .cs0{stroke:var(--navy)}
+.viz-graph .cs1{stroke:var(--gold)}
+.clegend{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:14px;font-size:.78rem;color:var(--ink-dim)}
+.clegend .ck{display:flex;align-items:center;gap:8px}
+.clegend .ck i{width:16px;height:2.5px;display:block;border-radius:2px}
+.clegend .ck i.cs0{background:var(--navy)}
+.clegend .ck i.cs1{background:var(--gold)}
+.clegend .cx{margin-left:auto;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.viz-table{overflow-x:auto}
+.viz-table table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:400px}
+.viz-table th{text-align:right;font-size:.65rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);padding:0 0 10px;border-bottom:1px solid var(--line)}
+.viz-table th:first-child,.viz-table td:first-child{text-align:left}
+.viz-table td{text-align:right;padding:10px 0;border-bottom:1px solid var(--line);color:var(--ink-dim)}
+.viz-table td:first-child{color:var(--navy);font-weight:500}
+.mix-bar{margin-top:10px}
+.mix-bar .bar{height:8px;background:rgba(244,238,224,.25);position:relative;overflow:hidden}
+.mix-bar .bar i{position:absolute;top:0;bottom:0;left:0;background:var(--gold);transition:width .4s var(--ease)}
+.mix-bar .lab{display:flex;justify-content:space-between;margin-top:8px;font-size:.74rem;color:var(--cream-tx-dim)}
+
 .amort{margin-top:34px;overflow-x:auto}
 .amort h4{font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;font-family:var(--sans)}
 .amort table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:420px}
@@ -202,6 +276,7 @@
   .calc-form{border-right:none;border-bottom:1px solid var(--line)}
   .ty-next{grid-template-columns:1fr}
   .budget-rows .cf-grid{grid-template-columns:1fr 1fr}
+  .priya-cols{grid-template-columns:1fr;gap:44px}
 }
 @media(max-width:720px){
   .phero{padding:44px 0 62px}

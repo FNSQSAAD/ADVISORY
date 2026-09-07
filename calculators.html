@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loan Calculators | Finance Square Group</title>
-<meta name="description" content="Australian loan calculators from Finance Square Group: borrowing capacity, repayments, budget planner, lump sum repayments, car and truck loans, stamp duty and personal loans. Estimates for illustration, then a straight answer from a real broker.">
+<title>Australian Loan Calculators | Finance Square Group</title>
+<meta name="description" content="Australian loan calculators from Finance Square Group: borrowing capacity with the APRA buffer, budget planner, repayments, extra and lump sum repayments, offset account, split loan, car and truck finance, stamp duty for every state, and personal loans.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -65,7 +65,7 @@
     <div class="wrap">
       <span class="eyebrow">Calculators</span>
       <h1>Assess your eligibility and <em>borrowing capacity.</em></h1>
-      <p>Play with the numbers now, then use the full calculator suite below. We’ll turn estimates into a real plan on our 15-minute strategy call.</p>
+      <p>Nine Australian lending calculators, built the way lenders actually assess the numbers: income after tax, benchmark living expenses, credit limits, and the APRA serviceability buffer on top of the rate. Play with the numbers now, then we’ll turn estimates into a real plan on a 15-minute strategy call.</p>
       <div class="hero-ctas">
         <a class="btn btn-navy" href="get-started.html">Book a 15-Minute Call</a>
       </div>
@@ -77,52 +77,85 @@
     <div class="calc-tabs rv in" role="tablist">
       <button data-tab="borrowing" role="tab">Borrowing Capacity</button>
       <button data-tab="budget" role="tab">Budget Planner</button>
-      <button data-tab="repayment" role="tab">Repayment</button>
-      <button data-tab="lumpsum" role="tab">Lump Sum Repayment</button>
-      <button data-tab="car" role="tab">Car and Truck Loan</button>
+      <button data-tab="repayment" role="tab">Repayments</button>
+      <button data-tab="lumpsum" role="tab">Extra &amp; Lump Sum</button>
+      <button data-tab="offset" role="tab">Offset Account</button>
+      <button data-tab="split" role="tab">Split Loan</button>
+      <button data-tab="car" role="tab">Car &amp; Truck</button>
       <button data-tab="stampduty" role="tab">Stamp Duty</button>
       <button data-tab="personal" role="tab">Personal Loan</button>
     </div>
 
     <!-- ============================================================
-         BORROWING CAPACITY
+         1 — BORROWING CAPACITY
          ============================================================ -->
-    <section class="calc-panel" id="p-borrowing" data-applicants="2" data-purpose="owner">
+    <section class="calc-panel" id="p-borrowing" data-applicants="2" data-purpose="owner" data-deps="0">
       <div class="calc-shell">
         <div class="calc-form">
           <h3>Borrowing capacity</h3>
           <p class="sub">How much a lender might extend, modelled the way lenders assess it: income after tax, a benchmark living-expense floor, your existing commitments, and the interest rate plus APRA’s 3.00 percentage point serviceability buffer.</p>
 
-          <div class="cf-grid">
-            <label class="cf">
-              <span class="k">Applicants</span>
-              <span class="seg" data-target="p-borrowing" data-attr="data-applicants">
-                <button type="button" data-val="1">Single</button>
-                <button type="button" data-val="2">Couple</button>
-              </span>
-            </label>
-            <label class="cf">
-              <span class="k">Purpose</span>
-              <span class="seg" data-target="p-borrowing" data-attr="data-purpose">
-                <button type="button" data-val="owner">Live in it</button>
-                <button type="button" data-val="investment">Invest</button>
-              </span>
-            </label>
+          <div class="cf-block" style="margin-top:0;padding-top:0;border-top:none">
+            <span class="blab">1 · Your details</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">Who is this loan for?</span>
+                <span class="seg" data-target="p-borrowing" data-attr="data-applicants">
+                  <button type="button" data-val="1">Just me</button>
+                  <button type="button" data-val="2">Me plus one</button>
+                </span>
+              </label>
+              <label class="cf">
+                <span class="k">Purpose</span>
+                <span class="seg" data-target="p-borrowing" data-attr="data-purpose">
+                  <button type="button" data-val="owner">Live in it</button>
+                  <button type="button" data-val="investment">Invest</button>
+                </span>
+              </label>
+              <label class="cf" style="grid-column:1/-1">
+                <span class="k">How many dependants do you financially support?</span>
+                <span class="seg compact" data-target="p-borrowing" data-attr="data-deps">
+                  <button type="button" data-val="0">0</button>
+                  <button type="button" data-val="1">1</button>
+                  <button type="button" data-val="2">2</button>
+                  <button type="button" data-val="3">3</button>
+                  <button type="button" data-val="4">4</button>
+                  <button type="button" data-val="5">5+</button>
+                </span>
+              </label>
+            </div>
           </div>
 
           <div class="cf-block">
-            <span class="blab">Income</span>
+            <span class="blab">2 · Your income</span>
             <div class="cf-grid">
               <label class="cf">
-                <span class="k">Applicant 1 income (before tax, yearly)</span>
-                <span class="money"><input id="b-income1" type="number" min="0" step="1000" value="120000"></span>
+                <span class="k">Applicant 1 income, before tax</span>
+                <span class="dual">
+                  <span class="money"><input id="b-income1" type="number" min="0" step="1000" value="120000"></span>
+                  <select id="b-freq1" aria-label="Applicant 1 income frequency">
+                    <option value="annually" selected>Annually</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="fortnightly">Fortnightly</option>
+                    <option value="weekly">Weekly</option>
+                  </select>
+                </span>
+                <span class="hint">Salary excluding super.</span>
+              </label>
+              <label class="cf" id="b-couple-block">
+                <span class="k">Applicant 2 income, before tax</span>
+                <span class="dual">
+                  <span class="money"><input id="b-income2" type="number" min="0" step="1000" value="80000"></span>
+                  <select id="b-freq2" aria-label="Applicant 2 income frequency">
+                    <option value="annually" selected>Annually</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="fortnightly">Fortnightly</option>
+                    <option value="weekly">Weekly</option>
+                  </select>
+                </span>
               </label>
               <label class="cf">
-                <span class="k">Applicant 2 income (before tax, yearly)</span>
-                <span class="money"><input id="b-income2" type="number" min="0" step="1000" value="80000"></span>
-              </label>
-              <label class="cf">
-                <span class="k">Other income (yearly)</span>
+                <span class="k">Other income (yearly, before tax)</span>
                 <span class="money"><input id="b-other" type="number" min="0" step="500" value="0"></span>
                 <span class="hint">Bonuses, overtime, dividends. Lenders shade some of these.</span>
               </label>
@@ -135,32 +168,32 @@
           </div>
 
           <div class="cf-block">
-            <span class="blab">Commitments &amp; expenses</span>
+            <span class="blab">3 · Expenses &amp; liabilities</span>
             <div class="cf-grid">
-              <label class="cf">
-                <span class="k">Dependants</span>
-                <input id="b-deps" type="number" min="0" max="8" step="1" value="0">
-              </label>
               <label class="cf">
                 <span class="k">Living expenses (monthly)</span>
                 <span class="money"><input id="b-expenses" type="number" min="0" step="100" value="3500"></span>
-                <span class="hint">A benchmark floor is applied if you enter less.</span>
+                <button type="button" class="link-btn" id="b-usehem">Use average Australian expenses</button>
               </label>
               <label class="cf">
-                <span class="k">Total credit card limits</span>
+                <span class="k">Total credit &amp; store card limits</span>
                 <span class="money"><input id="b-cards" type="number" min="0" step="500" value="10000"></span>
                 <span class="hint">Assessed at 3.8% of the limit per month, not the balance.</span>
               </label>
               <label class="cf">
-                <span class="k">Other loan repayments (monthly)</span>
+                <span class="k">Car loan repayment (monthly)</span>
+                <span class="money"><input id="b-carloan" type="number" min="0" step="50" value="0"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Other repayments (monthly)</span>
                 <span class="money"><input id="b-repayments" type="number" min="0" step="50" value="0"></span>
-                <span class="hint">Car, personal, HECS-HELP, existing mortgages.</span>
+                <span class="hint">Personal loans, HECS-HELP, tax debt, existing mortgages.</span>
               </label>
             </div>
           </div>
 
           <div class="cf-block">
-            <span class="blab">The loan</span>
+            <span class="blab">4 · The loan</span>
             <div class="cf-grid">
               <label class="cf">
                 <span class="k">Deposit / equity available</span>
@@ -176,16 +209,29 @@
               </label>
             </div>
           </div>
+
+          <div class="viz">
+            <div class="viz-head">
+              <h4>Loan balance over the term</h4>
+              <div class="viz-tabs">
+                <button type="button" data-viz="graph" class="on">Graph</button>
+                <button type="button" data-viz="table">Table</button>
+              </div>
+            </div>
+            <div class="viz-graph" id="b-chart"></div>
+            <div class="viz-table" id="b-table" hidden></div>
+          </div>
         </div>
 
         <div class="calc-res">
-          <span class="ok">Indicative borrowing range</span>
+          <span class="ok">You could borrow up to</span>
           <div class="big" id="b-out-range">$0</div>
           <p class="cap">which could support a purchase around <b id="b-out-price">$0</b>, allowing roughly 5% of the price for duty and acquisition costs.</p>
           <div class="rows">
             <div><span>Monthly surplus available</span><b id="b-out-surplus">$0</b></div>
             <div><span>Assessed at (rate + APRA buffer)</span><b id="b-out-assess">—</b></div>
             <div><span>Living expenses used</span><b id="b-out-hem">$0</b></div>
+            <div><span>Existing commitments counted</span><b id="b-out-commit">$0</b></div>
             <div><span>Actual repayment at your rate</span><b id="b-out-repay">$0</b></div>
             <div><span>Loan to value ratio</span><b id="b-out-lvr">0%</b></div>
             <div><span>Indicative LMI</span><b id="b-out-lmi">—</b></div>
@@ -193,25 +239,25 @@
           <div class="lvr-bar"><div class="bar"><i id="b-out-lvrbar" style="width:0"></i></div></div>
           <div class="flag" id="b-out-flag" style="display:none"></div>
           <a class="btn btn-gold" href="get-started.html?path=buy">Test this against real lender policy</a>
-          <p class="note">Generated by a simplified illustrative model, not a credit assessment, quote or offer. Tax is estimated on 2025–26 resident rates plus a 2% Medicare levy and ignores offsets. Actual borrowing power depends on a full assessment of your circumstances and each lender’s eligibility criteria.</p>
+          <p class="note">A simplified illustrative model, not a credit assessment, quote or offer. Tax is estimated on 2025–26 resident rates plus a 2% Medicare levy and ignores offsets. Every lender assesses differently — results between lenders can be tens of thousands of dollars apart.</p>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         BUDGET PLANNER
+         2 — BUDGET PLANNER
          ============================================================ -->
     <section class="calc-panel" id="p-budget">
       <div class="calc-shell">
         <div class="calc-form budget-rows">
           <h3>Budget planner</h3>
-          <p class="sub">Where the money actually goes each month. Lenders look hard at this, and so should you — your surplus is what makes a loan serviceable.</p>
+          <p class="sub">Where the money actually goes. Lenders look hard at this, and so should you — your surplus is what makes a loan serviceable in the first place.</p>
 
           <div class="cf-block" style="margin-top:0;padding-top:0;border-top:none">
-            <span class="blab">Income (after tax)</span>
+            <span class="blab">1 · Income, after tax</span>
             <div class="cf-grid">
               <label class="cf">
-                <span class="k">Pay frequency</span>
+                <span class="k">Amounts entered are</span>
                 <select id="g-freq">
                   <option value="weekly">Weekly</option>
                   <option value="fortnightly">Fortnightly</option>
@@ -219,32 +265,65 @@
                   <option value="annually">Annually</option>
                 </select>
               </label>
-              <label class="cf">
-                <span class="k">Your take-home pay</span>
-                <span class="money"><input id="g-income" type="number" min="0" step="100" value="7000"></span>
-              </label>
-              <label class="cf">
-                <span class="k">Partner / other take-home pay</span>
-                <span class="money"><input id="g-income2" type="number" min="0" step="100" value="0"></span>
-              </label>
+              <label class="cf"><span class="k">Your take-home pay</span><span class="money"><input id="g-salary" type="number" min="0" step="100" value="7000"></span></label>
+              <label class="cf"><span class="k">Partner take-home pay</span><span class="money"><input id="g-salary2" type="number" min="0" step="100" value="0"></span></label>
+              <label class="cf"><span class="k">Bonuses &amp; commissions</span><span class="money"><input id="g-bonus" type="number" min="0" step="50" value="0"></span></label>
+              <label class="cf"><span class="k">Investment &amp; rental income</span><span class="money"><input id="g-invest" type="number" min="0" step="50" value="0"></span></label>
+              <label class="cf"><span class="k">Other income</span><span class="money"><input id="g-otherinc" type="number" min="0" step="50" value="0"></span></label>
             </div>
           </div>
 
           <div class="cf-block">
-            <span class="blab">Monthly expenses</span>
+            <span class="blab">2 · Expenses</span>
+            <div class="cf-grid" style="grid-template-columns:1fr">
+              <label class="cf">
+                <span class="k">Expense amounts entered are</span>
+                <select id="g-expfreq">
+                  <option value="weekly">Weekly</option>
+                  <option value="fortnightly">Fortnightly</option>
+                  <option value="monthly" selected>Monthly</option>
+                  <option value="annually">Annually</option>
+                </select>
+              </label>
+            </div>
+
+            <span class="blab" style="margin-top:26px">Living expenses</span>
             <div class="cf-grid">
               <label class="cf"><span class="k">Rent or mortgage</span><span class="money"><input id="g-housing" type="number" min="0" step="50" value="2200"></span></label>
-              <label class="cf"><span class="k">Utilities &amp; rates</span><span class="money"><input id="g-utilities" type="number" min="0" step="10" value="300"></span></label>
+              <label class="cf"><span class="k">Utilities &amp; council rates</span><span class="money"><input id="g-utilities" type="number" min="0" step="10" value="300"></span></label>
               <label class="cf"><span class="k">Groceries</span><span class="money"><input id="g-groceries" type="number" min="0" step="25" value="900"></span></label>
-              <label class="cf"><span class="k">Transport &amp; fuel</span><span class="money"><input id="g-transport" type="number" min="0" step="25" value="500"></span></label>
-              <label class="cf"><span class="k">Insurance</span><span class="money"><input id="g-insurance" type="number" min="0" step="10" value="250"></span></label>
-              <label class="cf"><span class="k">Health &amp; medical</span><span class="money"><input id="g-health" type="number" min="0" step="10" value="150"></span></label>
-              <label class="cf"><span class="k">Education</span><span class="money"><input id="g-education" type="number" min="0" step="25" value="0"></span></label>
-              <label class="cf"><span class="k">Childcare</span><span class="money"><input id="g-childcare" type="number" min="0" step="25" value="0"></span></label>
-              <label class="cf"><span class="k">Subscriptions &amp; phone</span><span class="money"><input id="g-subs" type="number" min="0" step="10" value="90"></span></label>
-              <label class="cf"><span class="k">Dining, leisure &amp; travel</span><span class="money"><input id="g-leisure" type="number" min="0" step="25" value="500"></span></label>
-              <label class="cf"><span class="k">Loan &amp; card repayments</span><span class="money"><input id="g-debts" type="number" min="0" step="25" value="300"></span></label>
-              <label class="cf"><span class="k">Everything else</span><span class="money"><input id="g-other" type="number" min="0" step="25" value="200"></span></label>
+              <label class="cf"><span class="k">Phone &amp; internet</span><span class="money"><input id="g-phone" type="number" min="0" step="10" value="120"></span></label>
+              <label class="cf"><span class="k">Clothing &amp; personal care</span><span class="money"><input id="g-clothing" type="number" min="0" step="10" value="150"></span></label>
+            </div>
+
+            <span class="blab" style="margin-top:26px">Insurance &amp; superannuation</span>
+            <div class="cf-grid">
+              <label class="cf"><span class="k">General &amp; life insurance</span><span class="money"><input id="g-insurance" type="number" min="0" step="10" value="220"></span></label>
+              <label class="cf"><span class="k">Health &amp; medical</span><span class="money"><input id="g-health" type="number" min="0" step="10" value="180"></span></label>
+              <label class="cf"><span class="k">Extra super contributions</span><span class="money"><input id="g-super" type="number" min="0" step="25" value="0"></span></label>
+            </div>
+
+            <span class="blab" style="margin-top:26px">Loans &amp; credit cards</span>
+            <div class="cf-grid">
+              <label class="cf"><span class="k">Other home loan repayments</span><span class="money"><input id="g-homeloan" type="number" min="0" step="50" value="0"></span></label>
+              <label class="cf"><span class="k">Car loan repayments</span><span class="money"><input id="g-carloan" type="number" min="0" step="25" value="0"></span></label>
+              <label class="cf"><span class="k">Personal loan repayments</span><span class="money"><input id="g-personal" type="number" min="0" step="25" value="0"></span></label>
+              <label class="cf"><span class="k">Credit card repayments</span><span class="money"><input id="g-cards" type="number" min="0" step="25" value="300"></span></label>
+            </div>
+
+            <span class="blab" style="margin-top:26px">Transport</span>
+            <div class="cf-grid">
+              <label class="cf"><span class="k">Fuel</span><span class="money"><input id="g-fuel" type="number" min="0" step="10" value="260"></span></label>
+              <label class="cf"><span class="k">Public transport &amp; tolls</span><span class="money"><input id="g-transport" type="number" min="0" step="10" value="80"></span></label>
+              <label class="cf"><span class="k">Registration &amp; maintenance</span><span class="money"><input id="g-rego" type="number" min="0" step="10" value="120"></span></label>
+            </div>
+
+            <span class="blab" style="margin-top:26px">Leisure &amp; entertainment</span>
+            <div class="cf-grid">
+              <label class="cf"><span class="k">Dining out &amp; takeaway</span><span class="money"><input id="g-dining" type="number" min="0" step="25" value="350"></span></label>
+              <label class="cf"><span class="k">Subscriptions &amp; memberships</span><span class="money"><input id="g-subs" type="number" min="0" step="5" value="90"></span></label>
+              <label class="cf"><span class="k">Holidays &amp; travel</span><span class="money"><input id="g-holidays" type="number" min="0" step="25" value="200"></span></label>
+              <label class="cf"><span class="k">Everything else</span><span class="money"><input id="g-other" type="number" min="0" step="25" value="150"></span></label>
             </div>
           </div>
 
@@ -260,13 +339,18 @@
         </div>
 
         <div class="calc-res">
-          <span class="ok">Monthly position</span>
+          <span class="ok">Your monthly position</span>
           <div class="big" id="g-out-surplus">$0</div>
           <p class="cap" id="g-out-cap">left over each month</p>
           <div class="rows">
             <div><span>Total income</span><b id="g-out-in">$0</b></div>
+            <div><span>Living expenses</span><b id="g-sum-living">$0</b></div>
+            <div><span>Insurance &amp; super</span><b id="g-sum-insurance">$0</b></div>
+            <div><span>Loans &amp; cards</span><b id="g-sum-debts">$0</b></div>
+            <div><span>Transport</span><b id="g-sum-transport">$0</b></div>
+            <div><span>Leisure</span><b id="g-sum-leisure">$0</b></div>
             <div><span>Total expenses</span><b id="g-out-out">$0</b></div>
-            <div><span>Over a year</span><b id="g-out-year">$0</b></div>
+            <div><span>Surplus over a year</span><b id="g-out-year">$0</b></div>
             <div><span>Savings rate</span><b id="g-out-rate">—</b></div>
           </div>
           <div class="lvr-bar"><div class="bar"><i id="g-out-bar" style="width:0"></i></div></div>
@@ -278,13 +362,13 @@
     </section>
 
     <!-- ============================================================
-         REPAYMENT
+         3 — REPAYMENTS
          ============================================================ -->
     <section class="calc-panel" id="p-repayment" data-type="pi">
       <div class="calc-shell">
         <div class="calc-form">
           <h3>Loan repayments</h3>
-          <p class="sub">What a loan costs per repayment, and what it costs over its lifetime — including the effect of paying a little extra.</p>
+          <p class="sub">What a loan costs per repayment and over its lifetime, including what happens when an interest-only period ends or you pay a little extra.</p>
 
           <div class="cf-grid">
             <label class="cf">
@@ -320,7 +404,6 @@
             <label class="cf">
               <span class="k">Interest-only period (years)</span>
               <input id="r-io" type="number" min="0" max="10" step="1" value="3">
-              <span class="hint">Only used when interest only is selected.</span>
             </label>
             <label class="cf">
               <span class="k">Extra repayment (each period)</span>
@@ -329,12 +412,16 @@
             </label>
           </div>
 
-          <div class="amort">
-            <h4>First five years</h4>
-            <table>
-              <thead><tr><th>Period</th><th>Principal paid</th><th>Interest paid</th><th>Balance</th></tr></thead>
-              <tbody id="r-amort"></tbody>
-            </table>
+          <div class="viz">
+            <div class="viz-head">
+              <h4>Loan balance over the term</h4>
+              <div class="viz-tabs">
+                <button type="button" data-viz="graph" class="on">Graph</button>
+                <button type="button" data-viz="table">Table</button>
+              </div>
+            </div>
+            <div class="viz-graph" id="r-chart"></div>
+            <div class="viz-table" id="r-table" hidden></div>
           </div>
         </div>
 
@@ -357,35 +444,60 @@
     </section>
 
     <!-- ============================================================
-         LUMP SUM REPAYMENT
+         4 — EXTRA & LUMP SUM REPAYMENTS
          ============================================================ -->
     <section class="calc-panel" id="p-lumpsum">
       <div class="calc-shell">
         <div class="calc-form">
-          <h3>Lump sum &amp; extra repayments</h3>
-          <p class="sub">What a one-off payment, or a little extra each month, actually does to the interest you pay and the years you spend paying it.</p>
+          <h3>Extra &amp; lump sum repayments</h3>
+          <p class="sub">What a one-off payment, or a little extra each month, actually does to the interest you pay and the years you spend paying it. Modelled month by month, not approximated.</p>
 
-          <div class="cf-grid">
-            <label class="cf">
-              <span class="k">Current loan balance</span>
-              <span class="money"><input id="l-balance" type="number" min="10000" step="10000" value="500000"></span>
-            </label>
-            <label class="cf">
-              <span class="k">Interest rate</span>
-              <span class="pct"><input id="l-rate" type="number" min="0.5" max="20" step="0.01" value="5.99"></span>
-            </label>
-            <label class="cf">
-              <span class="k">Years remaining</span>
-              <input id="l-term" type="number" min="1" max="40" step="1" value="25">
-            </label>
-            <label class="cf">
-              <span class="k">One-off lump sum</span>
-              <span class="money"><input id="l-lump" type="number" min="0" step="1000" value="20000"></span>
-            </label>
-            <label class="cf">
-              <span class="k">Extra each month</span>
-              <span class="money"><input id="l-extra" type="number" min="0" step="50" value="200"></span>
-            </label>
+          <div class="cf-block" style="margin-top:0;padding-top:0;border-top:none">
+            <span class="blab">1 · Your loan</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">Current loan balance</span>
+                <span class="money"><input id="l-balance" type="number" min="10000" step="10000" value="500000"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Interest rate</span>
+                <span class="pct"><input id="l-rate" type="number" min="0.5" max="20" step="0.01" value="5.99"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Years remaining</span>
+                <input id="l-term" type="number" min="1" max="40" step="1" value="25">
+              </label>
+            </div>
+          </div>
+
+          <div class="cf-block">
+            <span class="blab">2 · What you’d pay extra</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">One-off lump sum</span>
+                <span class="money"><input id="l-lump" type="number" min="0" step="1000" value="20000"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Lump sum paid after (years)</span>
+                <input id="l-after" type="number" min="0" max="40" step="1" value="2">
+              </label>
+              <label class="cf">
+                <span class="k">Extra each month</span>
+                <span class="money"><input id="l-extra" type="number" min="0" step="50" value="200"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="viz">
+            <div class="viz-head">
+              <h4>Balance with and without the extra repayments</h4>
+              <div class="viz-tabs">
+                <button type="button" data-viz="graph" class="on">Graph</button>
+                <button type="button" data-viz="table">Table</button>
+              </div>
+            </div>
+            <div class="viz-graph" id="l-chart"></div>
+            <div class="viz-table" id="l-table" hidden></div>
           </div>
         </div>
 
@@ -407,13 +519,155 @@
     </section>
 
     <!-- ============================================================
-         CAR AND TRUCK LOAN
+         5 — OFFSET ACCOUNT
+         ============================================================ -->
+    <section class="calc-panel" id="p-offset">
+      <div class="calc-shell">
+        <div class="calc-form">
+          <h3>Offset account</h3>
+          <p class="sub">An offset account holds your savings against the loan, so interest is charged on the difference. Unlike an extra repayment, the money stays available. This models it month by month, including anything you add along the way.</p>
+
+          <div class="cf-block" style="margin-top:0;padding-top:0;border-top:none">
+            <span class="blab">1 · Your loan</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">Loan balance</span>
+                <span class="money"><input id="o-balance" type="number" min="10000" step="10000" value="600000"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Interest rate</span>
+                <span class="pct"><input id="o-rate" type="number" min="0.5" max="20" step="0.01" value="5.99"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Years remaining</span>
+                <input id="o-term" type="number" min="1" max="40" step="1" value="30">
+              </label>
+            </div>
+          </div>
+
+          <div class="cf-block">
+            <span class="blab">2 · Your offset</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">Offset account balance today</span>
+                <span class="money"><input id="o-offset" type="number" min="0" step="1000" value="30000"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Added to offset each month</span>
+                <span class="money"><input id="o-deposit" type="number" min="0" step="100" value="500"></span>
+                <span class="hint">Salary and savings you leave sitting in the account.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="viz">
+            <div class="viz-head">
+              <h4>Balance with and without the offset</h4>
+              <div class="viz-tabs">
+                <button type="button" data-viz="graph" class="on">Graph</button>
+                <button type="button" data-viz="table">Table</button>
+              </div>
+            </div>
+            <div class="viz-graph" id="o-chart"></div>
+            <div class="viz-table" id="o-table" hidden></div>
+          </div>
+        </div>
+
+        <div class="calc-res">
+          <span class="ok">Interest you could save</span>
+          <div class="big" id="o-out-saved">$0</div>
+          <p class="cap">paying the loan off in <b id="o-out-newterm">—</b>, about <b id="o-out-time">—</b> sooner.</p>
+          <div class="rows">
+            <div><span>Repayment (unchanged)</span><b id="o-out-pay">$0</b></div>
+            <div><span>Interest without offset</span><b id="o-out-basei">$0</b></div>
+            <div><span>Interest with offset</span><b id="o-out-newi">$0</b></div>
+            <div><span>Today’s balance is worth</span><b id="o-out-first">$0</b></div>
+          </div>
+          <div class="flag" id="o-out-flag" style="display:none"></div>
+          <a class="btn btn-gold" href="get-started.html?path=loan">Ask whether an offset suits you</a>
+          <p class="note">Estimates only, for illustration. Assumes a 100% offset, an unchanged rate and repayments continuing at the original scheduled amount. Package and annual fees are not included. Not a quote or offer of credit.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6 — SPLIT LOAN
+         ============================================================ -->
+    <section class="calc-panel" id="p-split">
+      <div class="calc-shell">
+        <div class="calc-form">
+          <h3>Split loan — fixed vs variable</h3>
+          <p class="sub">Splitting a loan fixes part of your rate for certainty and leaves the rest variable for flexibility. This shows the blended repayment, and what a rate move would actually cost you.</p>
+
+          <div class="cf-block" style="margin-top:0;padding-top:0;border-top:none">
+            <span class="blab">1 · Your loan</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">Loan amount</span>
+                <span class="money"><input id="s-amount" type="number" min="10000" step="10000" value="650000"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Loan term (years)</span>
+                <input id="s-term" type="number" min="1" max="40" step="1" value="30">
+              </label>
+            </div>
+          </div>
+
+          <div class="cf-block">
+            <span class="blab">2 · The split</span>
+            <div class="cf-grid">
+              <label class="cf">
+                <span class="k">Portion fixed</span>
+                <span class="pct"><input id="s-fixedpct" type="number" min="0" max="100" step="5" value="50"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Fixed rate</span>
+                <span class="pct"><input id="s-fixedrate" type="number" min="0.5" max="20" step="0.01" value="5.69"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Variable rate</span>
+                <span class="pct"><input id="s-varrate" type="number" min="0.5" max="20" step="0.01" value="5.99"></span>
+              </label>
+              <label class="cf">
+                <span class="k">Rate move to test</span>
+                <span class="pct"><input id="s-move" type="number" min="0" max="500" step="25" value="50"></span>
+                <span class="hint">In basis points. 50 = 0.50 percentage points.</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-res">
+          <span class="ok">Combined repayment</span>
+          <div class="big" id="s-out-pay">$0</div>
+          <p class="cap" id="s-out-blend">—</p>
+          <div class="mix-bar">
+            <div class="bar"><i id="s-out-bar" style="width:50%"></i></div>
+            <div class="lab"><span id="s-out-mix">—</span></div>
+          </div>
+          <div class="rows">
+            <div><span>Fixed portion</span><b id="s-out-fixed">—</b></div>
+            <div><span>Fixed repayment</span><b id="s-out-fixedpay">$0</b></div>
+            <div><span>Variable portion</span><b id="s-out-var">—</b></div>
+            <div><span>Variable repayment</span><b id="s-out-varpay">$0</b></div>
+            <div><span>If variable rates rise</span><b id="s-out-up">$0</b></div>
+            <div><span>If variable rates fall</span><b id="s-out-down">$0</b></div>
+          </div>
+          <div class="flag" id="s-out-flag" style="display:none"></div>
+          <a class="btn btn-gold" href="get-started.html?path=loan">Talk through the right split</a>
+          <p class="note">Estimates only, for illustration. Assumes both portions run over the same term and ignores fixed-rate break costs, which can be substantial if you exit a fixed loan early. Not a quote or offer of credit.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7 — CAR AND TRUCK LOAN
          ============================================================ -->
     <section class="calc-panel" id="p-car">
       <div class="calc-shell">
         <div class="calc-form">
           <h3>Car and truck loan</h3>
-          <p class="sub">Vehicle and equipment finance, including the balloon (residual) payment that makes the repayment look smaller than it is.</p>
+          <p class="sub">Vehicle and equipment finance, including the balloon (residual) payment that makes the repayment look smaller than it really is.</p>
 
           <div class="cf-grid">
             <label class="cf">
@@ -454,6 +708,18 @@
               </select>
             </label>
           </div>
+
+          <div class="viz">
+            <div class="viz-head">
+              <h4>Amount owing over the term</h4>
+              <div class="viz-tabs">
+                <button type="button" data-viz="graph" class="on">Graph</button>
+                <button type="button" data-viz="table">Table</button>
+              </div>
+            </div>
+            <div class="viz-graph" id="c-chart"></div>
+            <div class="viz-table" id="c-table" hidden></div>
+          </div>
         </div>
 
         <div class="calc-res">
@@ -475,13 +741,13 @@
     </section>
 
     <!-- ============================================================
-         STAMP DUTY
+         8 — STAMP DUTY
          ============================================================ -->
     <section class="calc-panel" id="p-stampduty" data-use="home" data-fhb="1">
       <div class="calc-shell">
         <div class="calc-form">
-          <h3>Stamp duty</h3>
-          <p class="sub">Transfer duty is usually the largest single cost of buying, and every state calculates it differently. This applies the current published scales, plus first home buyer concessions in Victoria, New South Wales and Queensland.</p>
+          <h3>Stamp duty &amp; upfront costs</h3>
+          <p class="sub">Transfer duty is usually the largest single cost of buying, and every state calculates it differently. This applies the current published scales, adds the land registry fees, and shows the cash you would actually need on the day.</p>
 
           <div class="cf-grid">
             <label class="cf">
@@ -527,6 +793,11 @@
               <span class="k">Deposit you have saved</span>
               <span class="money"><input id="d-deposit" type="number" min="0" step="5000" value="150000"></span>
             </label>
+            <label class="cf">
+              <span class="k">Conveyancing &amp; searches</span>
+              <span class="money"><input id="d-legals" type="number" min="0" step="100" value="2000"></span>
+              <span class="hint">Typical range is $1,500–$3,000 depending on the state and the property.</span>
+            </label>
           </div>
         </div>
 
@@ -536,20 +807,23 @@
           <p class="cap" id="d-out-note">—</p>
           <div class="rows">
             <div><span>Effective duty rate</span><b id="d-out-eff">—</b></div>
-            <div><span>Indicative LMI on your deposit</span><b id="d-out-lmi">—</b></div>
-            <div><span>Conveyancing &amp; searches</span><b id="d-out-legals">—</b></div>
+            <div><span>Land transfer fee</span><b id="d-out-transfer">$0</b></div>
+            <div><span>Mortgage registration fee</span><b id="d-out-mortgage">$0</b></div>
+            <div><span>Total government charges</span><b id="d-out-govt">$0</b></div>
+            <div><span>Indicative LMI</span><b id="d-out-lmi">—</b></div>
+            <div><span>Your loan</span><b id="d-out-lvr">—</b></div>
             <div><span>Upfront costs excluding deposit</span><b id="d-out-total">$0</b></div>
             <div><span>Total cash you’d need</span><b id="d-out-cash">$0</b></div>
           </div>
           <div class="flag" id="d-out-flag" style="display:none"></div>
           <a class="btn btn-gold" href="get-started.html?path=buy">Plan the full purchase cost</a>
-          <p class="note">Estimates only, for illustrative and discussion purposes. Duty rates, thresholds and concessions change without notice — confirm the exact figure with the relevant state revenue office or your conveyancer.</p>
+          <p class="note">Estimates only, for illustrative and discussion purposes. Duty rates, thresholds, concessions and registry fees change without notice — confirm the exact figures with the relevant state revenue office or your conveyancer.</p>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         PERSONAL LOAN
+         9 — PERSONAL LOAN
          ============================================================ -->
     <section class="calc-panel" id="p-personal">
       <div class="calc-shell">
@@ -587,6 +861,18 @@
               </select>
             </label>
           </div>
+
+          <div class="viz">
+            <div class="viz-head">
+              <h4>Amount owing over the term</h4>
+              <div class="viz-tabs">
+                <button type="button" data-viz="graph" class="on">Graph</button>
+                <button type="button" data-viz="table">Table</button>
+              </div>
+            </div>
+            <div class="viz-graph" id="n-chart"></div>
+            <div class="viz-table" id="n-table" hidden></div>
+          </div>
         </div>
 
         <div class="calc-res">
@@ -599,6 +885,7 @@
             <div><span>Total fees</span><b id="n-out-fees">$0</b></div>
             <div><span>Total repaid</span><b id="n-out-total">$0</b></div>
             <div><span>Cost of borrowing</span><b id="n-out-cost">—</b></div>
+            <div><span>Home lending it uses up</span><b id="n-out-impact">$0</b></div>
           </div>
           <div class="flag" id="n-out-flag" style="display:none"></div>
           <a class="btn btn-gold" href="personal-loans.html">See how we structure personal loans</a>
@@ -608,7 +895,7 @@
     </section>
 
     <div class="rv in" style="text-align:center;padding:60px 0 10px">
-      <p style="color:var(--ink-dim);max-width:56ch;margin:0 auto 26px">Numbers looking workable? The next step is a conversation, not an application, and it changes nothing on your credit file.</p>
+      <p style="color:var(--ink-dim);max-width:58ch;margin:0 auto 26px">Numbers looking workable? The next step is a conversation, not an application, and it changes nothing on your credit file.</p>
       <a class="btn btn-navy" href="get-started.html">Book a 15-Minute Call</a>
     </div>
 
@@ -619,7 +906,7 @@
     <div class="wrap">
       <span class="eyebrow">From estimate to keys</span>
       <h2>The real number is <em>one call away.</em></h2>
-      <p>Calculators are a compass, not a map. A 15-minute call tests your figures against actual lender policy: deposit, LMI, stamp duty and all, with no credit check.</p>
+      <p>Calculators are a compass, not a map. Every lender assesses differently, and results between them can be tens of thousands of dollars apart. A 15-minute call tests your figures against actual lender policy: deposit, LMI, stamp duty and all, with no credit check.</p>
       <a class="btn btn-gold" href="get-started.html">Book a 15-Minute Call</a>
     </div>
   </section>
