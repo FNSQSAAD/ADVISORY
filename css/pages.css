@@ -15,7 +15,7 @@
 .dd-menu{
   position:absolute;top:calc(100% + 22px);left:-24px;min-width:300px;background:var(--white);
   border:1px solid var(--line);border-top:2px solid var(--gold);padding:10px 0;
-  box-shadow:0 26px 60px -30px rgba(19,38,68,.55);
+  box-shadow:0 26px 60px -30px rgba(40,42,71,.55);
   opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .26s var(--ease),transform .26s var(--ease),visibility .26s;z-index:60
 }
 .dd:hover .dd-menu,.dd:focus-within .dd-menu{opacity:1;visibility:visible;transform:none}
@@ -114,7 +114,14 @@
   display:block;margin-top:7px;font-weight:400;font-size:.76rem;line-height:1.7;color:var(--ink-faint)
 }
 
+/* ---------- section topic subheading (sits under a section h2) ---------- */
+.sec-head h3{
+  font-family:var(--serif);font-weight:600;color:var(--navy);
+  font-size:clamp(1.1rem,1.9vw,1.4rem);line-height:1.35;margin:0 0 18px
+}
+
 /* ---------- misc ---------- */
+.direct-card:first-child{margin-top:0}
 .note-strip{font-size:.8rem;color:var(--ink-faint);line-height:1.75;max-width:84ch}
 .cta-inline{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:34px}
 .anchor-off{scroll-margin-top:120px}
@@ -166,7 +173,7 @@
 .calc-tabs button.on{background:var(--navy);color:var(--cream-tx)}
 .calc-panel{display:none}
 .calc-panel.on{display:block}
-.calc-shell{display:grid;grid-template-columns:1.12fr .88fr;background:var(--white);border:1px solid var(--line);box-shadow:0 30px 70px -45px rgba(19,38,68,.45)}
+.calc-shell{display:grid;grid-template-columns:1.12fr .88fr;background:var(--white);border:1px solid var(--line);box-shadow:0 30px 70px -45px rgba(40,42,71,.45)}
 .calc-form{padding:clamp(26px,3.2vw,46px);border-right:1px solid var(--line)}
 .calc-form h3{font-size:1.45rem;margin-bottom:8px}
 .calc-form .sub{font-size:.88rem;color:var(--ink-dim);line-height:1.7;margin-bottom:30px;max-width:54ch}
@@ -231,12 +238,12 @@
 .viz-tabs button.on{background:var(--navy);color:var(--cream-tx)}
 .viz-graph svg{width:100%;height:auto;display:block;overflow:visible}
 .viz-graph .cg{stroke:var(--line);stroke-width:1}
-.viz-graph .ca{stroke:rgba(29,36,52,.3);stroke-width:1}
+.viz-graph .ca{stroke:rgba(30,31,45,.3);stroke-width:1}
 .viz-graph .cl{font-family:var(--sans);font-size:11px;fill:var(--ink-faint)}
 .viz-graph .cly{text-anchor:end}
 .viz-graph .clx{text-anchor:middle}
 .viz-graph .cline{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
-.viz-graph .cfill{fill:rgba(19,38,68,.07);stroke:none}
+.viz-graph .cfill{fill:rgba(40,42,71,.07);stroke:none}
 .viz-graph .cs0{stroke:var(--navy)}
 .viz-graph .cs1{stroke:var(--gold)}
 .clegend{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:14px;font-size:.78rem;color:var(--ink-dim)}

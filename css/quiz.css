@@ -3,13 +3,13 @@
   --qz-bg:#fbf8f1;
   --qz-bg-2:#f5efe3;
   --qz-surface:#ffffff;
-  --qz-navy:#132644;
-  --qz-navy-2:#0e1c33;
+  --qz-navy:#282a47;
+  --qz-navy-2:#1e1f36;
   --qz-gold:#a87c2e;
   --qz-gold-soft:rgba(168,124,46,.12);
-  --qz-ink:#1d2434;
-  --qz-ink-dim:rgba(29,36,52,.7);
-  --qz-line:rgba(29,36,52,.14);
+  --qz-ink:#1e1f2d;
+  --qz-ink-dim:rgba(30,31,45,.7);
+  --qz-line:rgba(30,31,45,.14);
   --qz-line-gold:rgba(168,124,46,.4);
   --qz-head:'Roboto',system-ui,sans-serif;
   --qz-body:'Poppins',system-ui,sans-serif;
@@ -103,7 +103,7 @@ body.qz-page{
   font-size:.95rem;line-height:1.35;min-height:60px;position:relative;
   transition:border-color .18s var(--qz-ease),box-shadow .18s var(--qz-ease),background .18s;
 }
-.qz-opt:hover{border-color:var(--qz-line-gold);box-shadow:0 3px 14px rgba(19,38,68,.07)}
+.qz-opt:hover{border-color:var(--qz-line-gold);box-shadow:0 3px 14px rgba(40,42,71,.07)}
 .qz-opt:focus-visible,.qz-btn:focus-visible,.qz-back:focus-visible{outline:2px solid var(--qz-gold);outline-offset:2px}
 .qz-opt.sel{border-color:var(--qz-gold);background:var(--qz-gold-soft);box-shadow:inset 0 0 0 1px var(--qz-gold)}
 .qz-ico{flex:0 0 auto;width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:var(--qz-bg-2);color:var(--qz-navy)}

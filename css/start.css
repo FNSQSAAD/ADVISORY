@@ -3,13 +3,13 @@
   --st-bg:#fbf8f1;
   --st-bg-2:#f5efe3;
   --st-surface:#ffffff;
-  --st-navy:#132644;
-  --st-navy-2:#0e1c33;
+  --st-navy:#282a47;
+  --st-navy-2:#1e1f36;
   --st-gold:#a87c2e;
   --st-gold-soft:rgba(168,124,46,.12);
-  --st-ink:#1d2434;
-  --st-ink-dim:rgba(29,36,52,.7);
-  --st-line:rgba(29,36,52,.14);
+  --st-ink:#1e1f2d;
+  --st-ink-dim:rgba(30,31,45,.7);
+  --st-line:rgba(30,31,45,.14);
   --st-line-gold:rgba(168,124,46,.4);
   --st-head:'Roboto',system-ui,sans-serif;
   --st-body:'Poppins',system-ui,sans-serif;
@@ -40,7 +40,7 @@ body.st-page{
 .st-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
 .st-photo::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(200deg,rgba(19,38,68,0) 40%,rgba(19,38,68,.55) 100%);
+  background:linear-gradient(200deg,rgba(40,42,71,0) 40%,rgba(40,42,71,.55) 100%);
 }
 .st-photo-quote{
   position:absolute;left:clamp(20px,3vw,44px);right:clamp(20px,3vw,44px);bottom:clamp(22px,4vh,48px);
@@ -77,7 +77,7 @@ body.st-page{
   padding:20px 22px;cursor:pointer;font-family:var(--st-body);
   transition:border-color .18s var(--st-ease),box-shadow .18s var(--st-ease),transform .15s var(--st-ease);
 }
-.st-choice:hover{border-color:var(--st-gold);box-shadow:0 6px 22px rgba(19,38,68,.09);transform:translateY(-1px)}
+.st-choice:hover{border-color:var(--st-gold);box-shadow:0 6px 22px rgba(40,42,71,.09);transform:translateY(-1px)}
 .st-choice:focus-visible{outline:2px solid var(--st-gold);outline-offset:2px}
 .st-choice-t{font-family:var(--st-head);font-weight:700;color:var(--st-navy);font-size:1.15rem}
 .st-choice-t{grid-column:1;grid-row:1}
@@ -108,11 +108,11 @@ body.st-page{
 }
 .st-range::-webkit-slider-thumb{
   -webkit-appearance:none;appearance:none;width:30px;height:30px;border-radius:50%;
-  background:var(--st-navy);border:3px solid #fff;box-shadow:0 2px 10px rgba(19,38,68,.35);cursor:grab;
+  background:var(--st-navy);border:3px solid #fff;box-shadow:0 2px 10px rgba(40,42,71,.35);cursor:grab;
 }
 .st-range::-moz-range-thumb{
   width:26px;height:26px;border-radius:50%;background:var(--st-navy);
-  border:3px solid #fff;box-shadow:0 2px 10px rgba(19,38,68,.35);cursor:grab;
+  border:3px solid #fff;box-shadow:0 2px 10px rgba(40,42,71,.35);cursor:grab;
 }
 .st-range:focus-visible{outline:2px solid var(--st-gold);outline-offset:4px}
 .st-range:disabled{opacity:.4;cursor:default}
