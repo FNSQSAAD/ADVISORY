@@ -186,17 +186,5 @@
     trestart();
   }
 
-  /* ---------- back to top ---------- */
-  var top = $('#toTop');
-  if (top) {
-    top.hidden = false;
-    var toggleTop = function () { top.classList.toggle('show', window.scrollY > 600); };
-    window.addEventListener('scroll', toggleTop, { passive: true });
-    toggleTop();
-    top.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
   var yr = $('#yr'); if (yr) yr.textContent = new Date().getFullYear();
 })();

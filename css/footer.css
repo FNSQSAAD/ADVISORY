@@ -1,0 +1,101 @@
+/* ============================================================
+   FNSQ SITE FOOTER — self-contained (2026-09-08)
+   Loaded on every page INCLUDING get-started.html and quiz.html,
+   which deliberately do not load styles.css/pages.css. Everything
+   the footer needs is declared here (tokens, container, type), and
+   every selector is scoped to footer/.to-top so nothing leaks into
+   the funnel or quiz layouts.
+   ============================================================ */
+footer,
+.to-top{
+  --f-navy:#282a47;
+  --f-navy-2:#1e1f36;
+  --f-gold:#a87c2e;
+  --f-cream:#fbf8f1;
+  --f-cream-tx-dim:rgba(244,238,224,.75);
+  --f-line-cream:rgba(244,238,224,.22);
+  --f-line:rgba(30,31,45,.14);
+}
+
+footer{
+  background:var(--f-navy-2);
+  color:var(--f-cream-tx-dim);
+  padding:78px 0 40px;
+  font-family:"Poppins","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  text-align:left;
+}
+footer *{box-sizing:border-box}
+footer .wrap{max-width:1240px;margin:0 auto;padding:0 5vw}
+footer a{text-decoration:none}
+
+/* brand row + member badges */
+.foot-top{
+  display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;
+  padding-bottom:26px;margin-bottom:30px;border-bottom:1px solid var(--f-line-cream);
+}
+.foot-brand img{height:44px;width:auto;filter:brightness(0) invert(.92)}
+.foot-badges{display:flex;align-items:center;gap:26px}
+.foot-badges img{height:46px;width:auto;opacity:.95}
+
+/* link columns */
+.foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr 1.1fr;gap:44px;margin-bottom:58px}
+.foot-grid h4{
+  font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--f-gold);margin:0 0 20px;
+}
+.foot-grid a,
+.foot-grid p{display:block;font-size:.9rem;padding:5px 0;margin:0;color:var(--f-cream-tx-dim);transition:color .25s}
+.foot-grid a:hover{color:var(--f-gold)}
+.foot-logo p{max-width:30ch;line-height:1.7}
+
+/* social icons */
+.foot-social{display:flex;gap:14px;margin:20px 0 0;padding:0;list-style:none}
+.foot-social li{margin:0}
+.foot-social a{
+  display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;
+  border:1px solid var(--f-line-cream);border-radius:50%;color:var(--f-cream-tx-dim);
+  transition:color .25s,border-color .25s,background .25s;
+}
+.foot-social a:hover{color:var(--f-navy-2);background:var(--f-gold);border-color:var(--f-gold)}
+
+/* legal band */
+.legal{
+  border-top:1px solid var(--f-line-cream);padding-top:30px;
+  font-size:.72rem;line-height:1.8;color:rgba(244,238,224,.55);max-width:100ch;
+}
+.legal p{margin:0}
+.legal p+p{margin-top:10px}
+.legal .legal-copy{font-weight:600;color:rgba(244,238,224,.75);margin-bottom:12px}
+.legal .legal-links{margin-top:16px}
+.legal a{color:rgba(244,238,224,.75);text-decoration:underline;text-underline-offset:3px}
+.legal a:hover{color:var(--f-gold)}
+
+/* back to top */
+.to-top{
+  position:fixed;right:22px;bottom:22px;z-index:60;
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--f-line);
+  background:var(--f-cream);color:var(--f-navy);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px -12px rgba(40,42,71,.45);
+  opacity:0;transform:translateY(8px);
+  transition:opacity .3s,transform .3s,background .25s,color .25s;
+}
+.to-top.show{opacity:1;transform:none}
+.to-top:hover{background:var(--f-navy);color:var(--f-cream)}
+
+@media (max-width:1080px){
+  .foot-grid{grid-template-columns:1fr 1fr 1fr;gap:34px}
+}
+@media (max-width:700px){
+  footer{padding:56px 0 34px}
+  .foot-top{flex-direction:column;align-items:flex-start;gap:22px}
+  .foot-badges{gap:20px}
+  .foot-badges img{height:38px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px;margin-bottom:44px}
+  .to-top{right:14px;bottom:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .to-top{transition:none}
+}
