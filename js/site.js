@@ -82,8 +82,41 @@
     var goal = qs.get('goal');
     if (goal) {
       var sel = $('#f-goal');
-      var hit = $$('option', sel).filter(function (o) { return o.textContent.trim() === goal.trim(); })[0];
+      /* Campaign links don't always spell the option exactly ("Asset Refinance"
+         vs "Asset & Equipment finance"), so match progressively rather than
+         silently falling back to the first option. */
+      var ALIASES = {
+        'asset refinance': 'Asset & Equipment finance',
+        'asset finance': 'Asset & Equipment finance',
+        'equipment finance': 'Asset & Equipment finance',
+        'business finance': 'Business & Commercial finance',
+        'commercial finance': 'Business & Commercial finance',
+        'business loan': 'Business & Commercial finance',
+        'first home': 'Home loan: buy my first home',
+        'next home': 'Home loan: buy my next home',
+        'refinance': 'Home loan: refinance',
+        'investment': 'Home loan: invest in property',
+        'self employed': 'Self-employed lending'
+      };
+      var want = goal.trim();
+      var norm = function (s) { return s.trim().toLowerCase(); };
+      var opts = $$('option', sel);
+      var hit =
+        opts.filter(function (o) { return o.textContent.trim() === want; })[0] ||
+        opts.filter(function (o) { return norm(o.textContent) === norm(want); })[0];
+      if (!hit && ALIASES[norm(want)]) {
+        hit = opts.filter(function (o) { return o.textContent.trim() === ALIASES[norm(want)]; })[0];
+      }
+      if (!hit) {
+        // last resort: a single unambiguous substring match, either direction
+        var near = opts.filter(function (o) {
+          var t = norm(o.textContent);
+          return t.indexOf(norm(want)) > -1 || norm(want).indexOf(t) > -1;
+        });
+        if (near.length === 1) hit = near[0];
+      }
       if (hit) sel.value = hit.value;
+      else if (window.console) console.warn('contact form: no goal option matches "' + want + '"');
     }
     cform.addEventListener('submit', function (e) {
       e.preventDefault();
