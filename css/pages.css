@@ -371,3 +371,10 @@
 @media (prefers-reduced-motion:reduce){
   .lm-item img{filter:grayscale(1) brightness(.55);opacity:.8}
 }
+
+/* FHB campaign: three-column trust row (why-grid is 2-up by default) */
+.why-grid.trust-row{grid-template-columns:repeat(3,1fr);margin-top:44px}
+.why-grid.trust-row h3{margin-bottom:0;font-size:1.05rem}
+@media (max-width:860px){ .why-grid.trust-row{grid-template-columns:1fr} }
+/* FHB campaign: trust line under the Finance Square Score button */
+.band .score-trust{margin-top:22px;font-size:.86rem;opacity:.8;max-width:62ch}
