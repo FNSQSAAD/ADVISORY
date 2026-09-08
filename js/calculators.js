@@ -1,19 +1,19 @@
 /* ============================================================
-   FINANCE SQUARE GROUP — CALCULATOR SUITE (v2, 2026-09-07)
+   FINANCE SQUARE GROUP - CALCULATOR SUITE (v2, 2026-09-07)
 
    Modelled on how Australian broker and comparison sites actually
    build these tools. Reference set:
-     · Loan Market / LMG  — the aggregator FNSQ operates under.
+     · Loan Market / LMG - the aggregator FNSQ operates under.
        Numbered input steps, income frequency + pre-tax toggles,
        "use average Australian expenses", dependants chips,
        balance-over-time graph with a Graph/Table switch, and a
        stamp duty breakdown of duty + transfer fee + mortgage
        registration fee.
-     · Aussie Home Loans  — applicants / dependants / total income
+     · Aussie Home Loans - applicants / dependants / total income
        before tax / itemised liabilities, result shown as a RANGE.
-     · Canstar            — borrowing power, stamp duty, split loan.
-     · Lendi              — borrowing power, repayments, LMI, duty.
-     · Comparethemarket   — borrowing power.
+     · Canstar - borrowing power, stamp duty, split loan.
+     · Lendi - borrowing power, repayments, LMI, duty.
+     · Comparethemarket - borrowing power.
 
    Australian mechanics applied here:
      · ATO resident tax scale (2025-26) + 2% Medicare levy.
@@ -72,7 +72,7 @@ function principalFor(M, annualPct, periods, perYear) {
   return M * (1 - Math.pow(1 + r, -periods)) / r;
 }
 function termText(months) {
-  if (!isFinite(months) || months < 0) return '—';
+  if (!isFinite(months) || months < 0) return ', ';
   var y = Math.floor(months / 12), m = Math.round(months % 12);
   if (m === 12) { y++; m = 0; }
   if (!y && !m) return '0 months';
@@ -92,7 +92,7 @@ function simulate(P, annualPct, scheduledMonthly, opts) {
   var ioMonths = opts.ioMonths || 0;
   var cap = 1200;
 
-  /* The loan is discharged once the offset covers the balance — at that
+  /* The loan is discharged once the offset covers the balance - at that
      point net debt is nil and the borrower simply closes it out. Tracking
      the gross balance past that point would credit an offset with savings
      it cannot produce. */
@@ -121,7 +121,7 @@ function simulate(P, annualPct, scheduledMonthly, opts) {
 /* -------------------------------------------------- ATO resident tax
    2025-26 resident rates plus a flat 2% Medicare levy. Low-income
    thresholds and offsets are ignored, so tax is slightly overstated at
-   low incomes — deliberately conservative for a borrowing estimate. */
+   low incomes - deliberately conservative for a borrowing estimate. */
 function incomeTax(gross) {
   var t;
   if (gross <= 18200) t = 0;
@@ -156,7 +156,7 @@ function lmiEstimate(loan, lvr) {
 }
 
 /* ====================================================================
-   CHART — inline SVG, no library. Balance over time, one or two series,
+   CHART - inline SVG, no library. Balance over time, one or two series,
    with a Graph / Table switch, the way the broker calculators present it.
    ==================================================================== */
 function drawChart(hostId, opts) {
@@ -299,7 +299,7 @@ var DUTY = {
     else if (v <= 360000) d = 3135 + (v - 150000) * 0.038;
     else if (v <= 725000) d = 11115 + (v - 360000) * 0.0475;
     else d = 28453 + (v - 725000) * 0.0515;
-    return { duty: d, note: 'WA residential rate of duty. The first home owner rate of duty may reduce this — confirm with RevenueWA.' };
+    return { duty: d, note: 'WA residential rate of duty. The first home owner rate of duty may reduce this. Confirm with RevenueWA.' };
   },
 
   SA: function (v) {
@@ -313,7 +313,7 @@ var DUTY = {
     else if (v <= 300000) d = 8955 + (v - 250000) * 0.0475;
     else if (v <= 500000) d = 11330 + (v - 300000) * 0.05;
     else d = 21330 + (v - 500000) * 0.055;
-    return { duty: d, note: 'SA conveyance duty scale. South Australia has abolished duty for eligible first home buyers on new homes — confirm with RevenueSA.' };
+    return { duty: d, note: 'SA conveyance duty scale. South Australia has abolished duty for eligible first home buyers on new homes. Confirm with RevenueSA.' };
   },
 
   TAS: function (v) {
@@ -325,7 +325,7 @@ var DUTY = {
     else if (v <= 375000) d = 5935 + (v - 200000) * 0.04;
     else if (v <= 725000) d = 12935 + (v - 375000) * 0.0425;
     else d = 27810 + (v - 725000) * 0.045;
-    return { duty: d, note: 'Tasmanian property transfer duty scale. First home buyer concessions may apply — confirm with the State Revenue Office of Tasmania.' };
+    return { duty: d, note: 'Tasmanian property transfer duty scale. First home buyer concessions may apply. Confirm with the State Revenue Office of Tasmania.' };
   },
 
   ACT: function (v) {
@@ -337,7 +337,7 @@ var DUTY = {
     else if (v <= 1000000) d = 19754 + (v - 750000) * 0.059;
     else if (v <= 1455000) d = 34504 + (v - 1000000) * 0.064;
     else d = v * 0.0454;
-    return { duty: d, note: 'ACT residential conveyance duty. The ACT Home Buyer Concession Scheme can remove duty entirely under an income threshold — confirm with the ACT Revenue Office.' };
+    return { duty: d, note: 'ACT residential conveyance duty. The ACT Home Buyer Concession Scheme can remove duty entirely under an income threshold. Confirm with the ACT Revenue Office.' };
   },
 
   NT: function (v) {
@@ -346,7 +346,7 @@ var DUTY = {
     else if (v <= 3000000) d = v * 0.0495;
     else if (v <= 5000000) d = v * 0.0575;
     else d = v * 0.0595;
-    return { duty: d, note: 'Northern Territory conveyance duty. House and land and first home owner concessions may apply — confirm with the Territory Revenue Office.' };
+    return { duty: d, note: 'Northern Territory conveyance duty. House and land and first home owner concessions may apply. Confirm with the Territory Revenue Office.' };
   }
 };
 
@@ -428,13 +428,13 @@ function calcBorrowing() {
 
   var msg = '';
   if (surplus <= 0) {
-    msg = 'On these figures the numbers look tight at today’s assessment rate. Rough inputs often miss things that help — a second income, lower real expenses, or family support. That is exactly what a 15-minute call sorts out.';
+    msg = 'On these figures the numbers look tight at today’s assessment rate. Rough inputs often miss things that help, such as a second income, lower real expenses, or family support. That is exactly what a 15-minute call sorts out.';
   } else if (usedExpenses > expenses) {
     msg = 'We’ve used a benchmark living expense figure of <b>' + money(usedExpenses) + '</b> a month. Lenders substitute a minimum benchmark (HEM) when declared spending looks lower than the household would realistically spend.';
   } else if (cards > 0) {
     msg = 'Your <b>' + money(cards) + '</b> of card limits is assessed as <b>' + money(cardCommit) + '</b> a month whether you use it or not. Reducing or closing unused limits is often the fastest way to lift borrowing power.';
   } else if (lvr > 80) {
-    msg = 'At ' + Math.round(lvr) + '% LVR, Lenders Mortgage Insurance would usually apply. Some lenders waive it for specific professions — worth asking about.';
+    msg = 'At ' + Math.round(lvr) + '% LVR, Lenders Mortgage Insurance would usually apply. Some lenders waive it for specific professions. Worth asking about.';
   }
   flag('#b-out-flag', msg);
 
@@ -481,7 +481,7 @@ function calcBudget() {
   setText('#g-out-in', money(monthlyIn) + ' /mo');
   setText('#g-out-out', money(monthlyOut) + ' /mo');
   setText('#g-out-year', money(surplus * 12));
-  setText('#g-out-rate', monthlyIn > 0 ? Math.round(surplus / monthlyIn * 100) + '% of income' : '—');
+  setText('#g-out-rate', monthlyIn > 0 ? Math.round(surplus / monthlyIn * 100) + '% of income' : ', ');
   var bar = $('#g-out-bar');
   if (bar) bar.style.width = clamp(monthlyIn > 0 ? monthlyOut / monthlyIn * 100 : 0, 0, 100) + '%';
 
@@ -493,7 +493,7 @@ function calcBudget() {
   if (monthlyIn > 0 && surplus > 0) {
     var support = principalFor(surplus * 0.9, num('#g-rate') + 3, 360, 12);
     msg = 'A surplus of ' + money(surplus) + ' a month could support roughly <b>' + money(Math.round(support / 10000) * 10000) +
-          '</b> of home lending at a buffered assessment rate — before a lender looks at your full position.';
+          '</b> of home lending at a buffered assessment rate, before a lender looks at your full position.';
   } else if (monthlyIn > 0) {
     msg = 'Your listed expenses exceed your income. Worth a conversation before taking on any new lending.';
   }
@@ -540,7 +540,7 @@ function calcRepayment() {
   setText('#r-out-monthly', money(pay * perYear / 12));
   setText('#r-out-total', money(totalPaid));
   setText('#r-out-interest', money(totalInterest));
-  setText('#r-out-ratio', P > 0 ? Math.round(totalInterest / P * 100) + '% of the amount borrowed' : '—');
+  setText('#r-out-ratio', P > 0 ? Math.round(totalInterest / P * 100) + '% of the amount borrowed' : ', ');
 
   var msg = '';
   if (extra > 0 && type !== 'io') {
@@ -595,12 +595,12 @@ function calcExtra() {
   setText('#l-out-time', timeSaved > 0 ? termText(timeSaved) : 'No change');
   setText('#l-out-pay', money(basePay + extra) + ' /mo');
   setText('#l-out-basei', money(base.totalInterest));
-  setText('#l-out-newi', isFinite(improved.totalInterest) ? money(improved.totalInterest) : '—');
+  setText('#l-out-newi', isFinite(improved.totalInterest) ? money(improved.totalInterest) : ', ');
   setText('#l-out-newterm', isFinite(improved.months) ? termText(improved.months) : 'Repayment too low');
 
   var msg = '';
   if (lump > 0 || extra > 0) {
-    msg = 'Check your loan allows extra repayments without penalty — fixed-rate loans usually cap them. If you have an offset account, parking the ' +
+    msg = 'Check your loan allows extra repayments without penalty. Fixed-rate loans usually cap them. If you have an offset account, parking the ' +
           (lump > 0 ? money(lump) : 'money') + ' there achieves a similar interest result while keeping the funds available.';
   }
   flag('#l-out-flag', msg);
@@ -659,7 +659,7 @@ function calcOffset() {
 }
 
 /* ====================================================================
-   6. SPLIT LOAN — FIXED vs VARIABLE
+   6. SPLIT LOAN - FIXED vs VARIABLE
    ==================================================================== */
 function calcSplit() {
   var root = $('#p-split');
@@ -796,7 +796,7 @@ function calcDuty() {
 
   setText('#d-out-duty', money(duty));
   setText('#d-out-note', res.note);
-  setText('#d-out-eff', v > 0 ? pct(duty / v * 100) + ' of the purchase price' : '—');
+  setText('#d-out-eff', v > 0 ? pct(duty / v * 100) + ' of the purchase price' : ', ');
   setText('#d-out-transfer', money(transferFee));
   setText('#d-out-mortgage', money(mortgageFee));
   setText('#d-out-govt', money(govt));
@@ -838,7 +838,7 @@ function calcPersonal() {
   setText('#n-out-interest', money(Math.max(0, interest)));
   setText('#n-out-fees', money(estFee + monthlyFee * years * 12));
   setText('#n-out-total', money(totalPaid));
-  setText('#n-out-cost', P > 0 ? Math.round(cost / P * 100) + '% of the amount borrowed' : '—');
+  setText('#n-out-cost', P > 0 ? Math.round(cost / P * 100) + '% of the amount borrowed' : ', ');
 
   var impact = principalFor(payAll * perYear / 12, 9, 360, 12);
   setText('#n-out-impact', money(Math.round(impact / 1000) * 1000));

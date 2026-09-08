@@ -1,4 +1,4 @@
-/* Finance Square Group — Get Started funnel.
+/* Finance Square Group - Get Started funnel.
    Chooser -> 3 sliders + 1 chip step -> contact capture -> indicative snapshot.
    Submissions relay through /api/lead. Figures are illustrations only. */
 (function(){
@@ -27,31 +27,31 @@ var PATHS = {
         sub:'Savings, gifts and any equity you could use all count.',
         min:10000, max:500000, step:5000, start:80000, format:fmt$, maxPlus:true },
       { id:'expenses', kind:'slider', title:'What does your household spend in a typical month?',
-        sub:'Living costs only — not rent or loan repayments.',
+        sub:'Living costs only, not rent or loan repayments.',
         min:1500, max:10000, step:250, start:3500, format:fmt$, maxPlus:true },
       { id:'timeframe', kind:'chips', title:'When are you hoping to buy?',
         options:['As soon as possible','Within 3 months','3–6 months','6–12 months','Just planning ahead'] }
     ],
     captureTitle: 'Your buying snapshot is ready.',
-    captureSub: 'Tell us where to send it and a broker will sense-check the numbers with you — no cost, no obligation.'
+    captureSub: 'Tell us where to send it and a broker will sense-check the numbers with you, no cost, no obligation.'
   },
   loan: {
     label: 'Reviewing a loan',
     steps: [
       { id:'value', kind:'slider', title:'Roughly what’s your property worth today?',
-        sub:'Your best guess is fine — nothing here is a valuation.',
+        sub:'Your best guess is fine, nothing here is a valuation.',
         min:300000, max:3000000, step:25000, start:850000, format:fmtK, maxPlus:true },
       { id:'balance', kind:'slider', title:'What’s left on the loan?',
         sub:'The approximate balance still owing.',
         min:50000, max:2000000, step:25000, start:500000, format:fmtK, maxPlus:true },
       { id:'rate', kind:'slider', title:'What interest rate are you paying now?',
-        sub:'It’s on your statement or banking app — or tick “I’m not sure”.',
+        sub:'It’s on your statement or banking app, or tick “I’m not sure”.',
         min:3, max:9.5, step:0.05, start:6.2, format:function(v){ return v.toFixed(2) + '% p.a.'; }, unsure:true },
       { id:'goal', kind:'chips', title:'What would you most like out of a review?',
         options:['Lower repayments','Access equity','More flexibility','Certainty on my rate','Just checking I’m not overpaying'] }
     ],
     captureTitle: 'Your loan check is ready.',
-    captureSub: 'Tell us where to send it and a broker will look over your numbers — no cost, no obligation.'
+    captureSub: 'Tell us where to send it and a broker will look over your numbers, no cost, no obligation.'
   }
 };
 
@@ -77,12 +77,12 @@ function renderChooser(){
   var el = h('st-chooser',
     '<p class="st-eyebrow">Finance Square Group</p>' +
     '<h1>Good finance starts with a <em>clear picture.</em></h1>' +
-    '<p class="st-sub">Answer a handful of quick questions and we’ll put together a personal snapshot — then a broker will walk you through it. About 60 seconds.</p>' +
+    '<p class="st-sub">Answer a handful of quick questions and we’ll put together a personal snapshot, then a broker will walk you through it. About 60 seconds.</p>' +
     '<div class="st-choose">' +
       '<button type="button" class="st-choice" data-path="buy"><span class="st-choice-t">I’m looking to buy</span><span class="st-choice-s">First home, next home or an investment</span><span class="st-choice-arr">→</span></button>' +
       '<button type="button" class="st-choice" data-path="loan"><span class="st-choice-t">I want a better deal on my loan</span><span class="st-choice-s">Check the loan you already have</span><span class="st-choice-arr">→</span></button>' +
     '</div>' +
-    '<p class="st-fine">No credit check. General information only — not credit advice; any loan is subject to lender assessment.</p>');
+    '<p class="st-fine">No credit check. General information only, not credit advice; any loan is subject to lender assessment.</p>');
   Array.prototype.forEach.call(el.querySelectorAll('[data-path]'), function(b){
     b.addEventListener('click', function(){ startPath(b.getAttribute('data-path')); });
   });
@@ -236,7 +236,7 @@ function submitLead(c, el){
     email: c.email,
     phone: c.phone,
     message: summaryLine() + ' Submitted from ' + location.host + location.pathname,
-    lead_source: 'Get Started Funnel — ' + (state.path === 'buy' ? 'Buying' : 'Loan review'),
+    lead_source: 'Get Started Funnel: ' + (state.path === 'buy' ? 'Buying' : 'Loan review'),
     website: c.honeypot
   };
   var done = function(ok){
@@ -267,17 +267,17 @@ function buyResult(){
   loan = Math.min(loan, v.income * 7);
   var low = round10k(loan * 0.93), high = round10k(loan * 1.07);
   if (high < 50000){
-    return '<p>On these figures the numbers look tight at today’s assessment rates — but rough inputs often miss things that help, like a second income, lower real expenses or family support. It’s exactly the kind of situation a quick conversation sorts out.</p>';
+    return '<p>On these figures the numbers look tight at today’s assessment rates, but rough inputs often miss things that help, like a second income, lower real expenses or family support. It’s exactly the kind of situation a quick conversation sorts out.</p>';
   }
   var bLow = round10k(low + v.deposit), bHigh = round10k(high + v.deposit);
   return '<div class="st-fig"><span>Indicative borrowing range</span><strong>' + fmtK(low) + ' – ' + fmtK(high) + '</strong></div>' +
     '<div class="st-fig"><span>Potential purchase band with your ' + fmtK(v.deposit) + '</span><strong>' + fmtK(bLow) + ' – ' + fmtK(bHigh) + '</strong></div>' +
-    '<p>These are broad estimates from three rough inputs — lenders assess much more, and results vary a lot between them. Your broker will firm this up with you' + (v.timeframe === 'As soon as possible' ? ' quickly, given your timeframe' : '') + '.</p>';
+    '<p>These are broad estimates from three rough inputs; lenders assess much more, and results vary a lot between them. Your broker will firm this up with you' + (v.timeframe === 'As soon as possible' ? ' quickly, given your timeframe' : '') + '.</p>';
 }
 function loanResult(){
   var v = state.values, u = state.unsure;
   if (u.rate){
-    return '<p>Not knowing your rate is common — and often a sign it’s worth checking. On a balance of about ' + fmtK(v.balance) +
+    return '<p>Not knowing your rate is common, and often a sign it’s worth checking. On a balance of about ' + fmtK(v.balance) +
       ', each 0.25 percentage points changes repayments by roughly ' + fmt$(monthly(v.balance, 6.25) - monthly(v.balance, 6.0)) +
       ' a month. Your broker will find your actual rate with you and compare it properly.</p>';
   }
@@ -286,7 +286,7 @@ function loanResult(){
   var d50 = m - monthly(v.balance, Math.max(1, v.rate - 0.5));
   return '<div class="st-fig"><span>Approx. current repayment (30-yr basis)</span><strong>' + fmt$(m) + ' /mo</strong></div>' +
     '<div class="st-fig"><span>What a 0.25 / 0.50 point difference means on your balance</span><strong>' + fmt$(d25) + ' / ' + fmt$(d50) + ' per month</strong></div>' +
-    '<p>That’s arithmetic, not an offer — whether a better rate, structure or features are actually available depends on your situation and lender assessment. Sometimes the honest answer is that your current loan stacks up; if so, we’ll tell you.</p>';
+    '<p>That’s arithmetic, not an offer. Whether a better rate, structure or features are actually available depends on your situation and lender assessment. Sometimes the honest answer is that your current loan stacks up; if so, we’ll tell you.</p>';
 }
 
 function renderResult(){
@@ -294,7 +294,7 @@ function renderResult(){
   var el = h('st-result',
     '<div class="st-done-mark">✓</div>' +
     '<p class="st-eyebrow">Snapshot sent</p>' +
-    '<h2>Thanks — here’s your first look.</h2>' +
+    '<h2>Thanks, here’s your first look.</h2>' +
     '<div class="st-card">' + (isBuy ? buyResult() : loanResult()) + '</div>' +
     '<p class="st-sub">A broker will be in touch shortly to walk through it. Prefer to pick a time yourself?</p>' +
     '<div class="st-ctas">' +

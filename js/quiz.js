@@ -1,6 +1,6 @@
-/* Finance Square Group — Find Your Home Loan Starting Point
+/* Finance Square Group - Find Your Home Loan Starting Point
    Self-contained quiz engine. No tracking, no lead capture, no network calls.
-   General information only — not credit advice. */
+   General information only - not credit advice. */
 (function(){
 'use strict';
 
@@ -52,7 +52,7 @@ var Q = {
   goal: {
     eyebrow: 'Let’s get started',
     title: 'What are you looking to do?',
-    help: 'Your answer shapes the questions that follow — you’ll only be asked what’s relevant.',
+    help: 'Your answer shapes the questions that follow, you’ll only be asked what’s relevant.',
     options: [
       {v:'first', t:'Buy my first home', i:'key'},
       {v:'next', t:'Buy my next home', i:'home'},
@@ -72,7 +72,7 @@ var Q = {
               equity:'When would you ideally want to access the funds?',
               unsure:'Is there a timeframe on your mind?'}[a.goal];
     },
-    help: 'A rough idea is fine — there’s no wrong answer.',
+    help: 'A rough idea is fine, there’s no wrong answer.',
     options: TIMING
   },
   current_home: {
@@ -99,7 +99,7 @@ var Q = {
   budget: {
     eyebrow: 'Price range',
     title: 'Roughly what price range are you considering?',
-    help: 'No need to be exact — a ballpark is plenty.',
+    help: 'No need to be exact, a ballpark is plenty.',
     options: VALUE_RANGES.map(function(o){return {v:o.v, t:o.t};})
   },
   deposit_fhb: {
@@ -190,7 +190,7 @@ var Q = {
     title: 'Would you like to explore first-home-buyer support that may apply to you?',
     help: 'Things like the Home Guarantee Scheme, stamp-duty concessions or the First Home Super Saver Scheme. Eligibility varies by state and circumstances.',
     options: [
-      {v:'yes', t:'Yes — show me what may apply', i:'star'},
+      {v:'yes', t:'Yes, show me what may apply', i:'star'},
       {v:'already', t:'I’ve already looked into them', i:'shield'},
       {v:'later', t:'Maybe later', i:'clock'},
       {v:'ns', t:'I don’t know what’s available', i:'quest'}
@@ -199,7 +199,7 @@ var Q = {
   credit: {
     eyebrow: 'Credit history',
     title: 'Has anything affected your credit history?',
-    help: 'There’s no judgement here — it simply helps point you in the right direction.',
+    help: 'There’s no judgement here, it simply helps point you in the right direction.',
     assume: 'none',
     options: [
       {v:'none', t:'Nothing I’m aware of', i:'shield'},
@@ -213,7 +213,7 @@ var Q = {
   credit_when: {
     eyebrow: 'Credit history',
     title: 'When did that happen?',
-    help: 'Timing can matter — many lenders view older, resolved issues differently.',
+    help: 'Timing can matter, many lenders view older, resolved issues differently.',
     options: [
       {v:'y1', t:'Within the last year'},
       {v:'y12', t:'1 – 2 years ago'},
@@ -229,7 +229,7 @@ var Q = {
         ? 'What would matter most in a new loan?'
         : 'What matters most to you in a home loan?';
     },
-    help: 'Almost there — this is the last question.',
+    help: 'Almost there, this is the last question.',
     options: [
       {v:'repay', t:'Competitive repayments', i:'coins'},
       {v:'flex', t:'Flexibility to make changes', i:'refresh'},
@@ -257,7 +257,7 @@ var Q = {
   prop_value: {
     eyebrow: 'Your property',
     title: 'Roughly what’s your property worth today?',
-    help: 'Your best guess is fine — a formal valuation comes much later.',
+    help: 'Your best guess is fine, a formal valuation comes much later.',
     options: VALUE_RANGES
   },
   balance: {
@@ -319,7 +319,7 @@ var Q = {
     title: 'Do you currently have a loan on your own home?',
     options: [
       {v:'yes', t:'Yes', i:'home'},
-      {v:'no', t:'No — it’s paid off', i:'shield'},
+      {v:'no', t:'No, it’s paid off', i:'shield'},
       {v:'rent', t:'I’m renting', i:'key'},
       {v:'disc', t:'I’d prefer to discuss', i:'quest'}
     ]
@@ -352,7 +352,7 @@ var Q = {
   unsure_pick: {
     eyebrow: 'No rush',
     title: 'Which of these sounds most like you?',
-    help: 'Choose the option that fits best — there’s no wrong answer.',
+    help: 'Choose the option that fits best, there’s no wrong answer.',
     options: [
       {v:'first', t:'Thinking about buying a first home', i:'key'},
       {v:'move', t:'Wondering about my next move', i:'home'},
@@ -437,19 +437,19 @@ function buildPath(a){
 function interstitial(from, v, a){
   if (from === 'goal'){
     return {
-      first:'Great — buying your first home is a big step. Let’s look at where you’re starting from.',
+      first:'Great, buying your first home is a big step. Let’s look at where you’re starting from.',
       next:'Let’s look at how your next move is shaping up.',
       refi:'Let’s see what you’re hoping to improve with your current loan.',
       invest:'Let’s look at your finance from an investment point of view.',
       equity:'Let’s understand the equity you may be able to work with.',
-      unsure:'No worries — plenty of people start here. We’ll keep it simple.'
+      unsure:'No worries, plenty of people start here. We’ll keep it simple.'
     }[v];
   }
   if (from === 'income' && v === 'se'){
     return 'Let’s look at the factors that can matter when your income comes from a business.';
   }
   if (from === 'credit' && (v === 'late' || v === 'def' || v === 'dec')){
-    return 'Thanks for sharing that. Every situation is different — let’s understand a little more about yours.';
+    return 'Thanks for sharing that. Every situation is different, let’s understand a little more about yours.';
   }
   return null;
 }
@@ -472,7 +472,7 @@ var CATS = {
   equity: { badge:'Equity Review', lead:'Your answers suggest it may be worth exploring what your equity could support.' },
   investor: { badge:'Investor Profile', lead:'You’re approaching finance from an investment perspective, and that changes what’s worth weighing up.' },
   se: { badge:'Self-Employed Pathway', lead:'Because your income comes from a business, the way lenders assess it may be an important part of your journey.' },
-  early: { badge:'Early Stage', lead:'You’re in research mode — which is a smart place to be. Here’s what’s worth understanding first.' },
+  early: { badge:'Early Stage', lead:'You’re in research mode, which is a smart place to be. Here’s what’s worth understanding first.' },
   specialist: { badge:'A Tailored Conversation', lead:'Your circumstances have a few moving parts, so a tailored conversation is likely to serve you better than a generic checklist.' }
 };
 
@@ -503,62 +503,62 @@ function meaningParas(a, cat){
   var g = a.goal;
   /* category base line */
   if (cat === 'specialist'){
-    out.push('A past credit event doesn’t necessarily rule anything out. Some lenders take a case-by-case view, particularly where the situation has been resolved' + (a.credit_when === 'res' ? ' — and you’ve indicated yours has been' : '') + '. Timing, the details of what happened and lender choice can all matter, which is why a conversation tends to help more than a calculator here.');
+    out.push('A past credit event doesn’t necessarily rule anything out. Some lenders take a case-by-case view, particularly where the situation has been resolved' + (a.credit_when === 'res' ? ', and you’ve indicated yours has been' : '') + '. Timing, the details of what happened and lender choice can all matter, which is why a conversation tends to help more than a calculator here.');
     var goalCtx = {
-      first:'That doesn’t change your goal — plenty of first-home buyers start from exactly this position. It mostly shapes which lenders are worth approaching first.',
-      next:'Your next move is still very much on the table — it mostly shapes which lenders are worth approaching first.',
-      refi:'People refinance with a credit event on file regularly — it simply narrows the field to lenders whose policy suits your situation.',
-      invest:'Investment lending is still possible in many of these situations — the right lender fit just becomes the first question rather than the last.',
-      equity:'Accessing equity may still be possible — the starting point is understanding how different lenders would view your file.',
-      unsure:'There’s no need to have it all worked out — understanding where you stand is a solid first step.'
+      first:'That doesn’t change your goal, plenty of first-home buyers start from exactly this position. It mostly shapes which lenders are worth approaching first.',
+      next:'Your next move is still very much on the table, it mostly shapes which lenders are worth approaching first.',
+      refi:'People refinance with a credit event on file regularly, it simply narrows the field to lenders whose policy suits your situation.',
+      invest:'Investment lending is still possible in many of these situations, the right lender fit just becomes the first question rather than the last.',
+      equity:'Accessing equity may still be possible, the starting point is understanding how different lenders would view your file.',
+      unsure:'There’s no need to have it all worked out, understanding where you stand is a solid first step.'
     }[g];
     if (goalCtx) out.push(goalCtx);
   } else if (cat === 'se'){
-    out.push('Different lenders read business income very differently — some want two full years of tax returns, others take a more flexible view of recent figures. For self-employed borrowers, lender selection can matter as much as the rate.');
+    out.push('Different lenders read business income very differently, some want two full years of tax returns, others take a more flexible view of recent figures. For self-employed borrowers, lender selection can matter as much as the rate.');
     if (a.se_years === 'y1' || a.se_years === 'y12'){
-      out.push('With under two years of trading, your options may be narrower but they’re rarely zero — the way your income is documented becomes the key question to work through.');
+      out.push('With under two years of trading, your options may be narrower but they’re rarely zero, the way your income is documented becomes the key question to work through.');
     }
   } else if (cat === 'refi' || cat === 'equity'){
     var vm = MID[a.prop_value], lm = MID[a.balance];
     if (vm && lm && (vm - lm) > vm * 0.2){
-      out.push('Your figures suggest you may have meaningful equity in the property, which could open up options — from better pricing to ' + (cat === 'equity' ? 'releasing funds for your plans' : 'restructuring the loan around your goals') + '. A formal valuation would confirm the real position.');
+      out.push('Your figures suggest you may have meaningful equity in the property, which could open up options, from better pricing to ' + (cat === 'equity' ? 'releasing funds for your plans' : 'restructuring the loan around your goals') + '. A formal valuation would confirm the real position.');
     } else {
       out.push('The gap between your property’s value and your loan balance shapes what a refinance could achieve, so getting a clearer read on your equity position is a sensible first step.');
     }
-    if (a.reason === 'fixedend') out.push('With a fixed rate ending, it’s worth comparing the rate you’d roll onto against the wider market before it happens — the revert rate is often not the most competitive one available.');
+    if (a.reason === 'fixedend') out.push('With a fixed rate ending, it’s worth comparing the rate you’d roll onto against the wider market before it happens, the revert rate is often not the most competitive one available.');
     if (a.loan_age === 'a5') out.push('Loans set up more than five years ago were priced for a different market, so a review is often worthwhile even if you end up staying put.');
   } else if (cat === 'investor'){
-    out.push('Investment lending brings its own considerations — how rental income is assessed, how the loan is structured against your other property, and whether interest-only repayments fit your strategy. These are worth settling before you fall in love with a property.');
+    out.push('Investment lending brings its own considerations, how rental income is assessed, how the loan is structured against your other property, and whether interest-only repayments fit your strategy. These are worth settling before you fall in love with a property.');
     if (a.inv_count === 'firstinv') out.push('As a first-time investor, the structure you choose now can affect how easily you can borrow for the next property, so it’s worth thinking one step ahead.');
-    if (a.inv_count === 'few' || a.inv_count === 'many') out.push('With multiple properties already, how lenders view your overall position — not just this purchase — will likely drive the outcome.');
+    if (a.inv_count === 'few' || a.inv_count === 'many') out.push('With multiple properties already, how lenders view your overall position, not just this purchase, will likely drive the outcome.');
   } else if (cat === 'early'){
     out.push('There’s no pressure to move quickly. Understanding how deposits, borrowing capacity and loan features work now means that when you’re ready, the decisions will feel much smaller.');
   } else if (cat === 'prep'){
     out.push(g === 'first'
-      ? 'You’re on the path — and the time between now and buying is genuinely useful. Growing your deposit, keeping your accounts tidy and understanding your borrowing capacity all strengthen your position before you apply.'
-      : 'With some time before your move, you can approach it on your terms — clarifying your equity, your borrowing capacity and what needs to happen with your current home first.');
+      ? 'You’re on the path, and the time between now and buying is genuinely useful. Growing your deposit, keeping your accounts tidy and understanding your borrowing capacity all strengthen your position before you apply.'
+      : 'With some time before your move, you can approach it on your terms, clarifying your equity, your borrowing capacity and what needs to happen with your current home first.');
   } else { /* ready */
     out.push(g === 'first'
-      ? 'You appear to have the key pieces coming together. The next step is usually understanding your borrowing capacity and getting a clear view of the full cost of buying — deposit, stamp duty and the loan itself.'
+      ? 'You appear to have the key pieces coming together. The next step is usually understanding your borrowing capacity and getting a clear view of the full cost of buying, deposit, stamp duty and the loan itself.'
       : 'You appear well positioned to start comparing options. Lining up your borrowing capacity and how your current home fits into the plan are the usual next steps.');
   }
   /* cross-cutting modifiers */
   var priceMid = MID[a.budget] || MID[a.inv_price];
   var depMid = MID[a.deposit_fhb] || MID[a.deposit_next] || MID[a.inv_amount];
   if (cat !== 'specialist' && priceMid && depMid && depMid < priceMid * 0.15){
-    out.push('With your deposit relative to your price range, lenders mortgage insurance or low-deposit options may be part of the picture — that’s common, and there are ways to approach it.');
+    out.push('With your deposit relative to your price range, lenders mortgage insurance or low-deposit options may be part of the picture, that’s common, and there are ways to approach it.');
   }
   if (g === 'first' && (a.schemes === 'yes' || a.schemes === 'ns')){
-    out.push('Government support such as the Home Guarantee Scheme, state grants or stamp-duty concessions may be worth exploring — eligibility depends on your income, the property’s price and your state, so it needs to be checked against your specific numbers.');
+    out.push('Government support such as the Home Guarantee Scheme, state grants or stamp-duty concessions may be worth exploring, eligibility depends on your income, the property’s price and your state, so it needs to be checked against your specific numbers.');
   }
   if ((a.commitments || []).indexOf('hecs') !== -1){
     out.push('HECS/HELP repayments reduce the income lenders count, so they’re worth factoring into any borrowing-capacity estimate early.');
   }
   if ((a.commitments || []).indexOf('bnpl') !== -1 || (a.commitments || []).indexOf('cc') !== -1){
-    out.push('Credit limits and Buy Now Pay Later accounts can affect how lenders assess you even when the balances are small — tidying these up before applying sometimes improves the picture.');
+    out.push('Credit limits and Buy Now Pay Later accounts can affect how lenders assess you even when the balances are small, tidying these up before applying sometimes improves the picture.');
   }
   if (a.credit === 'disc'){
-    out.push('You mentioned you’d prefer to discuss your credit history — that’s a perfectly good way to handle it, and nothing you’ve answered here commits you to anything.');
+    out.push('You mentioned you’d prefer to discuss your credit history, that’s a perfectly good way to handle it, and nothing you’ve answered here commits you to anything.');
   }
   if (a.timing === 'asap' && cat !== 'early'){
     out.push('Given your timeframe, having your documents and a clear picture of your position ready early may help you move quickly when it counts.');
@@ -568,16 +568,16 @@ function meaningParas(a, cat){
 
 var CONS = {
   deposit: {t:'Deposit position', d:'How your deposit compares with your target price range, and what that means for the loans available to you.'},
-  capacity: {t:'Borrowing capacity', d:'What lenders may be willing to lend on your income and commitments — before you set your heart on a price.'},
-  lmi: {t:'Low-deposit options', d:'Lenders mortgage insurance, guarantor arrangements and scheme places — and what each could mean for you.'},
+  capacity: {t:'Borrowing capacity', d:'What lenders may be willing to lend on your income and commitments, before you set your heart on a price.'},
+  lmi: {t:'Low-deposit options', d:'Lenders mortgage insurance, guarantor arrangements and scheme places, and what each could mean for you.'},
   schemes: {t:'Government support', d:'The Home Guarantee Scheme, grants and concessions that may apply, subject to eligibility.'},
-  docs: {t:'Income documentation', d:'What lenders may want to see from your business — and which lenders suit how your income actually works.'},
+  docs: {t:'Income documentation', d:'What lenders may want to see from your business, and which lenders suit how your income actually works.'},
   commitments: {t:'Existing commitments', d:'How loans, cards, HECS/HELP and other commitments shape your borrowing capacity.'},
-  policy: {t:'Lender policy fit', d:'Different lenders assess the same situation differently — finding the right fit can matter more than the advertised rate.'},
-  features: {t:'Loan features', d:'Offset, redraw, fixed and variable options — and which are worth paying for in your situation.'},
+  policy: {t:'Lender policy fit', d:'Different lenders assess the same situation differently, finding the right fit can matter more than the advertised rate.'},
+  features: {t:'Loan features', d:'Offset, redraw, fixed and variable options, and which are worth paying for in your situation.'},
   equity: {t:'Equity and valuation', d:'What your property may be worth, what’s owed, and how much of the difference is usable.'},
   compare: {t:'Rate and cost comparison', d:'Whether your current loan still stacks up once rates, fees and switching costs are all counted.'},
-  structure: {t:'Loan structure', d:'How the lending is set up across properties — including repayment type and what supports your next step.'},
+  structure: {t:'Loan structure', d:'How the lending is set up across properties, including repayment type and what supports your next step.'},
   rental: {t:'Rental assessment', d:'How lenders may treat the expected rent, vacancy and costs when assessing the loan.'},
   timing: {t:'Timing your move', d:'What to line up first so the finance is ready when the right property appears.'},
   credit: {t:'Your credit file', d:'Understanding exactly what’s on your file and how different lenders may view it.'},
@@ -682,10 +682,10 @@ function renderIntro(){
     '<ul class="qz-ticks">' +
       '<li>Takes about 2–3 minutes</li>' +
       '<li>No contact details asked for</li>' +
-      '<li>No credit check — nothing is recorded</li>' +
+      '<li>No credit check, nothing is recorded</li>' +
     '</ul>' +
     '<button type="button" class="qz-btn qz-btn-primary" data-focus data-start>Start<span class="qz-btn-arrow">' + ICONS.arrow + '</span></button>' +
-    '<p class="qz-fine">General information only — this isn’t credit advice or an offer of credit.</p>';
+    '<p class="qz-fine">General information only, this isn’t credit advice or an offer of credit.</p>';
   el.querySelector('[data-start]').addEventListener('click', function(){ go('goal'); });
   swap(el);
 }
@@ -848,7 +848,7 @@ function renderResult(){
   cons.forEach(function(x){ html += '<li><strong>' + esc(x.t) + '</strong><span>' + esc(x.d) + '</span></li>'; });
   html += '</ol></div>' +
     '<div class="qz-ctas">' +
-      '<a class="qz-btn qz-btn-primary" href="contact.html">Talk it through — book a 15-minute chat</a>' +
+      '<a class="qz-btn qz-btn-primary" href="contact.html">Talk it through and book a 15-minute chat</a>' +
       '<a class="qz-btn qz-btn-ghost" href="calculators.html">Try our calculators</a>' +
       '<button type="button" class="qz-restart" data-restart>' + ICONS.refresh + '<span>Start again</span></button>' +
     '</div>' +

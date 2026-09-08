@@ -1,8 +1,8 @@
 /* ============================================================
-   FINANCE SQUARE GROUP — PAGES LAYER (2026-09-07)
+   FINANCE SQUARE GROUP - PAGES LAYER (2026-09-07)
    Inner pages: nav dropdown, page heroes, prose blocks, splits,
    pill lists, legal docs, thank-you, calculator suite.
-   Loaded AFTER css/styles.css. Additive only — the homepage
+   Loaded AFTER css/styles.css. Additive only - the homepage
    never loads this file, so index.html is untouched.
    ============================================================ */
 
@@ -295,4 +295,79 @@
   .calc-tabs button:last-child{border-bottom:none}
   .doc-toc{padding:22px}
   .split-media .sm-frame,.split.flip .split-media .sm-frame{inset:-10px -10px 10px 10px}
+}
+
+/* ============================================================
+   LENDER PANEL - continuous logo marquee (2026-09-08)
+   Replaces the static name list. Two identical tracks scroll as
+   one; translating a full track width loops seamlessly.
+   ============================================================ */
+.lenders .wrap.lender-wrap{display:block}
+.lender-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:20px}
+.lender-head .lab{flex-shrink:0}
+.lender-head b{font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--gold);white-space:nowrap}
+
+.lender-marquee{
+  position:relative;overflow:hidden;
+  /* fade the logos out at both edges so they enter/leave softly */
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+}
+.lender-marquee .lm-viewport{display:flex;width:max-content;animation:lender-scroll 46s linear infinite}
+.lender-marquee:hover .lm-viewport{animation-play-state:paused}
+.lm-track{display:flex;align-items:center;flex:none}
+.lm-item{
+  flex:none;display:flex;align-items:center;justify-content:center;
+  width:190px;height:62px;padding:0 26px;
+}
+.lm-item img{
+  max-width:100%;max-height:38px;width:auto;height:auto;object-fit:contain;
+  filter:grayscale(1);opacity:.5;
+  transition:filter .45s var(--ease),opacity .45s var(--ease);
+}
+.lender-marquee:hover .lm-item img{opacity:.42}
+.lm-item:hover img{filter:grayscale(0);opacity:1}
+@keyframes lender-scroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+
+@media (max-width:700px){
+  .lm-item{width:150px;height:56px;padding:0 18px}
+  .lm-item img{max-height:30px}
+  .lender-marquee .lm-viewport{animation-duration:34s}
+}
+/* Users who ask for less motion get a static, scrollable row instead */
+@media (prefers-reduced-motion:reduce){
+  .lender-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .lender-marquee .lm-viewport{animation:none}
+  .lender-marquee .lm-track[aria-hidden="true"]{display:none}
+  .lm-item img{filter:grayscale(1);opacity:.62}
+}
+
+/* Optical normalisation: logos range from square (BOQ 0.89) to very wide
+   (Bendigo 6.41). Matching heights alone makes square marks look tiny, so
+   each is capped by shape - square marks taller, wordmarks shorter. */
+.lm-item img{max-width:150px}
+.lm-item img[src$="cba.svg"],
+.lm-item img[src$="boq.png"]{max-height:46px}          /* square marks */
+.lm-item img[src$="anz.svg"],
+.lm-item img[src$="nab.svg"],
+.lm-item img[src$="amp.svg"],
+.lm-item img[src$="suncorp.svg"],
+.lm-item img[src$="stgeorge.png"]{max-height:34px}      /* balanced marks */
+.lm-item img[src$="westpac.svg"],
+.lm-item img[src$="macquarie.svg"],
+.lm-item img[src$="bendigo.png"],
+.lm-item img[src$="bankwest.png"]{max-height:27px}      /* wide wordmarks */
+@media (max-width:700px){
+  .lm-item img{max-width:120px}
+  .lm-item img[src$="cba.svg"],.lm-item img[src$="boq.png"]{max-height:38px}
+}
+
+/* Plain grayscale washes out light-coloured marks (CBA's yellow diamond
+   becomes near-white on cream). Darkening as well as desaturating gives
+   every logo the same mid-tone weight; hover restores true brand colour. */
+.lm-item img{filter:grayscale(1) brightness(.55) contrast(1.05);opacity:.72}
+.lender-marquee:hover .lm-item img{opacity:.5}
+.lm-item:hover img{filter:none;opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .lm-item img{filter:grayscale(1) brightness(.55);opacity:.8}
 }
