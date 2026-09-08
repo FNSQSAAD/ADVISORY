@@ -378,3 +378,10 @@
 @media (max-width:860px){ .why-grid.trust-row{grid-template-columns:1fr} }
 /* FHB campaign: trust line under the Finance Square Score button */
 .band .score-trust{margin-top:22px;font-size:.86rem;opacity:.8;max-width:62ch}
+
+/* --- ported legal pages (privacy policy, disclosure & consent, important documents) --- */
+.doc .doc-meta{opacity:.62;font-size:.9em;margin-left:10px;white-space:nowrap}
+.doc .btn{margin:.2em 0}
+.doc-quote{margin:0 0 1.6em;padding:18px 22px;border-left:3px solid var(--gold,#b99248);background:rgba(0,0,0,.035);border-radius:0 6px 6px 0}
+.doc-quote p{margin:0}
+.doc ul li strong{font-weight:600}

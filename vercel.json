@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.fnsq.com.au" }],
+      "destination": "https://fnsq.com.au/$1",
+      "permanent": true
+    }
+  ]
+}
