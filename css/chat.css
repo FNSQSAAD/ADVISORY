@@ -1,0 +1,310 @@
+/* ============================================================
+   FINANCE SQUARE - CHAT WIDGET
+
+   Standalone, in the same way css/footer.css is standalone: get-started.html
+   and quiz.html load neither styles.css nor pages.css, so this file carries its
+   own tokens and every selector is scoped to .fq-* or #fnsq-chat. Nothing here
+   can leak into the funnel or quiz layouts.
+
+   Tokens mirror css/styles.css :root (navy #282a47, gold #a87c2e, cream #fbf8f1,
+   Poppins body / Roboto headings) but are re-declared with a --q- prefix so the
+   widget looks identical on pages that never load the site stylesheet.
+   ============================================================ */
+
+.fq-launch,
+#fnsq-chat{
+  --q-navy:#282a47;
+  --q-navy-2:#1e1f36;
+  --q-navy-3:#373a62;
+  --q-gold:#a87c2e;
+  --q-gold-soft:rgba(168,124,46,.12);
+  --q-cream:#fbf8f1;
+  --q-cream-2:#f5efe3;
+  --q-white:#fff;
+  --q-ink:#1e1f2d;
+  --q-ink-dim:rgba(30,31,45,.72);
+  --q-ink-faint:rgba(30,31,45,.5);
+  --q-line:rgba(30,31,45,.14);
+  --q-cream-tx:#f4eee0;
+  --q-cream-tx-dim:rgba(244,238,224,.78);
+  --q-line-cream:rgba(244,238,224,.22);
+  --q-sans:'Poppins','Poppins Fallback',system-ui,-apple-system,sans-serif;
+  --q-serif:'Roboto','Roboto Fallback',system-ui,sans-serif;
+  --q-shadow:0 24px 60px -20px rgba(30,31,45,.45);
+}
+
+/* ---------------------------------------------------------- launcher */
+.fq-launch{
+  position:fixed;right:22px;bottom:22px;z-index:70;
+  display:flex;align-items:center;gap:10px;
+  height:56px;padding:0 22px 0 18px;
+  border:0;border-radius:32px;cursor:pointer;
+  background:var(--q-navy);color:var(--q-cream-tx);
+  font-family:var(--q-sans);font-size:15px;font-weight:500;letter-spacing:.01em;
+  box-shadow:var(--q-shadow);
+  transition:transform .25s cubic-bezier(.25,.8,.25,1),background .25s;
+}
+.fq-launch:hover{background:var(--q-navy-3);transform:translateY(-2px)}
+.fq-launch:focus-visible{outline:2px solid var(--q-gold);outline-offset:3px}
+.fq-launch svg{width:20px;height:20px;flex:none}
+.fq-launch .fq-launch-tx{white-space:nowrap}
+.fq-launch[hidden]{display:none!important}
+
+/* A small unread pip so the greeting is discoverable without auto-opening a
+   panel over someone's reading. */
+.fq-launch .fq-pip{
+  position:absolute;top:-2px;right:-2px;width:12px;height:12px;border-radius:50%;
+  background:var(--q-gold);border:2px solid var(--q-cream);
+}
+
+/* css/footer.css puts the back-to-top button at right:22px/bottom:22px, exactly
+   where the launcher sits. The launcher is the more important control, so the
+   back-to-top button moves up. This override lives here because the collision is
+   caused by this file, and footer.css stays the source of truth for the rest. */
+body.fq-has-chat .to-top{bottom:90px}
+
+/* ------------------------------------------------------------- panel */
+#fnsq-chat{
+  position:fixed;right:22px;bottom:22px;z-index:71;
+  width:min(408px,calc(100vw - 32px));
+  height:min(640px,calc(100vh - 44px));
+  display:flex;flex-direction:column;
+  background:var(--q-cream);
+  border:1px solid var(--q-line);border-radius:18px;
+  box-shadow:var(--q-shadow);
+  font-family:var(--q-sans);color:var(--q-ink);
+  overflow:hidden;
+  opacity:0;transform:translateY(12px) scale(.985);
+  transition:opacity .22s ease,transform .22s cubic-bezier(.25,.8,.25,1);
+}
+#fnsq-chat.fq-open{opacity:1;transform:none}
+#fnsq-chat[hidden]{display:none!important}
+
+.fq-head{
+  flex:none;display:flex;align-items:center;gap:12px;
+  padding:14px 14px 14px 18px;
+  background:var(--q-navy);color:var(--q-cream-tx);
+}
+.fq-head .fq-avatar{
+  width:38px;height:38px;border-radius:50%;flex:none;
+  background:var(--q-gold-soft);border:1px solid var(--q-line-cream);
+  display:flex;align-items:center;justify-content:center;
+}
+.fq-head .fq-avatar svg{width:19px;height:19px}
+/* Colour is set explicitly on every heading in the widget. The site stylesheet
+   has a global `h1,h2,h3{color:var(--navy)}` rule, and an element selector beats
+   inheritance, so this header's title rendered navy-on-navy until it was stated
+   here. Same reasoning applies to the h3s in .fq-calc and .fq-card below. */
+.fq-head h2{
+  margin:0;font-family:var(--q-serif);font-size:15px;font-weight:500;
+  letter-spacing:.01em;line-height:1.25;color:var(--q-cream-tx);
+  text-transform:none;
+}
+.fq-head p{margin:2px 0 0;font-size:11.5px;color:var(--q-cream-tx-dim);line-height:1.3}
+.fq-head .fq-htx{flex:1;min-width:0}
+.fq-x{
+  flex:none;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--q-line-cream);background:transparent;
+  color:var(--q-cream-tx);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.fq-x:hover{background:rgba(244,238,224,.12)}
+.fq-x:focus-visible{outline:2px solid var(--q-gold);outline-offset:2px}
+.fq-x svg{width:15px;height:15px}
+
+/* Reset against the host page's typography. The widget is injected into pages
+   that already carry their own h2/h3/p/ul/dl rules, so every element it uses is
+   neutralised here rather than trusting inheritance.
+   Wrapped in :where() so the whole reset carries ZERO specificity: it beats the
+   host page's inherited defaults but loses to every component rule below, which
+   is exactly the ordering an injected widget wants. */
+:where(#fnsq-chat) :where(h2,h3,p,ul,ol,li,dl,dt,dd,button,a,textarea,div,span){
+  box-sizing:border-box;
+  font-family:var(--q-sans);
+  text-transform:none;
+  letter-spacing:normal;
+  list-style:none;
+  margin:0;
+}
+
+/* ---------------------------------------------------------- messages */
+.fq-log{
+  flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:18px 16px 6px;
+  display:flex;flex-direction:column;gap:12px;
+  scrollbar-width:thin;scrollbar-color:rgba(30,31,45,.22) transparent;
+}
+.fq-log::-webkit-scrollbar{width:7px}
+.fq-log::-webkit-scrollbar-thumb{background:rgba(30,31,45,.2);border-radius:4px}
+
+.fq-msg{display:flex;flex-direction:column;gap:6px;max-width:100%}
+.fq-msg.fq-you{align-items:flex-end}
+
+.fq-bubble{
+  max-width:86%;padding:11px 14px;border-radius:14px;
+  font-size:14px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word;
+}
+.fq-bot .fq-bubble{
+  background:var(--q-white);border:1px solid var(--q-line);
+  border-bottom-left-radius:5px;color:var(--q-ink);
+}
+.fq-you .fq-bubble{
+  background:var(--q-navy);color:var(--q-cream-tx);
+  border-bottom-right-radius:5px;
+}
+.fq-hint{font-size:12.5px;color:var(--q-ink-faint);line-height:1.45;padding:0 3px;max-width:86%}
+
+/* calculator result table */
+.fq-calc{
+  max-width:96%;background:var(--q-white);
+  border:1px solid var(--q-line);border-left:3px solid var(--q-gold);
+  border-radius:12px;padding:13px 15px;
+}
+.fq-calc h3{
+  margin:0 0 9px;font-family:var(--q-serif);font-size:12px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.09em;color:var(--q-gold);
+}
+.fq-calc dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 14px}
+.fq-calc dt{font-size:13px;color:var(--q-ink-dim);line-height:1.4}
+.fq-calc dd{margin:0;font-size:13.5px;font-weight:600;text-align:right;line-height:1.4;font-variant-numeric:tabular-nums}
+/* The headline row of every calculator result. */
+.fq-calc dl>dt:first-of-type{color:var(--q-ink);font-weight:500}
+.fq-calc dl>dd:first-of-type{font-size:16px;color:var(--q-navy)}
+.fq-calc .fq-notes{margin:11px 0 0;padding:10px 0 0;border-top:1px solid var(--q-line);display:grid;gap:7px}
+.fq-calc .fq-notes p{margin:0;font-size:12px;line-height:1.5;color:var(--q-ink-dim)}
+.fq-calc .fq-more{
+  display:inline-block;margin-top:10px;font-size:12.5px;color:var(--q-gold);
+  text-decoration:none;border-bottom:1px solid rgba(168,124,46,.4);
+}
+.fq-calc .fq-more:hover{border-bottom-color:var(--q-gold)}
+
+/* "what happens next" style list */
+.fq-card{
+  max-width:96%;background:var(--q-cream-2);border:1px solid var(--q-line);
+  border-radius:12px;padding:13px 15px;
+}
+.fq-card h3{
+  margin:0 0 8px;font-family:var(--q-serif);font-size:12px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.09em;color:var(--q-navy);
+}
+.fq-card ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+.fq-card li{position:relative;padding-left:17px;font-size:13px;line-height:1.5;color:var(--q-ink-dim)}
+.fq-card li::before{content:'';position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--q-gold)}
+
+.fq-linkrow{max-width:86%}
+.fq-linkrow a{font-size:13px;color:var(--q-gold);text-decoration:none;border-bottom:1px solid rgba(168,124,46,.4)}
+.fq-linkrow a:hover{border-bottom-color:var(--q-gold)}
+
+/* GHL booking widget */
+.fq-booking{
+  max-width:100%;background:var(--q-white);border:1px solid var(--q-line);
+  border-radius:12px;overflow:hidden;
+}
+.fq-booking h3{
+  margin:0;padding:11px 14px;font-family:var(--q-serif);font-size:12px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.09em;color:var(--q-navy);
+  background:var(--q-cream-2);border-bottom:1px solid var(--q-line);
+}
+.fq-booking iframe{display:block;width:100%;height:520px;border:0;background:var(--q-white)}
+.fq-booking .fq-newtab{
+  display:block;padding:9px 14px;font-size:12px;color:var(--q-ink-faint);
+  border-top:1px solid var(--q-line);text-decoration:none;
+}
+.fq-booking .fq-newtab:hover{color:var(--q-gold)}
+
+/* typing indicator */
+.fq-typing{display:flex;gap:4px;padding:13px 15px;background:var(--q-white);border:1px solid var(--q-line);border-radius:14px;border-bottom-left-radius:5px;width:fit-content}
+.fq-typing span{width:6px;height:6px;border-radius:50%;background:var(--q-ink-faint);animation:fq-blink 1.3s infinite}
+.fq-typing span:nth-child(2){animation-delay:.18s}
+.fq-typing span:nth-child(3){animation-delay:.36s}
+@keyframes fq-blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+
+/* per-message compliance affordance: the tooltip the disclaimers live behind */
+.fq-disc{position:relative;align-self:flex-start;margin-top:-1px}
+.fq-disc button{
+  display:inline-flex;align-items:center;gap:5px;
+  border:0;background:none;cursor:pointer;padding:1px 3px;
+  font-family:var(--q-sans);font-size:11px;color:var(--q-ink-faint);
+}
+.fq-disc button:hover,.fq-disc button:focus-visible{color:var(--q-gold)}
+.fq-disc button svg{width:12px;height:12px}
+.fq-disc .fq-pop{
+  display:none;position:absolute;left:0;bottom:calc(100% + 7px);z-index:5;
+  width:min(300px,78vw);padding:11px 13px;
+  background:var(--q-navy);color:var(--q-cream-tx-dim);
+  border-radius:10px;box-shadow:var(--q-shadow);
+  font-size:11.5px;line-height:1.55;
+}
+.fq-disc.fq-show .fq-pop{display:block}
+.fq-disc .fq-pop b{display:block;color:var(--q-cream-tx);font-weight:500;margin-bottom:3px}
+.fq-disc .fq-pop p{margin:0 0 7px}
+.fq-disc .fq-pop p:last-child{margin:0}
+
+/* ------------------------------------------------------------- chips */
+.fq-chips{
+  flex:none;display:flex;flex-wrap:wrap;gap:7px;
+  padding:10px 16px 2px;
+}
+.fq-chips:empty{display:none}
+.fq-chips button{
+  border:1px solid var(--q-line);border-radius:20px;
+  background:var(--q-white);color:var(--q-navy);cursor:pointer;
+  padding:7px 13px;font-family:var(--q-sans);font-size:12.5px;line-height:1.3;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.fq-chips button:hover{background:var(--q-navy);border-color:var(--q-navy);color:var(--q-cream-tx)}
+.fq-chips button:focus-visible{outline:2px solid var(--q-gold);outline-offset:2px}
+
+/* ------------------------------------------------------------- input */
+.fq-form{
+  flex:none;display:flex;align-items:flex-end;gap:9px;
+  padding:12px 16px;border-top:1px solid var(--q-line);background:var(--q-cream);
+}
+.fq-form textarea{
+  flex:1;resize:none;min-height:42px;max-height:110px;
+  padding:11px 13px;border:1px solid var(--q-line);border-radius:11px;
+  background:var(--q-white);color:var(--q-ink);
+  font-family:var(--q-sans);font-size:14px;line-height:1.45;
+}
+.fq-form textarea::placeholder{color:var(--q-ink-faint)}
+.fq-form textarea:focus{outline:0;border-color:var(--q-gold);box-shadow:0 0 0 3px var(--q-gold-soft)}
+.fq-send{
+  flex:none;width:42px;height:42px;border-radius:11px;border:0;cursor:pointer;
+  background:var(--q-navy);color:var(--q-cream-tx);
+  display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s;
+}
+.fq-send:hover{background:var(--q-navy-3)}
+.fq-send:disabled{opacity:.4;cursor:default}
+.fq-send:focus-visible{outline:2px solid var(--q-gold);outline-offset:2px}
+.fq-send svg{width:17px;height:17px}
+
+/* ------------------------------------------------- persistent footer */
+.fq-foot{
+  flex:none;padding:8px 16px 11px;background:var(--q-navy-2);
+  color:var(--q-cream-tx-dim);font-size:10.5px;line-height:1.5;
+}
+.fq-foot p{margin:0}
+.fq-foot a{color:var(--q-cream-tx-dim);text-decoration:underline;text-underline-offset:2px}
+.fq-foot a:hover{color:var(--q-gold)}
+
+/* ------------------------------------------------------------ mobile */
+@media (max-width:560px){
+  #fnsq-chat{
+    right:0;bottom:0;left:0;top:0;
+    width:100%;height:100%;height:100dvh;
+    border-radius:0;border:0;
+  }
+  .fq-launch{right:16px;bottom:16px;height:52px;padding:0 18px 0 15px}
+  .fq-booking iframe{height:60vh}
+  body.fq-has-chat .to-top{bottom:82px}
+}
+
+/* Someone who has asked for less motion gets none of it. */
+@media (prefers-reduced-motion:reduce){
+  .fq-launch,#fnsq-chat{transition:none}
+  .fq-typing span{animation:none;opacity:.5}
+}
+
+/* The widget is interactive and has no print value. */
+@media print{.fq-launch,#fnsq-chat{display:none!important}}
