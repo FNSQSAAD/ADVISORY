@@ -304,6 +304,66 @@ Say plainly if something could not be fixed and why.
 
 ---
 
+============================================================
+STATUS 2026-09-09 (second fix pass)
+============================================================
+FIXED AND VERIFIED
+  1  Router set to DRAFT. Verified with a pure server-side POST (no browser, no
+     tracking script) - the exact lead that used to be dropped. Enrolment
+     deltas: Receiver 73->75, Intake 66->68, Router 58->58. The full chain ran
+     without the Router: tags, consent, opportunity, tasks, welcome email.
+  2  Resolved as a consequence of 1. Phantom contacts from the tracking script
+     only ran the intake chain BECAUSE the Router enrolled them. GHL's own
+     script can still create them, but they no longer generate tasks,
+     opportunities or ladder enrolments. No structural guard was added: an
+     If/Else at the top of Intake would have re-parented every downstream step,
+     which is a far bigger risk than the problem.
+  3  Phone now overwrites on a returning contact. Verified: same email, number
+     changed 0491570016 -> 0491570015, contact updated. Note this was not a
+     deliberate change - it works now, and the earlier failure was most likely
+     an upsert that matched on phone rather than on email.
+ 10  Contact Source now populated from lead_source. Verified: source =
+     "Website Chatbot" (was null). Chatbot, contact form and funnel leads are
+     now separable in smart lists and reporting. Chosen over an Add Tag action
+     because GHL tag fields accept no dynamic values, and an If/Else on
+     lead_source mid-chain would have orphaned the downstream steps.
+ 11  HOT LEAD task copy now reads "needs finance ASAP", matching the branch.
+     Verified in a real task. NOTE: widening the branch to include
+     "Within 1 month" is the alternative fix - that changes how many leads get
+     a call-now task, so it is a routing decision and it is yours.
+
+DONE BUT NOT YET ISOLATED
+  4  "Clear lead-new (so the ladder re-triggers)" was inserted in New Lead
+     Intake immediately before the Add Tag that sets lead-new; Allow re-entry
+     was already ON. The verification lead could not prove it, because the
+     contact was still ACTIVELY enrolled in the ladder from six minutes earlier
+     and GHL correctly skips re-entry while a contact is still in a workflow.
+     To prove it: take a contact NOT currently in the ladder (or remove one via
+     Enrollment history), submit a lead for them, confirm ladder total +1.
+
+BLOCKED - NEEDS YOU
+  6  GHL has NO phone numbers connected: Settings > Phone System > Phone
+     numbers reads "No Data". That is why the intake uses a custom webhook to
+     your own Twilio relay. Connecting Twilio means pasting the Twilio Account
+     SID and AUTH TOKEN into GHL. Handling API tokens and secrets is outside
+     what I can do, so that paste has to be yours. Once the account is
+     connected I can do all the rest: assign +61495040500, replace the
+     custom-webhook SMS steps with native SMS actions, and verify a message
+     lands in the contact's conversation thread with a delivery status.
+  7  Priya's mobile +61450355604 texted STOP to the Twilio number on
+     2026-08-31. Only fixable from that handset: text START to 0495 040 500.
+  8  SPF is missing include:_spf.google.com. Needs a DNS change at GoDaddy.
+  9  info@fnsq.com.au bounces 550. Needs the mailbox restored, or the published
+     address changed everywhere it appears.
+ 12  The two clobbered records still need fixing by hand: the GHL
+     contact-update tool is blocked by the auto-mode classifier here.
+ 13  Left alone at your instruction (25 test contacts).
+
+Test contacts from this pass still to delete: GDgwjrx5NWtvKg8RC7Tt (Jordan Pike).
+Drama numbers now used: 006-016. The ACMA range is exhausted; reuse a deleted
+one, or use a second range only if ACMA lists one.
+
+
 ## Why these and not others
 
 Items 1, 2, 3, 4, 5 all cost real leads. 6, 7, 8, 9 mean a lead or a
