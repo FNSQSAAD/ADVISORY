@@ -5,16 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finance Square Group | Strategy-First Finance Brokers, Australia</title>
 <meta name="description" content="Finance Square Group builds lending strategy for self-employed borrowers, investors, medical professionals and business owners. Banks don’t understand. Handling complex finances. Not a rate site.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/poppins-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/roboto-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/perf.css">
 <link rel="icon" type="image/svg+xml" href="assets/brand/fnsq-logo.svg">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/pages.css">
 <link rel="stylesheet" href="css/footer.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8DMYX99373"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8DMYX99373');</script>
-<script async src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_0fd4654259a64250bb59c26b3a6faa40"></script>
+<script>
+/* Analytics and CRM tracking load after the page is usable, so ~450ms of
+   third-party main-thread work stays off the critical path. gtag() is stubbed
+   synchronously and its calls queue on dataLayer, so the page_view and any
+   generate_lead event fired by site.js/start.js are replayed once gtag.js
+   arrives. Whichever comes first triggers the load: a real user interaction,
+   or a short delay after window.load. */
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-8DMYX99373');
+(function(){
+  var loaded=false;
+  var EVENTS=['pointerdown','keydown','touchstart','wheel','scroll'];
+  function add(src,attrs){var s=document.createElement('script');s.async=true;s.src=src;
+    for(var k in attrs)s.setAttribute(k,attrs[k]);document.head.appendChild(s);}
+  function load(){
+    if(loaded)return; loaded=true;
+    EVENTS.forEach(function(e){window.removeEventListener(e,load);});
+    add('https://www.googletagmanager.com/gtag/js?id=G-8DMYX99373');
+    add('https://link.msgsndr.com/js/external-tracking.js',{'data-tracking-id':'tk_0fd4654259a64250bb59c26b3a6faa40'});
+  }
+  EVENTS.forEach(function(e){window.addEventListener(e,load,{passive:true});});
+  function afterLoad(){setTimeout(load,1500);}
+  if(document.readyState==='complete')afterLoad();
+  else window.addEventListener('load',afterLoad);
+})();
+</script>
 </head>
 <body>
 
@@ -26,7 +49,7 @@
 </div>
 
 <header class="nav">
-  <a class="logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group"></a>
+  <a class="logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group" width="1500" height="310"></a>
   <nav class="nav-links" aria-label="Main">
     <span class="dd">
       <a href="#services">Lending Services <i class="dd-caret"></i></a>
@@ -89,10 +112,10 @@
       <div class="arch-frame"></div>
       <div class="arch" data-slider>
         <div class="arch-sizer"></div>
-        <div class="arch-slide on"><img src="assets/img/home-dusk-1600.jpg" srcset="assets/img/home-dusk-800.jpg 800w, assets/img/home-dusk-1600.jpg 1600w" sizes="(max-width:1080px) 90vw, 470px" alt="Australian family home at dusk"></div>
-        <div class="arch-slide"><img src="assets/img/home-gum-1600.jpg" srcset="assets/img/home-gum-800.jpg 800w, assets/img/home-gum-1600.jpg 1600w, assets/img/home-gum-4k.jpg 3840w" sizes="(max-width:1080px) 90vw, 470px" alt="Modern Australian home beneath a gum tree"></div>
-        <div class="arch-slide"><img src="assets/img/verandah-blue-1600.jpg" srcset="assets/img/verandah-blue-800.jpg 800w, assets/img/verandah-blue-1600.jpg 1600w, assets/img/verandah-blue-4k.jpg 3840w" sizes="(max-width:1080px) 90vw, 470px" alt="Classic Australian weatherboard verandah"></div>
-        <div class="arch-slide"><img src="assets/img/home-timber-1600.jpg" srcset="assets/img/home-timber-800.jpg 800w, assets/img/home-timber-1600.jpg 1600w, assets/img/home-timber-4k.jpg 3840w" sizes="(max-width:1080px) 90vw, 470px" alt="Contemporary timber Australian home"></div>
+        <div class="arch-slide on"><picture><source type="image/webp" srcset="assets/img/home-dusk-800.webp 800w, assets/img/home-dusk-1600.webp 1600w" sizes="(max-width:1080px) 90vw, 470px"><img src="assets/img/home-dusk-1600.jpg" srcset="assets/img/home-dusk-800.jpg 800w, assets/img/home-dusk-1600.jpg 1600w" sizes="(max-width:1080px) 90vw, 470px" alt="Australian family home at dusk"></picture></div>
+        <div class="arch-slide" data-defer><picture><source type="image/webp" data-srcset="assets/img/home-gum-800.webp 800w, assets/img/home-gum-1600.webp 1600w, assets/img/home-gum-4k.webp 3840w" sizes="(max-width:1080px) 90vw, 470px"><img data-src="assets/img/home-gum-1600.jpg" data-srcset="assets/img/home-gum-800.jpg 800w, assets/img/home-gum-1600.jpg 1600w, assets/img/home-gum-4k.jpg 3840w" sizes="(max-width:1080px) 90vw, 470px" alt="Modern Australian home beneath a gum tree"></picture></div>
+        <div class="arch-slide" data-defer><picture><source type="image/webp" data-srcset="assets/img/verandah-blue-800.webp 800w, assets/img/verandah-blue-1600.webp 1600w, assets/img/verandah-blue-4k.webp 3840w" sizes="(max-width:1080px) 90vw, 470px"><img data-src="assets/img/verandah-blue-1600.jpg" data-srcset="assets/img/verandah-blue-800.jpg 800w, assets/img/verandah-blue-1600.jpg 1600w, assets/img/verandah-blue-4k.jpg 3840w" sizes="(max-width:1080px) 90vw, 470px" alt="Classic Australian weatherboard verandah"></picture></div>
+        <div class="arch-slide" data-defer><picture><source type="image/webp" data-srcset="assets/img/home-timber-800.webp 800w, assets/img/home-timber-1600.webp 1600w, assets/img/home-timber-4k.webp 3840w" sizes="(max-width:1080px) 90vw, 470px"><img data-src="assets/img/home-timber-1600.jpg" data-srcset="assets/img/home-timber-800.jpg 800w, assets/img/home-timber-1600.jpg 1600w, assets/img/home-timber-4k.jpg 3840w" sizes="(max-width:1080px) 90vw, 470px" alt="Contemporary timber Australian home"></picture></div>
       </div>
       <div class="arch-dots" aria-label="Hero images">
         <button class="on" aria-label="Image 1"></button><button aria-label="Image 2"></button><button aria-label="Image 3"></button><button aria-label="Image 4"></button>
@@ -173,7 +196,7 @@
     <div class="about-visual rv">
       <div class="arch-frame"></div>
       <div class="arch">
-        <img src="assets/img/priya-dey-1200.jpg" srcset="assets/img/priya-dey-800.jpg 800w, assets/img/priya-dey-1200.jpg 1200w" sizes="(max-width:1080px) 90vw, 430px" alt="Priya Dey, Founder, Finance Square Group">
+        <picture><source type="image/webp" srcset="assets/img/priya-dey-800.webp 800w, assets/img/priya-dey-1200.webp 1200w" sizes="(max-width:1080px) 90vw, 430px"><img src="assets/img/priya-dey-1200.jpg" srcset="assets/img/priya-dey-800.jpg 800w, assets/img/priya-dey-1200.jpg 1200w" sizes="(max-width:1080px) 90vw, 430px" alt="Priya Dey, Founder, Finance Square Group"></picture>
       </div>
       <div class="sig"><b>Priya Dey</b><span>Credit Representative 543438</span></div>
     </div>
@@ -227,30 +250,30 @@
     <div class="lender-marquee">
       <div class="lm-viewport">
         <div class="lm-track">
-          <div class="lm-item"><img src="assets/img/lenders/anz.svg" alt="ANZ" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/cba.svg" alt="Commonwealth Bank" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/nab.svg" alt="NAB" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/westpac.svg" alt="Westpac" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/macquarie.svg" alt="Macquarie" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/suncorp.svg" alt="Suncorp" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/bankwest.png" alt="Bankwest" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/stgeorge.png" alt="St.George" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/bendigo.png" alt="Bendigo Bank" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/boq.png" alt="Bank of Queensland" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/amp.svg" alt="AMP" height="38" decoding="async"></div>
+          <div class="lm-item"><img src="assets/img/lenders/anz.svg" alt="ANZ" decoding="async" width="440" height="146"></div>
+          <div class="lm-item"><img src="assets/img/lenders/cba.svg" alt="Commonwealth Bank" decoding="async" width="64" height="64"></div>
+          <div class="lm-item"><img src="assets/img/lenders/nab.svg" alt="NAB" decoding="async" width="500" height="200"></div>
+          <div class="lm-item"><img src="assets/img/lenders/westpac.svg" alt="Westpac" decoding="async" width="1024" height="203"></div>
+          <div class="lm-item"><img src="assets/img/lenders/macquarie.svg" alt="Macquarie" decoding="async" width="2450" height="430"></div>
+          <div class="lm-item"><img src="assets/img/lenders/suncorp.svg" alt="Suncorp" decoding="async" width="582" height="172"></div>
+          <div class="lm-item"><img src="assets/img/lenders/bankwest.png" alt="Bankwest" decoding="async" width="308" height="80"></div>
+          <div class="lm-item"><img src="assets/img/lenders/stgeorge.png" alt="St.George" decoding="async" width="391" height="124"></div>
+          <div class="lm-item"><img src="assets/img/lenders/bendigo.png" alt="Bendigo Bank" decoding="async" width="3308" height="516"></div>
+          <div class="lm-item"><img src="assets/img/lenders/boq.png" alt="Bank of Queensland" decoding="async" width="294" height="330"></div>
+          <div class="lm-item"><img src="assets/img/lenders/amp.svg" alt="AMP" decoding="async" width="131" height="58"></div>
         </div>
         <div class="lm-track" aria-hidden="true">
-          <div class="lm-item"><img src="assets/img/lenders/anz.svg" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/cba.svg" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/nab.svg" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/westpac.svg" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/macquarie.svg" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/suncorp.svg" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/bankwest.png" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/stgeorge.png" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/bendigo.png" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/boq.png" alt="" height="38" decoding="async"></div>
-          <div class="lm-item"><img src="assets/img/lenders/amp.svg" alt="" height="38" decoding="async"></div>
+          <div class="lm-item"><img src="assets/img/lenders/anz.svg" alt="" decoding="async" width="440" height="146"></div>
+          <div class="lm-item"><img src="assets/img/lenders/cba.svg" alt="" decoding="async" width="64" height="64"></div>
+          <div class="lm-item"><img src="assets/img/lenders/nab.svg" alt="" decoding="async" width="500" height="200"></div>
+          <div class="lm-item"><img src="assets/img/lenders/westpac.svg" alt="" decoding="async" width="1024" height="203"></div>
+          <div class="lm-item"><img src="assets/img/lenders/macquarie.svg" alt="" decoding="async" width="2450" height="430"></div>
+          <div class="lm-item"><img src="assets/img/lenders/suncorp.svg" alt="" decoding="async" width="582" height="172"></div>
+          <div class="lm-item"><img src="assets/img/lenders/bankwest.png" alt="" decoding="async" width="308" height="80"></div>
+          <div class="lm-item"><img src="assets/img/lenders/stgeorge.png" alt="" decoding="async" width="391" height="124"></div>
+          <div class="lm-item"><img src="assets/img/lenders/bendigo.png" alt="" decoding="async" width="3308" height="516"></div>
+          <div class="lm-item"><img src="assets/img/lenders/boq.png" alt="" decoding="async" width="294" height="330"></div>
+          <div class="lm-item"><img src="assets/img/lenders/amp.svg" alt="" decoding="async" width="131" height="58"></div>
         </div>
       </div>
     </div>
@@ -446,7 +469,7 @@
 
 <!-- ================= WHAT YOU CAN EXPECT ================= -->
 <section class="band">
-  <img src="assets/img/keys-model-1600.jpg" srcset="assets/img/keys-model-800.jpg 800w, assets/img/keys-model-1600.jpg 1600w, assets/img/keys-model-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy">
+  <picture><source type="image/webp" srcset="assets/img/keys-model-800.webp 800w, assets/img/keys-model-1600.webp 1600w, assets/img/keys-model-4k.webp 3840w" sizes="100vw"><img src="assets/img/keys-model-1600.jpg" srcset="assets/img/keys-model-800.jpg 800w, assets/img/keys-model-1600.jpg 1600w, assets/img/keys-model-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy"></picture>
   <div class="wrap">
     <span class="eyebrow rv">What You Can Expect From Finance Square</span>
     <h2 class="rv">Your Bank’s No isn’t <em>Your Last Option</em></h2>
@@ -460,7 +483,7 @@
 
 <!-- ================= FINAL CTA ================= -->
 <section class="section cta cta-photo">
-  <img src="assets/img/syd-aerial-1600.jpg" srcset="assets/img/syd-aerial-800.jpg 800w, assets/img/syd-aerial-1600.jpg 1600w, assets/img/syd-aerial-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy">
+  <picture><source type="image/webp" srcset="assets/img/syd-aerial-800.webp 800w, assets/img/syd-aerial-1600.webp 1600w, assets/img/syd-aerial-4k.webp 3840w" sizes="100vw"><img src="assets/img/syd-aerial-1600.jpg" srcset="assets/img/syd-aerial-800.jpg 800w, assets/img/syd-aerial-1600.jpg 1600w, assets/img/syd-aerial-4k.jpg 3840w" sizes="100vw" alt="" loading="lazy"></picture>
   <div class="wrap">
     <span class="eyebrow rv">Qualify. Strategise. Settle.</span>
     <h2 class="rv">Ready to determine your <em>borrowing capacity?</em></h2>
@@ -491,11 +514,11 @@
 
     <div class="foot-top">
       <a class="foot-brand" href="index.html" aria-label="Finance Square Group home">
-        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group">
+        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group" width="1500" height="310">
       </a>
       <div class="foot-badges">
-        <img src="assets/img/badges/mfaa.png" alt="Mortgage and Finance Association of Australia" width="120" height="46" loading="lazy">
-        <img src="assets/img/badges/afca.png" alt="Australian Financial Complaints Authority" width="150" height="46" loading="lazy">
+        <img src="assets/img/badges/mfaa.png" alt="Mortgage and Finance Association of Australia" width="342" height="200" loading="lazy">
+        <img src="assets/img/badges/afca.png" alt="Australian Financial Complaints Authority" width="457" height="200" loading="lazy">
       </div>
     </div>
 
@@ -558,7 +581,7 @@
 
 <button class="to-top" id="toTop" aria-label="Back to top" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 15l6-6 6 6"/></svg></button>
 
-<script src="js/site.js"></script>
-<script src="js/footer.js"></script>
+<script defer src="js/site.js"></script>
+<script defer src="js/footer.js"></script>
 </body>
 </html>

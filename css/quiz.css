@@ -28,7 +28,7 @@ body.qz-page{
   padding:14px clamp(16px,4vw,40px);border-bottom:1px solid var(--qz-line);
   background:var(--qz-bg);
 }
-.qz-head .qz-logo img{height:44px;display:block}
+.qz-head .qz-logo img{height:44px;width:auto;display:block}
 .qz-exit{
   font-family:var(--qz-body);font-size:.85rem;color:var(--qz-ink-dim);
   text-decoration:none;display:inline-flex;align-items:center;gap:6px;

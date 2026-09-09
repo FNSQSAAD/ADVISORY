@@ -183,6 +183,21 @@
     var aSlides = $$('.arch-slide', arch);
     var aDots = $$('.arch-dots button');
     var aIdx = 0, aTimer;
+    /* Slides 2-n ship with their URLs in data-src/data-srcset so they do not
+       compete with first paint. They sit inside the viewport at opacity 0, so
+       loading="lazy" would not have held them back. Hydrate once the page has
+       loaded - well before the 5.5s first transition. */
+    var aHydrate = function () {
+      $$('.arch-slide[data-defer]', arch).forEach(function (sl) {
+        $$('img[data-src], source[data-srcset]', sl).forEach(function (el) {
+          if (el.dataset.srcset) { el.srcset = el.dataset.srcset; delete el.dataset.srcset; }
+          if (el.dataset.src) { el.src = el.dataset.src; delete el.dataset.src; }
+        });
+        sl.removeAttribute('data-defer');
+      });
+    };
+    if (document.readyState === 'complete') aHydrate();
+    else window.addEventListener('load', aHydrate);
     var aGo = function (n) {
       aIdx = (n + aSlides.length) % aSlides.length;
       aSlides.forEach(function (s, i) { s.classList.toggle('on', i === aIdx); });

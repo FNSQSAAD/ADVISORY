@@ -6,20 +6,43 @@
   <title>Get Started | Finance Square Group</title>
   <meta name="description" content="Answer a few quick questions and get a personal finance snapshot, whether you're buying or reviewing the loan you already have. About 60 seconds.">
   <link rel="icon" type="image/svg+xml" href="assets/brand/fnsq-logo.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/poppins-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/roboto-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/perf.css">
   <link rel="stylesheet" href="css/start.css">
   <link rel="stylesheet" href="css/footer.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8DMYX99373"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8DMYX99373');</script>
-<script async src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_0fd4654259a64250bb59c26b3a6faa40"></script>
+<script>
+/* Analytics and CRM tracking load after the page is usable, so ~450ms of
+   third-party main-thread work stays off the critical path. gtag() is stubbed
+   synchronously and its calls queue on dataLayer, so the page_view and any
+   generate_lead event fired by site.js/start.js are replayed once gtag.js
+   arrives. Whichever comes first triggers the load: a real user interaction,
+   or a short delay after window.load. */
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-8DMYX99373');
+(function(){
+  var loaded=false;
+  var EVENTS=['pointerdown','keydown','touchstart','wheel','scroll'];
+  function add(src,attrs){var s=document.createElement('script');s.async=true;s.src=src;
+    for(var k in attrs)s.setAttribute(k,attrs[k]);document.head.appendChild(s);}
+  function load(){
+    if(loaded)return; loaded=true;
+    EVENTS.forEach(function(e){window.removeEventListener(e,load);});
+    add('https://www.googletagmanager.com/gtag/js?id=G-8DMYX99373');
+    add('https://link.msgsndr.com/js/external-tracking.js',{'data-tracking-id':'tk_0fd4654259a64250bb59c26b3a6faa40'});
+  }
+  EVENTS.forEach(function(e){window.addEventListener(e,load,{passive:true});});
+  function afterLoad(){setTimeout(load,1500);}
+  if(document.readyState==='complete')afterLoad();
+  else window.addEventListener('load',afterLoad);
+})();
+</script>
 </head>
 <body class="st-page">
   <div class="st-shell">
     <div class="st-col">
       <header class="st-head">
-        <a class="st-logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group"></a>
+        <a class="st-logo" href="index.html" aria-label="Finance Square Group home"><img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group" width="1500" height="310"></a>
         <a class="st-exit" href="index.html">Back to site</a>
       </header>
       <main class="st-main">
@@ -27,7 +50,7 @@
       </main>
     </div>
     <aside class="st-photo" aria-hidden="true">
-      <img src="assets/img/home-suburb-1600.jpg" srcset="assets/img/home-suburb-1600.jpg 1600w, assets/img/home-suburb-4k.jpg 3840w" sizes="44vw" alt="">
+      <picture><source type="image/webp" srcset="assets/img/home-suburb-1600.webp 1600w, assets/img/home-suburb-4k.webp 3840w" sizes="44vw"><img src="assets/img/home-suburb-1600.jpg" srcset="assets/img/home-suburb-1600.jpg 1600w, assets/img/home-suburb-4k.jpg 3840w" sizes="44vw" alt="" loading="lazy"></picture>
       <div class="st-photo-quote">
         <strong>Clear explanations, <span class="gold">then a plan.</span></strong>
         Our service to you is free. Lender fees, government charges and other costs may apply.
@@ -40,11 +63,11 @@
 
     <div class="foot-top">
       <a class="foot-brand" href="index.html" aria-label="Finance Square Group home">
-        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group">
+        <img src="assets/brand/fnsq-logo.svg" alt="Finance Square Group" width="1500" height="310">
       </a>
       <div class="foot-badges">
-        <img src="assets/img/badges/mfaa.png" alt="Mortgage and Finance Association of Australia" width="120" height="46" loading="lazy">
-        <img src="assets/img/badges/afca.png" alt="Australian Financial Complaints Authority" width="150" height="46" loading="lazy">
+        <img src="assets/img/badges/mfaa.png" alt="Mortgage and Finance Association of Australia" width="342" height="200" loading="lazy">
+        <img src="assets/img/badges/afca.png" alt="Australian Financial Complaints Authority" width="457" height="200" loading="lazy">
       </div>
     </div>
 
@@ -107,8 +130,8 @@
 
 <button class="to-top" id="toTop" aria-label="Back to top" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 15l6-6 6 6"/></svg></button>
 
-  <script src="js/footer.js"></script>
+  <script defer src="js/footer.js"></script>
 
-  <script src="js/start.js"></script>
+  <script defer src="js/start.js"></script>
 </body>
 </html>

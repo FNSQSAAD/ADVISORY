@@ -23,7 +23,7 @@ body.st-page{
 .st-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,44%);min-height:100vh}
 .st-col{display:flex;flex-direction:column;min-width:0}
 .st-head{display:flex;align-items:center;justify-content:space-between;padding:16px clamp(16px,3.5vw,44px)}
-.st-head .st-logo img{height:44px;display:block}
+.st-head .st-logo img{height:44px;width:auto;display:block}
 .st-exit{
   font-size:.85rem;color:var(--st-ink-dim);text-decoration:none;
   padding:8px 14px;border:1px solid var(--st-line);border-radius:999px;
