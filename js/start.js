@@ -237,7 +237,11 @@ function submitLead(c, el){
     phone: c.phone,
     message: summaryLine() + ' Submitted from ' + location.host + location.pathname,
     lead_source: 'Get Started Funnel: ' + (state.path === 'buy' ? 'Buying' : 'Loan review'),
-    website: c.honeypot
+    website: c.honeypot,
+    /* Discrete fields for GHL. The buy path asks a timeframe; the loan path never does,
+       so it sends none and the intake branch correctly settles on lead-warm. */
+    timing: state.values.timeframe || '',
+    goal: state.path || ''
   };
   var done = function(ok){
     if (ok){

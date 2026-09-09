@@ -151,7 +151,11 @@
         phone: $('#f-phone').value.replace(/[\s()-]/g, ''),
         message: 'Contact form. Goal: ' + $('#f-goal').value + '. Timing: ' + $('#f-when').value + '.' +
                  (notes ? ' Notes: ' + notes : '') + ' Submitted from ' + location.host + location.pathname,
-        lead_source: 'Website Contact Form'
+        lead_source: 'Website Contact Form',
+        /* Sent as discrete fields as well as in the message, so GHL can map them onto
+           the contact and the New Lead Intake branch can read a real answer. */
+        timing: $('#f-when').value,
+        goal: $('#f-goal').value
       };
       fetch('/api/lead', {
         method: 'POST',
