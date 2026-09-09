@@ -373,3 +373,47 @@ first nine harder to diagnose next time.
 
 The chatbot itself is not implicated in any of them except item 2, whose
 website-side cause was fixed before deploy (see `docs/CHATBOT.md`).
+
+---
+
+## Item 6 — done a different way, 2026-09-09
+
+Native SMS turned out to be unreachable: GHL has no phone numbers connected
+(Settings > Phone System > Phone numbers reads "No Data"), and "bring your own
+Twilio" is an AGENCY-level setting. This login is scoped to the Finance Square
+sub-account only, so the option is not merely hidden, it is not reachable.
+"Add Number" here offers exactly three things and none of them is "connect my
+existing Twilio": Add Phone Number (buys a LeadConnector number), Add Number
+Pool, Add Verified CallerID.
+
+So option 3 from the original brief was taken, but implemented in GHL rather
+than in the relay, which avoids touching Twilio and avoids handling any secret:
+
+- **New Lead Intake**: new action **"Log the intake SMS to the contact record"**
+  immediately after `#1 Twilio SMS - Intake Confirm`. Writes a note holding the
+  exact message text, the number it went to, and a pointer to the execution log
+  for Twilio's response.
+- **Website Form Receiver**: new action **"Log the welcome-back SMS to the
+  contact record"** immediately after `#1 Twilio SMS - Welcome Back`, in the
+  returning-lead branch.
+
+Verified live: execution log shows `#1 Twilio SMS - Intake Confirm | Executed |
+6:52:11 pm` followed by `Log the intake SMS to the contact record | Executed |
+6:52:12 pm`, zero Failed actions in the run. Both workflows still Published,
+all nodes intact.
+
+**What this does and does not give you.** Priya can now see, on the contact,
+what was texted and when - which was the actual complaint. It does NOT give
+per-message delivery status; that needs Twilio status callbacks, which means
+either native GHL SMS (agency access) or a change to the relay.
+
+### Also fixed while in there
+The intake SMS body carried the SAME "about your first home" claim as the email
+(item 4A) - every refinancer and investor was told they were buying a first
+home, by text as well. Now reads "thanks for reaching out about your plans",
+and a missing comma after "Finance Square Group" was fixed.
+
+### Worth knowing
+The Twilio SMS steps are GHL **premium actions** ("this action will incur
+additional charges per execution"). Moving to native SMS later would remove
+that per-execution premium charge on top of what Twilio bills.
