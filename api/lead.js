@@ -59,8 +59,23 @@ module.exports = async (req, res) => {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return res.status(400).json({ ok: false, error: 'email' });
   if (!/^(04\d{8}|\+614\d{8})$/.test(phone)) return res.status(400).json({ ok: false, error: 'phone' });
 
+  /* Split the name so GoHighLevel can greet people properly.
+
+     Every caller here posts a single `full_name`, which the GHL "Create contact"
+     action maps straight into First Name, so {{contact.first_name}} rendered the
+     whole thing and the welcome email opened "Hi Marcus Webb,". GHL's workflow
+     builder has no string functions, so the split has to happen here.
+
+     `full_name` is still sent unchanged, so this is additive: until the Receiver
+     is remapped, GHL ignores the two new keys and nothing changes. */
+  const nameParts = name.split(/\s+/).filter(Boolean);
+  const firstName = nameParts[0] || name;
+  const lastName = nameParts.slice(1).join(' ');
+
   const body = {
     full_name: name,
+    first_name: firstName,
+    last_name: lastName,
     email: email,
     phone: phone.replace(/^0/, '+61'),
     message: (message ? message + ' ' : '') + 'Mobile: ' + phone.replace(/^\+61/, '0') + '.',
