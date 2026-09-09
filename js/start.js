@@ -253,11 +253,25 @@ function submitLead(c, el){
     err.textContent = 'Something went wrong sending that. Please try again, or call us on 0495 040 500.';
     err.hidden = false;
   };
-  fetch('/api/lead', {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json' },
-    body: JSON.stringify(payload)
-  }).then(function(r){ done(r.ok); }).catch(function(){ done(false); });
+  /* Confirm the mobile first. FNSQVerify resolves with a token, or with '' when
+     verification is not switched on, so the funnel keeps working either way. */
+  var mount = el.querySelector('[data-err]') ? el.querySelector('[data-err]').parentNode : el;
+  var gate = (window.FNSQVerify && window.FNSQVerify.gate)
+    ? window.FNSQVerify.gate(payload.phone, mount)
+    : Promise.resolve('');
+
+  gate.then(function(token){
+    if (token) payload.verification = token;
+    return fetch('/api/lead', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ done(r.ok); });
+  }, function(){
+    // visitor abandoned the code step; leave the form usable
+    btn.disabled = false;
+    btn.textContent = 'See my snapshot';
+  }).catch(function(){ done(false); });
 }
 
 /* ---------------------------------------------------------------- result */

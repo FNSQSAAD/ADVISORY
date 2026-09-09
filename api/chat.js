@@ -9,6 +9,7 @@
 'use strict';
 
 const engine = require('./_engine.js');
+const otp = require('./_otp.js');
 
 const MAX_MESSAGE = 1000;
 const MAX_TURNS = 120;
@@ -41,7 +42,9 @@ async function submitLead(req, payload) {
     message: payload.message,
     lead_source: payload.lead_source,
     goal: payload.goal,
-    timing: payload.timing
+    timing: payload.timing,
+    // proof the mobile was verified; /api/lead refuses the lead without it
+    verification: payload.verification
   };
   const url = leadEndpoint(req);
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -103,6 +106,66 @@ module.exports = async (req, res) => {
       chips: ['Book a call'], compliance: engine.COMPLIANCE,
       action: { type: 'booking', url: engine.BOOKING_URL }
     });
+  }
+
+  /* ---- mobile verification, the same gate the forms use ----
+     The engine asks; this layer does the sending and checking. When
+     verification is not configured, the flow skips straight to submitting so
+     the chatbot behaves exactly as it did before. */
+  if (out.sendCode) {
+    const e164 = otp.normalisePhone(out.sendCode);
+    if (!otp.enabled() || !e164) {
+      out.submit = engine.buildLeadPayload(out.state.lead, out.state.transcript);
+    } else {
+      const { code, challenge } = otp.makeChallenge(e164);
+      const sent = await otp.sendCode(e164, code);
+      if (sent.ok) {
+        out.state.otp = { challenge, phone: e164, tries: 0 };
+        out.state.step = 'verify';
+        out.blocks = [{
+          type: 'text',
+          text: (out.resend ? 'Sent you another code.' : 'Last step: I have just texted a 6-digit code to '
+            + e164.replace('+61', '0') + '.') + '\n\nType it here and I will pass you straight to Priya. '
+            + 'It expires in 5 minutes.'
+        }];
+        out.chips = ['Resend the code'];
+      } else {
+        console.error('chat otp send failed:', sent.reason);
+        out.state.step = null; out.state.flow = null;
+        out.blocks = [
+          { type: 'text', text: 'I could not send your verification code just now, so I have not passed anything on.' },
+          { type: 'card', title: 'Reach Priya directly', items: ['Call 0450 355 604', 'Email info@fnsq.com.au'] }
+        ];
+        out.chips = [];
+      }
+    }
+    delete out.sendCode; delete out.resend;
+  }
+
+  if (out.checkCode) {
+    const st = out.state.otp;
+    const result = st ? otp.checkChallenge(st.challenge, out.checkCode, st.phone) : { ok: false, reason: 'invalid' };
+    if (result.ok) {
+      out.state.otp = null;
+      out.submit = engine.buildLeadPayload(out.state.lead, out.state.transcript);
+      out.submit.verification = otp.issueToken(st.phone);
+    } else {
+      const tries = st ? (st.tries = (st.tries || 0) + 1) : 99;
+      if (tries >= 5) {
+        out.state.otp = null; out.state.step = null; out.state.flow = null;
+        out.blocks = [{ type: 'text', text: 'That is a few wrong codes, so I have stopped there and sent nothing. Give Priya a call on 0450 355 604 and she will pick it up directly.' }];
+        out.chips = [];
+      } else {
+        out.blocks = [{
+          type: 'text',
+          text: result.reason === 'expired'
+            ? 'That code has expired. Say "resend" and I will send a fresh one.'
+            : 'That code does not match what I sent. Have another look at the message and try again.'
+        }];
+        out.chips = ['Resend the code'];
+      }
+    }
+    delete out.checkCode;
   }
 
   // The engine signals a completed, consented lead by attaching `submit`.

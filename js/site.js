@@ -157,10 +157,26 @@
         timing: $('#f-when').value,
         goal: $('#f-goal').value
       };
-      fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+      /* Confirm the mobile before anything reaches GHL. FNSQVerify resolves with
+         a token, or with '' when verification is not switched on, so the form
+         keeps working either way. */
+      var gate = (window.FNSQVerify && window.FNSQVerify.gate)
+        ? window.FNSQVerify.gate(payload.phone, btn.parentNode || cform)
+        : Promise.resolve('');
+
+      gate.then(function (token) {
+        if (token) payload.verification = token;
+        btn.textContent = 'Sending…';
+        return fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }, function () {
+        // visitor abandoned the code step
+        btn.disabled = false;
+        btn.textContent = 'Request My Strategy Call';
+        return Promise.reject(new Error('unverified'));
       }).then(function (r) {
         if (!r.ok) throw new Error('bad');
         try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: payload.lead_source }); } catch (e) {}

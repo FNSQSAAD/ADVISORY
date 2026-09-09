@@ -1,6 +1,7 @@
 // Vercel serverless relay: validates the funnel submission and forwards one
 // normalised payload to the existing GHL inbound webhook (New Lead Intake).
 const HOOK = 'https://services.leadconnectorhq.com/hooks/JECqHy0cJP2aT9gJyo8q/webhook-trigger/afa2d705-3d71-495d-81c7-88b8f7167b29';
+const otp = require('./_otp.js');
 
 /* The GHL contact fields these map onto are RADIO/SINGLE_OPTIONS pickers, so a value
    that isn't spelled exactly like an option is silently dropped by GHL. Normalise here
@@ -58,6 +59,19 @@ module.exports = async (req, res) => {
   if (name.length < 2) return res.status(400).json({ ok: false, error: 'name' });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return res.status(400).json({ ok: false, error: 'email' });
   if (!/^(04\d{8}|\+614\d{8})$/.test(phone)) return res.status(400).json({ ok: false, error: 'phone' });
+
+  /* SMS verification gate. Only enforced once OTP_SECRET is set, so deploying
+     this ahead of the secrets changes nothing; setting them switches it on for
+     every caller at once (contact form, Get Started funnel and the chatbot all
+     land here). A lead that reaches this point without a token covering its own
+     number is refused rather than forwarded to GHL. */
+  if (otp.enabled()) {
+    const e164 = otp.normalisePhone(phone);
+    if (!e164 || !otp.verifyToken(b.verification, e164)) {
+      return res.status(403).json({ ok: false, error: 'unverified',
+        message: 'Please verify your mobile number before submitting.' });
+    }
+  }
 
   /* Split the name so GoHighLevel can greet people properly.
 

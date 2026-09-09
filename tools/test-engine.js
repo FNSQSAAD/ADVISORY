@@ -223,12 +223,26 @@ console.log('=== 7. Lead capture state machine ===');
 
   // Declining must send nothing.
   const declined = ask('no', JSON.parse(JSON.stringify(r.state)));
-  check('declining consent sends nothing', !declined.submit && /nothing has been sent/.test(flat(declined)));
+  check('declining consent sends nothing', !declined.submit && !declined.sendCode && /nothing has been sent/.test(flat(declined)));
 
-  // Consenting hands a payload to the HTTP layer, it does not post from the engine.
+  /* Consenting no longer submits directly: it asks the HTTP layer to text a
+     verification code, and only a correct code releases the lead. */
   const agreed = ask('yes that is fine', JSON.parse(JSON.stringify(r.state)));
-  check('consent produces a submit payload', !!agreed.submit);
-  const p = agreed.submit || {};
+  check('consent asks for a code rather than submitting', !agreed.submit && agreed.sendCode === '0412345678', agreed.sendCode);
+  check('consent moves to the verify step', agreed.state.step === 'verify', agreed.state.step);
+
+  // Mid-verification, the engine must not release the lead for anything else.
+  const junk = ask('just send it already', JSON.parse(JSON.stringify(agreed.state)));
+  check('no lead escapes without a code', !junk.submit && !junk.checkCode, JSON.stringify(junk).slice(0, 80));
+  check('non-code input is asked for the digits', /6 digits/.test(flat(junk)));
+  const resend = ask('resend', JSON.parse(JSON.stringify(agreed.state)));
+  check('"resend" asks for another code', resend.sendCode === '0412345678' && resend.resend === true);
+  const coded = ask('123456', JSON.parse(JSON.stringify(agreed.state)));
+  check('a 6-digit reply is handed over for checking', coded.checkCode === '123456', coded.checkCode);
+  check('the engine never validates the code itself', !coded.submit);
+
+  // The payload the HTTP layer will build once the code checks out.
+  const p = e.buildLeadPayload(agreed.state.lead, agreed.state.transcript);
   check('payload name', p.full_name === 'Sarah Chen');
   check('payload email', p.email === 'sarah.chen@example.com');
   check('payload phone matches the /api/lead pattern', /^(04\d{8}|\+614\d{8})$/.test(p.phone || ''), p.phone);
@@ -252,8 +266,10 @@ console.log('=== 8. Lead capture, low intent path ===');
   r = ask('tom@example.com', r.state);
   r = ask('0400111222', r.state);
   r = ask('yes', r.state);
-  check('researching lead is not flagged high intent', r.submit && r.submit._highIntent === false, String(r.submit && r.submit._highIntent));
-  check('tags reflect the unknown intent', /intent:unknown/.test(r.submit.message));
+  check('consent triggers verification, not a submit', r.sendCode === '0400111222' && !r.submit, r.sendCode);
+  const lowP = e.buildLeadPayload(r.state.lead, r.state.transcript);
+  check('researching lead is not flagged high intent', lowP._highIntent === false, String(lowP._highIntent));
+  check('tags reflect the unknown intent', /intent:unknown/.test(lowP.message));
 }
 
 console.log('=== 9. Escape hatches ===');

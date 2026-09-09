@@ -155,3 +155,74 @@ Edit `tools/kb-faq.js`, then `node tools/build-kb.js`. Add the phrasings people
 actually type to `alt`: they feed both the index and the exact-match shortcut,
 which is what rescues short queries like "what loan should i get" that BM25
 cannot score. After editing site copy, re-run `extract-site.js` too.
+
+---
+
+# Mobile verification (SMS code) on every lead path
+
+Added 2026-09-09. A lead cannot reach GoHighLevel unless the mobile number on it
+has been confirmed by a code we texted to that number.
+
+## How it works
+
+`api/_otp.js` is deliberately **stateless**. A Vercel function has nowhere durable
+to hold a pending code and two requests can land on different instances, so the
+code is never stored server-side:
+
+- **send** generates a 6-digit code, texts it, and hands the browser a signed
+  *challenge*: `{phone, expiry, nonce, sha256(code+nonce+secret)}`. The challenge
+  is HMAC-signed and does not contain the code.
+- **check** re-hashes the submitted code against the challenge. On success it
+  issues a short-lived signed *token* bound to that number.
+- `api/lead.js` refuses any submission whose phone is not covered by a valid
+  token, so all three entry points are gated at the one choke point.
+
+Lifetimes: challenge 5 minutes, token 30 minutes. Signatures are compared with
+`crypto.timingSafeEqual`, and codes come from `crypto.randomInt`, not
+`Math.random`.
+
+## The three entry points
+
+| Where | How it is gated |
+|---|---|
+| `contact.html` | `js/verify.js` -> `FNSQVerify.gate()` before the POST (`js/site.js`) |
+| `get-started.html` funnel | same gate (`js/start.js`) |
+| Chatbot | server-side: consent -> `sendCode` -> `verify` step -> submit |
+
+A number verified once is remembered in `sessionStorage` for the visit, so
+someone who verifies in the chat is not asked again on the contact form.
+
+## Configuration
+
+Verification is **off** unless `OTP_SECRET` is set. Deploying the code alone
+changes nothing; setting the variables switches it on for all three paths at
+once, and unsetting `OTP_SECRET` switches it off again.
+
+    OTP_SECRET         long random string, signs challenges and tokens
+    FNSQ_RELAY_SECRET  the shared secret the Twilio relay already expects
+    FNSQ_RELAY_URL     optional, defaults to the relay already in use
+
+## Rate limiting, and why it matters
+
+Every code is a **paid SMS**, so an unthrottled endpoint is a way for a bot to
+spend the client's Twilio balance. `api/verify.js` limits sends to 3 per number
+and 6 per IP per 15 minutes, and checks to 6 per number and 12 per IP per 10
+minutes. The chatbot separately abandons the lead after 5 wrong codes.
+
+**Known limit, stated honestly:** those counters are per-instance, because there
+is no shared store. They are a speed bump, not a global quota. What actually
+makes guessing impractical is the 6-digit code with a 5-minute life. If abuse
+ever becomes real, the fix is a shared counter (Vercel KV or Upstash), not more
+in-memory limits.
+
+## Tests
+
+    node tools/test-otp.js         44 checks: forged and tampered challenges,
+                                   cross-number tokens, wrong secret, expiry,
+                                   code randomness, what the SMS contains
+    node tools/test-lead-gate.js   21 checks: an unverified lead is refused AND
+                                   never forwarded to GHL; a verified one passes
+                                   through unchanged
+
+The lead-gate suite stubs the upstream fetch, so a forwarded payload in those
+tests would be a real leak in production.

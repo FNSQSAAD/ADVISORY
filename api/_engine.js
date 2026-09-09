@@ -356,7 +356,7 @@ const TIMINGS = [
 const DEPOSITS = ['Under 5%', '5% to 10%', '10% to 20%', '20% or more', 'Using equity', 'Not sure'];
 const INCOMES = ['Full-time PAYG', 'Part-time or casual', 'Self-employed', 'Business income', 'Retired or other'];
 
-const LEAD_STEPS = ['goal', 'timing', 'deposit', 'incomeType', 'name', 'email', 'phone', 'consent'];
+const LEAD_STEPS = ['goal', 'timing', 'deposit', 'incomeType', 'name', 'email', 'phone', 'consent', 'verify'];
 
 function matchChoice(msg, list, key) {
   const m = msg.toLowerCase().trim();
@@ -573,13 +573,25 @@ function respond(message, stateIn) {
       }
       if (yn !== true) return reply(Object.assign(leadPrompt('consent', lead), { blocks: [t('I need a clear yes or no on this one before I can pass anything on.')] }));
       lead.consent = true;
-      state.flow = 'submitting'; state.step = null;
-      // The HTTP layer performs the POST, because the engine stays side-effect free.
-      return reply({
-        blocks: [],
-        submit: buildLeadPayload(lead, state.transcript),
-        chips: []
-      });
+      /* Verify the mobile before anything reaches GHL, the same gate the contact
+         form and the funnel use. The engine stays side-effect free: it asks the
+         HTTP layer to send the code, and that layer decides whether verification
+         is switched on at all. */
+      state.step = 'verify';
+      return reply({ blocks: [], sendCode: lead.phone, chips: [] });
+    }
+    if (step === 'verify') {
+      if (/\b(resend|new code|send.*again|didn'?t get|not received|nothing)\b/i.test(msg)) {
+        return reply({ blocks: [], sendCode: lead.phone, resend: true, chips: [] });
+      }
+      const code = (msg.match(/\d/g) || []).join('');
+      if (code.length !== 6) {
+        return reply({
+          blocks: [t('I need the 6 digits from the text message. If it has not arrived, say "resend".')],
+          chips: ['Resend the code']
+        });
+      }
+      return reply({ blocks: [], checkCode: code, chips: [] });
     }
   }
 
