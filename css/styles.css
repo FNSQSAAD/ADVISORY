@@ -21,8 +21,8 @@
   --line:rgba(30,31,45,.14);
   --line-gold:rgba(168,124,46,.35);
   --line-cream:rgba(244,238,224,.22);
-  --serif:'Roboto',system-ui,sans-serif;   /* headings */
-  --sans:'Poppins',system-ui,sans-serif;   /* body text */
+  --serif:'Roboto','Roboto Fallback',system-ui,sans-serif;   /* headings */
+  --sans:'Poppins','Poppins Fallback',system-ui,sans-serif;   /* body text */
   --ease:cubic-bezier(.25,.8,.25,1);
 }
 
