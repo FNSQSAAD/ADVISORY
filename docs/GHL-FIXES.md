@@ -114,7 +114,7 @@ P1 - FOLLOW-UP GAPS
    (for example the opportunity being created, or a "re-enquiry" tag).
    Make sure Allow Re-entry is ON, and verify a returning lead enrols.
 
-4A. THE WELCOME EMAIL CALLS EVERY LEAD A FIRST HOME BUYER
+4A. [FIXED 2026-09-09] THE WELCOME EMAIL CALLED EVERY LEAD A FIRST HOME BUYER
    The automated welcome email (New Lead Intake) opens with:
      "thanks for reaching out to Finance Square about your first home"
    That sentence is hardcoded. It goes to refinancers, investors, commercial
@@ -129,7 +129,7 @@ P1 - FOLLOW-UP GAPS
    reaching out about your finance plans". Verify by running one lead per goal
    and reading the email each receives.
 
-4B. THE EMAIL GREETS PEOPLE BY THEIR FULL NAME
+4B. [FIXED 2026-09-09] THE EMAIL GREETED PEOPLE BY THEIR FULL NAME
    Subject: "Thanks for reaching out, Marcus Webb". Body: "Hi Marcus Webb,".
    The website posts a single full_name field, which the Receiver maps into
    First Name, so {{contact.first_name}} renders the whole name. Reads like a
@@ -267,6 +267,26 @@ P3 - DATA QUALITY
 ============================================================
 ALREADY RESOLVED - DO NOT REDO
 ============================================================
+- 4A and 4B were fixed and verified on 2026-09-09. Three changes:
+  (i)   the website now sends discrete first_name and last_name alongside
+        full_name (api/lead.js, commit 15655c6, 34 tests);
+  (ii)  Website Form Receiver -> "Create contact": First name remapped from
+        {{inboundWebhookRequest.full_name}} to {{inboundWebhookRequest.first_name}},
+        and a new Last name field added mapped to
+        {{inboundWebhookRequest.last_name}};
+  (iii) New Lead Intake -> "Email": the opening line is now "thanks for
+        reaching out about your plans" (was "to Finance Square about your first
+        home"), and "Looking forward to help you" reads "to helping you".
+  Verified end to end with a live refinance lead: contact stored firstName
+  "Elena" / lastName "Kowalski", subject "Thanks for reaching out, Elena",
+  body "Hi Elena," with no mention of a first home, booking link and the full
+  ACL 391237 compliance block intact, timing "1-3 months", goal "Refinance",
+  tags lead-new + lead-warm, consent stamped, opportunity created.
+  Both workflows still Published; all nodes present.
+  NOTE FOR NEXT TIME: never press Ctrl+A in the workflow builder. Focus sits on
+  the canvas, not the field, and it selects every node - a following Delete
+  offers to remove the whole workflow. Edit ProseMirror fields by setting a
+  Range over the text and using execCommand('insertText') instead.
 - "LEGACY — Old Contact Form Webhook (superseded)" was set to Draft on
   2026-09-08. Its webhook 81c47238 was the old WordPress FHB form. Correct.
 - The timing/goal branch works. /api/lead sends discrete timing and goal, the
