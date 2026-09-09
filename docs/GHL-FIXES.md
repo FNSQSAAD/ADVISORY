@@ -114,6 +114,32 @@ P1 - FOLLOW-UP GAPS
    (for example the opportunity being created, or a "re-enquiry" tag).
    Make sure Allow Re-entry is ON, and verify a returning lead enrols.
 
+4A. THE WELCOME EMAIL CALLS EVERY LEAD A FIRST HOME BUYER
+   The automated welcome email (New Lead Intake) opens with:
+     "thanks for reaching out to Finance Square about your first home"
+   That sentence is hardcoded. It goes to refinancers, investors, commercial
+   clients and people buying their fifth property, all of whom told you
+   otherwise thirty seconds earlier. Confirmed live 2026-09-09: a lead who
+   selected "Buying my next home" (goal field correctly recorded as
+   "Home Loan") was emailed about "your first home".
+   This matters more now than it did, because the chatbot captures a specific
+   goal on every lead, so the contradiction is visible in the same record.
+   FIX: branch the email on {{contact.what_do_you_need_finance_for}}
+   (OGFSjP0wxo36YxwWuCMj), or make the line goal-neutral, e.g. "thanks for
+   reaching out about your finance plans". Verify by running one lead per goal
+   and reading the email each receives.
+
+4B. THE EMAIL GREETS PEOPLE BY THEIR FULL NAME
+   Subject: "Thanks for reaching out, Marcus Webb". Body: "Hi Marcus Webb,".
+   The website posts a single full_name field, which the Receiver maps into
+   First Name, so {{contact.first_name}} renders the whole name. Reads like a
+   mail merge rather than a person.
+   FIX: in "Website Form Receiver" -> "Create contact", split the incoming name
+   (First Name = the first word of {{inboundWebhookRequest.full_name}}, Last
+   Name = the remainder), or change the email to a neutral greeting. Note the
+   contact form and the Get Started funnel post the same shape, so fixing it in
+   the Receiver fixes all three entry points at once.
+
 5. THE ROUTER ALSO ONLY FIRES ON "CONTACT CREATED"
    So it does nothing at all for returning leads (verified 0 of 3). This is
    subsumed by fix 1 if you take option (a).
@@ -129,6 +155,9 @@ P2 - MESSAGING AND DELIVERABILITY
    execution log's response body, and that is Twilio ACCEPTING the message
    ({"ok":true,"sid":"SM...","status":"queued"}), not the handset receiving it.
    Priya cannot see what a lead was told, and nobody notices failures.
+   Re-confirmed 2026-09-09 on a live chatbot lead: the contact's conversation
+   contains the welcome email and the opportunity activity, and nothing else.
+   The SMS the workflow "sent" leaves no trace in the CRM at all.
    FIX: either connect the Twilio number to GHL and use the native SMS action,
    or have the relay post the message back into the contact's conversation so
    there is a record. State which you chose and show a message appearing in a
