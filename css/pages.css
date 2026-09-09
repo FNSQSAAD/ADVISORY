@@ -385,3 +385,96 @@
 .doc-quote{margin:0 0 1.6em;padding:18px 22px;border-left:3px solid var(--gold,#b99248);background:rgba(0,0,0,.035);border-radius:0 6px 6px 0}
 .doc-quote p{margin:0}
 .doc ul li strong{font-weight:600}
+
+/* ============================================================
+   PULL QUOTE - bare <blockquote class="pullquote"> variant (2026-09-09)
+   The FHB page uses the class directly on the blockquote rather than
+   wrapping it in a <figure>, so `.pullquote blockquote` never matched
+   and the quote fell back to body sans. Give it the same serif voice
+   as the figure variant, plus an attribution line under it.
+   ============================================================ */
+blockquote.pullquote{
+  font-family:var(--serif);font-weight:500;font-style:italic;
+  font-size:clamp(1.2rem,2.3vw,1.6rem);line-height:1.5;color:var(--navy)
+}
+.pullquote-attr{
+  max-width:60ch;margin:18px auto 0;text-align:center;
+  font-family:var(--sans);font-weight:600;font-size:.92rem;color:var(--navy)
+}
+.pullquote-attr span{
+  display:block;margin-top:6px;font-weight:400;font-size:.76rem;
+  line-height:1.7;color:var(--ink-faint)
+}
+
+/* ============================================================
+   LENDER PANEL - full-colour card slider (2026-09-09)
+   Supersedes the grayscale treatment above. The desaturated marks
+   read as washed-out on cream and several logos were clipped by the
+   edge mask. Each logo now sits on its own white card at true brand
+   colour, tiles are tighter and evenly spaced, and the fade is pulled
+   in to the very edge so nothing is cut mid-wordmark.
+   ============================================================ */
+.lenders{padding:38px 0}
+.lender-head{align-items:center;margin-bottom:22px}
+.lender-head b{
+  font-size:.72rem;letter-spacing:.04em;color:var(--navy);
+  background:rgba(198,160,74,.16);border:1px solid rgba(198,160,74,.42);
+  border-radius:999px;padding:6px 14px
+}
+
+.lender-marquee{
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 2.5%,#000 97.5%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 2.5%,#000 97.5%,transparent);
+  padding:6px 0
+}
+.lender-marquee .lm-viewport{animation-duration:60s}
+
+.lm-item{
+  width:auto;min-width:158px;height:74px;padding:0;margin:0 9px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 1px 2px rgba(20,32,54,.05);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease);
+}
+.lm-item:hover{
+  transform:translateY(-3px);
+  border-color:rgba(198,160,74,.55);
+  box-shadow:0 10px 22px rgba(20,32,54,.10);
+}
+
+/* Full brand colour, at rest and on hover - no grayscale, no dimming. */
+.lm-item img,
+.lender-marquee:hover .lm-item img,
+.lm-item:hover img{filter:none;opacity:1}
+
+/* Re-state the optical caps: cards are shorter than the old 190px rows,
+   so each shape class steps down proportionally. */
+.lm-item img{max-width:118px;max-height:34px}
+.lm-item img[src$="cba.svg"],
+.lm-item img[src$="boq.png"]{max-height:42px}          /* square marks */
+.lm-item img[src$="anz.svg"],
+.lm-item img[src$="nab.svg"],
+.lm-item img[src$="amp.svg"],
+.lm-item img[src$="suncorp.svg"],
+.lm-item img[src$="stgeorge.png"]{max-height:31px}      /* balanced marks */
+.lm-item img[src$="westpac.svg"],
+.lm-item img[src$="macquarie.svg"],
+.lm-item img[src$="bendigo.png"],
+.lm-item img[src$="bankwest.png"]{max-height:25px}      /* wide wordmarks */
+
+@media (max-width:700px){
+  .lm-item{min-width:132px;height:64px;margin:0 7px}
+  .lm-item img{max-width:96px;max-height:28px}
+  .lm-item img[src$="cba.svg"],.lm-item img[src$="boq.png"]{max-height:34px}
+  .lm-item img[src$="westpac.svg"],
+  .lm-item img[src$="macquarie.svg"],
+  .lm-item img[src$="bendigo.png"],
+  .lm-item img[src$="bankwest.png"]{max-height:21px}
+  .lender-marquee .lm-viewport{animation-duration:44s}
+}
+
+/* Reduced motion keeps the static scrollable row, now also in colour. */
+@media (prefers-reduced-motion:reduce){
+  .lm-item img{filter:none;opacity:1}
+}
