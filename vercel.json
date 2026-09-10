@@ -11,6 +11,16 @@
       ],
       "destination": "https://fnsq.com.au/$1",
       "permanent": true
+    },
+    {
+      "source": "/book-a-free-strategy-call",
+      "destination": "https://api.leadconnectorhq.com/widget/booking/jjntJeKyOuid8eFZkm7W",
+      "permanent": false
+    },
+    {
+      "source": "/book-a-free-strategy-call/",
+      "destination": "https://api.leadconnectorhq.com/widget/booking/jjntJeKyOuid8eFZkm7W",
+      "permanent": false
     }
   ],
   "headers": [
