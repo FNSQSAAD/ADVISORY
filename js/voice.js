@@ -100,12 +100,19 @@
       .then(function (data) {
         if (!data.access_token) throw new Error('no token');
         if (!client) {
-          client = new ctor();
+          /* Retell's v3 web-call tokens use the "gateway" transport, but the SDK defaults to
+             "livekit" — a mismatch that failed every call with "Error starting call". Pass
+             the transport the token came with, and default to gateway if it is missing. */
+          client = new ctor({ defaultTransport: 'gateway' });
           client.on('call_started', function () { live = true; starting = false; setState('live'); });
           client.on('call_ended', function () { live = false; starting = false; setState('idle'); });
           client.on('error', function () { stop(); setState('error'); });
         }
-        return client.startCall({ accessToken: data.access_token });
+        var cfg = { accessToken: data.access_token, transport: data.transport || 'gateway' };
+        if (data.call_id) cfg.callId = data.call_id;
+        if (data.ice_servers) cfg.iceServers = data.ice_servers;
+        if (data.url) cfg.url = data.url;
+        return client.startCall(cfg);
       })
       .catch(function (err) {
         starting = false;
