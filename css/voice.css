@@ -1,0 +1,109 @@
+/* Finance Square — voice widget.
+   Scoped entirely to .fv-* and #fnsq-voice. Nothing here leaks into the page.
+
+   The palette is re-declared rather than inherited: css/chat.css scopes its --q-*
+   tokens to .fq-launch/#fnsq-chat, not :root, so they are invisible from here. The
+   values below are copied from that block verbatim — keep the two in step. */
+
+.fv-launch,
+#fnsq-voice{
+  --q-navy:#282a47;
+  --q-navy-2:#1e1f36;
+  --q-navy-3:#373a62;
+  --q-gold:#a87c2e;
+  --q-gold-soft:rgba(168,124,46,.12);
+  --q-cream:#fbf8f1;
+  --q-cream-2:#f5efe3;
+  --q-white:#fff;
+  --q-ink:#1e1f2d;
+  --q-ink-dim:rgba(30,31,45,.72);
+  --q-ink-faint:rgba(30,31,45,.5);
+  --q-line:rgba(30,31,45,.14);
+  --q-cream-tx:#f4eee0;
+  --q-cream-tx-dim:rgba(244,238,224,.78);
+  --q-line-cream:rgba(244,238,224,.22);
+  --q-sans:'Poppins','Poppins Fallback',system-ui,-apple-system,sans-serif;
+  --q-serif:'Roboto','Roboto Fallback',system-ui,sans-serif;
+  --q-shadow:0 24px 60px -20px rgba(30,31,45,.45);
+}
+
+/* ---------------------------------------------------------------- launcher */
+.fv-launch{
+  position:fixed;right:22px;bottom:90px;z-index:70;
+  display:flex;align-items:center;gap:10px;
+  height:56px;padding:0 22px 0 18px;
+  border:0;border-radius:32px;cursor:pointer;
+  background:var(--q-gold);color:var(--q-navy);
+  font-family:var(--q-sans);font-size:15px;font-weight:600;letter-spacing:.01em;
+  box-shadow:var(--q-shadow);
+  transition:transform .25s cubic-bezier(.25,.8,.25,1),background .25s;
+}
+.fv-launch:hover{transform:translateY(-2px)}
+.fv-launch:focus-visible{outline:2px solid var(--q-navy);outline-offset:3px}
+.fv-launch svg{width:20px;height:20px;flex:none}
+.fv-launch .fv-launch-tx{white-space:nowrap}
+
+/* Live call: a soft pulse so it is obvious the microphone is open. */
+.fv-launch.fv-on{background:#c0402f;color:var(--q-cream-tx);animation:fv-pulse 1.8s ease-in-out infinite}
+@keyframes fv-pulse{0%,100%{box-shadow:var(--q-shadow)}50%{box-shadow:0 0 0 10px rgba(192,64,47,.18)}}
+@media (prefers-reduced-motion:reduce){
+  .fv-launch,.fv-launch.fv-on{transition:none;animation:none}
+}
+
+/* chat.js already pushes .to-top to bottom:90px, which is where this sits.
+   With both widgets present the stack is: chat 22, voice 90, back-to-top 158. */
+body.fv-has-voice.fq-has-chat .to-top{bottom:158px}
+body.fv-has-voice:not(.fq-has-chat) .fv-launch{bottom:22px}
+body.fv-has-voice:not(.fq-has-chat) .to-top{bottom:90px}
+
+/* ------------------------------------------------------------------- panel */
+#fnsq-voice{
+  position:fixed;right:22px;bottom:158px;z-index:71;
+  width:min(360px,calc(100vw - 32px));
+  padding:20px 20px 18px;
+  border-radius:18px;
+  background:var(--q-cream,#faf6ee);
+  color:var(--q-ink,#1e1f2d);
+  font-family:var(--q-sans);
+  box-shadow:var(--q-shadow);
+  opacity:0;transform:translateY(8px);
+  transition:opacity .25s,transform .25s;
+}
+#fnsq-voice.fv-open{opacity:1;transform:none}
+#fnsq-voice[hidden]{display:none!important}
+body.fv-has-voice:not(.fq-has-chat) #fnsq-voice{bottom:90px}
+
+.fv-head{display:flex;align-items:center;gap:9px;margin:0 0 10px}
+.fv-head strong{font-size:15px;font-weight:600;letter-spacing:.01em}
+.fv-dot{width:9px;height:9px;border-radius:50%;background:var(--q-gold);flex:none}
+
+.fv-lede{margin:0 0 14px;font-size:13.5px;line-height:1.55;color:var(--q-ink-dim,#4a4b5c)}
+
+.fv-action{
+  display:block;width:100%;height:46px;
+  border:0;border-radius:26px;cursor:pointer;
+  background:var(--q-navy,#1e1f2d);color:var(--q-cream-tx,#f4eee0);
+  font-family:var(--q-sans);font-size:15px;font-weight:600;
+  transition:background .2s,transform .2s;
+}
+.fv-action:hover{transform:translateY(-1px)}
+.fv-action:focus-visible{outline:2px solid var(--q-gold);outline-offset:3px}
+#fnsq-voice[data-state="live"] .fv-action{background:#c0402f}
+#fnsq-voice[data-state="connecting"] .fv-action{opacity:.75;pointer-events:none}
+
+.fv-status{margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--q-ink-dim,#4a4b5c);min-height:1px}
+#fnsq-voice[data-state="denied"] .fv-status,
+#fnsq-voice[data-state="error"] .fv-status{color:#a3382a}
+
+.fv-fineprint{
+  margin:14px 0 0;padding-top:12px;
+  border-top:1px solid var(--q-line,rgba(30,31,45,.12));
+  font-size:11.5px;line-height:1.5;color:var(--q-ink-faint,#75768a);
+}
+
+/* --------------------------------------------------------------- inline use */
+#fnsq-voice.fv-inline{
+  position:static;width:auto;max-width:520px;bottom:auto;right:auto;
+  opacity:1;transform:none;box-shadow:none;
+  border:1px solid var(--q-line,rgba(30,31,45,.12));
+}
