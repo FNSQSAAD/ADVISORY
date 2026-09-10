@@ -256,6 +256,22 @@ body.fq-has-chat .to-top{bottom:90px}
 .fq-chips button:hover{background:var(--q-navy);border-color:var(--q-navy);color:var(--q-cream-tx)}
 .fq-chips button:focus-visible{outline:2px solid var(--q-gold);outline-offset:2px}
 
+/* Icon chips: the opening choices. The arrow is CSS, not content, so it never
+   ends up in the accessible name or in the message the chip sends. */
+.fq-chips button.fq-chip-icon{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 12px 7px 10px;
+}
+.fq-chips button.fq-chip-icon .fq-ico{font-size:14px;line-height:1}
+.fq-chips button.fq-chip-icon .fq-lab{font-weight:500}
+.fq-chips button.fq-chip-icon::after{
+  content:'→';font-size:12px;opacity:.45;margin-left:1px;transition:opacity .2s,transform .2s;
+}
+.fq-chips button.fq-chip-icon:hover::after{opacity:1;transform:translateX(2px)}
+@media (prefers-reduced-motion:reduce){
+  .fq-chips button.fq-chip-icon::after{transition:none}
+  .fq-chips button.fq-chip-icon:hover::after{transform:none}
+}
+
 /* ------------------------------------------------------------- input */
 .fq-form{
   flex:none;display:flex;align-items:flex-end;gap:9px;
@@ -287,6 +303,23 @@ body.fq-has-chat .to-top{bottom:90px}
 .fq-foot p{margin:0}
 .fq-foot a{color:var(--q-cream-tx-dim);text-decoration:underline;text-underline-offset:2px}
 .fq-foot a:hover{color:var(--q-gold)}
+
+/* ------------------------------------------------------- inline mode
+   The chat as a page's main content rather than a floating panel. Used by
+   chat.html, where paid traffic lands and the conversation is the whole point,
+   so the panel drops its fixed positioning and fills its container. */
+#fnsq-chat.fq-inline{
+  position:static;right:auto;bottom:auto;
+  width:100%;max-width:none;
+  height:min(620px,calc(100vh - 220px));min-height:460px;
+  opacity:1;transform:none;
+  box-shadow:0 18px 50px -24px rgba(30,31,45,.35);
+  border-radius:16px;
+}
+#fnsq-chat.fq-inline .fq-head{padding-right:18px}
+/* the opening chips carry more weight when the chat is the page */
+#fnsq-chat.fq-inline .fq-chips{padding:12px 16px 4px;gap:8px}
+#fnsq-chat.fq-inline .fq-chips button.fq-chip-icon{padding:9px 14px 9px 12px;font-size:13.5px}
 
 /* ------------------------------------------------------------ mobile */
 @media (max-width:560px){

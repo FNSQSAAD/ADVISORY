@@ -416,14 +416,32 @@ function buildLeadPayload(lead, transcript) {
   if (lead.calcSummary) lines.push('Ran in chat: ' + lead.calcSummary + '.');
   if (high) lines.push('HIGH INTENT: flagged for a same-day call.');
   lines.push('Tags: chatbot-lead, ' + (goalEntry ? goalEntry.tag : 'intent:unknown') + (high ? ', priority-callback' : '') + '.');
+
+  /* Campaign attribution. Without this a lead from a paid ad reaches GHL with no
+     record of which ad produced it, which makes the spend unmeasurable. The
+     widget passes whatever UTM parameters were on the landing URL. */
+  const utm = lead.utm || {};
+  const utmBits = ['source', 'medium', 'campaign', 'content', 'term']
+    .filter(k => utm[k])
+    .map(k => k + '=' + String(utm[k]).slice(0, 120));
+  if (utm.fbclid) utmBits.push('fbclid=' + String(utm.fbclid).slice(0, 60));
+  if (utmBits.length) lines.push('Campaign: ' + utmBits.join(' ') + '.');
+  if (lead.landingPage) lines.push('Landed on: ' + String(lead.landingPage).slice(0, 200) + '.');
+
   lines.push('Consent given in chat at ' + new Date().toISOString() + '.');
+
+  /* A paid lead is labelled by its source so it is separable in reporting from
+     an organic one, without needing a second capture path. */
+  const source = utm.source
+    ? 'Website Chatbot (' + String(utm.source).slice(0, 40) + ')'
+    : 'Website Chatbot';
 
   return {
     full_name: lead.name,
     email: lead.email,
     phone: lead.phone,
     message: lines.join(' '),
-    lead_source: 'Website Chatbot',
+    lead_source: source,
     goal: lead.goal,
     timing: lead.timing,
     // Read by api/chat.js only; api/lead.js ignores unknown keys.
@@ -448,10 +466,23 @@ function freshState() {
   return { flow: null, step: null, lead: {}, calc: null, slots: {}, turns: 0, transcript: '' };
 }
 
+/* Opening chips. A blank chat box is the single biggest drop-off point, so the
+   first thing a visitor sees is four things they can press. Each carries an icon
+   and a short label but SENDS a full sentence, which gives the intent router
+   something unambiguous to work with. */
+const ENTRY_CHIPS = [
+  { icon: '🏡', label: 'Home loan', send: 'I want to talk about a home loan' },
+  { icon: '🔁', label: 'Refinance', send: 'I want to refinance my home loan' },
+  { icon: '🔑', label: 'First home', send: 'I am buying my first home' },
+  { icon: '💼', label: 'Business', send: 'I need business or commercial finance' },
+  { icon: '🚗', label: 'Car or asset', send: 'I need car or equipment finance' },
+  { icon: '📅', label: 'Book a call', send: 'Book a call' }
+];
+
 function greetingBlocks() {
   return {
     blocks: [t('Hi, I am the Finance Square assistant. I can answer questions about home loans, refinancing, first home buying, business and asset finance, run the numbers on borrowing power, repayments and stamp duty, and book you a free 15-minute strategy call with Priya.\n\nWhat brings you here?')],
-    chips: ['How much can I borrow?', 'I want to refinance', 'What are my repayments?', 'Book a call']
+    chips: ENTRY_CHIPS
   };
 }
 
@@ -483,6 +514,11 @@ function respond(message, stateIn) {
   const msg = String(message || '').trim().slice(0, 1000);
   state.turns = (state.turns || 0) + 1;
   state.transcript = (state.transcript || '').slice(-1500) + ' ' + msg;
+
+  /* Campaign context arrives once, on the first turn, and is kept on the lead
+     so buildLeadPayload can attribute it. */
+  if (stateIn && stateIn.utm && !state.lead.utm) state.lead.utm = stateIn.utm;
+  if (stateIn && stateIn.landingPage && !state.lead.landingPage) state.lead.landingPage = stateIn.landingPage;
 
   const reply = out => {
     const r = Object.assign({ blocks: [], chips: [], action: null, estimate: false }, out);

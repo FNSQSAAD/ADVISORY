@@ -478,3 +478,72 @@ blockquote.pullquote{
 @media (prefers-reduced-motion:reduce){
   .lm-item img{filter:none;opacity:1}
 }
+
+/* ============================================================
+   chat.html - the chat-first landing page for paid traffic.
+   Deliberately quiet: the conversation is the hero, everything
+   else is there to answer "are these people legitimate".
+   ============================================================ */
+.ch-body{background:var(--cream)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;z-index:99;background:var(--navy);color:var(--cream-tx);padding:10px 16px;border-radius:8px}
+
+.ch-top{border-bottom:1px solid var(--line);background:var(--white)}
+.ch-top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.ch-logo img{display:block;height:32px;width:auto}
+.ch-call{
+  font-family:var(--sans);font-size:15px;font-weight:500;color:var(--navy);
+  text-decoration:none;white-space:nowrap;padding:8px 14px;border-radius:22px;
+  border:1px solid var(--line);transition:background .2s,color .2s,border-color .2s;
+}
+.ch-call:hover{background:var(--navy);border-color:var(--navy);color:var(--cream-tx)}
+
+.ch-hero{padding:38px 0 14px}
+.ch-eyebrow{
+  font-family:var(--serif);font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold);margin:0 0 12px;
+}
+.ch-hero h1{
+  font-family:var(--serif);font-weight:500;font-size:clamp(27px,4.6vw,42px);
+  line-height:1.12;letter-spacing:-.01em;margin:0 0 12px;color:var(--navy);text-wrap:balance;
+}
+.ch-lede{margin:0 0 24px;max-width:60ch;font-size:16px;line-height:1.6;color:var(--ink-dim)}
+
+.ch-panel{margin:0 0 22px}
+.ch-noscript{border:1px solid var(--line);border-radius:12px;padding:20px;background:var(--white)}
+
+.ch-trust{
+  list-style:none;margin:0 0 18px;padding:0;
+  display:flex;flex-wrap:wrap;gap:10px 26px;
+}
+.ch-trust li{font-size:13.5px;color:var(--ink-dim);position:relative;padding-left:19px}
+.ch-trust li::before{
+  content:'';position:absolute;left:2px;top:7px;width:7px;height:7px;
+  border-radius:50%;background:var(--gold);
+}
+.ch-trust strong{color:var(--ink);font-weight:600}
+
+.ch-fine{margin:0;max-width:78ch;font-size:11.5px;line-height:1.65;color:var(--ink-faint)}
+.ch-fine a{color:var(--ink-faint);text-decoration:underline;text-underline-offset:2px}
+.ch-fine a:hover{color:var(--gold)}
+
+.ch-what{padding:44px 0 56px;border-top:1px solid var(--line);margin-top:40px;background:var(--cream-2)}
+.ch-what h2{
+  font-family:var(--serif);font-weight:500;font-size:12px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold);margin:0 0 20px;
+}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.ch-card{
+  display:block;padding:16px 18px;border:1px solid var(--line);border-radius:12px;
+  background:var(--white);text-decoration:none;transition:border-color .2s,transform .2s;
+}
+.ch-card:hover{border-color:var(--line-gold);transform:translateY(-2px)}
+.ch-card span{font-size:19px;display:block;margin-bottom:7px}
+.ch-card b{display:block;font-size:14.5px;color:var(--navy);margin-bottom:3px;font-weight:600}
+.ch-card em{display:block;font-style:normal;font-size:12.5px;line-height:1.5;color:var(--ink-dim)}
+
+@media (prefers-reduced-motion:reduce){.ch-card:hover{transform:none}}
+@media (max-width:600px){
+  .ch-hero{padding-top:26px}
+  .ch-trust{gap:8px 18px}
+}
