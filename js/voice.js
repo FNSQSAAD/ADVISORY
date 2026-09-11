@@ -1,5 +1,5 @@
 /* Finance Square — voice widget.
-   Lets a visitor talk to Jack, the AI receptionist, from the browser. Same agent and
+   Lets a visitor talk to Frank, the AI receptionist, from the browser. Same agent and
    same compliance rails as the phone line on 0495 040 500.
 
    Mirrors js/chat.js: a corner launcher by default, or inline as page content when a
@@ -59,8 +59,8 @@
     if (els.action) els.action.textContent = COPY[state] || COPY.idle;
     if (els.status) {
       els.status.textContent =
-        state === 'connecting' ? 'Connecting you to Jack…'
-        : state === 'live' ? 'Connected — go ahead, Jack is listening.'
+        state === 'connecting' ? 'Connecting you to Frank…'
+        : state === 'live' ? 'Connected — go ahead, Frank is listening.'
         : state === 'denied' ? 'Your browser blocked the microphone. Allow it, or call 0495 040 500.'
         : state === 'error' ? (detail || 'Could not start the call. Please call 0495 040 500.')
         : '';
@@ -134,11 +134,11 @@
 
     var head = el('div', 'fv-head');
     head.appendChild(el('span', 'fv-dot'));
-    head.appendChild(el('strong', null, 'Talk to Finance Square'));
+    head.appendChild(el('strong', null, 'Talk to Frank'));
     panel.appendChild(head);
 
     panel.appendChild(el('p', 'fv-lede',
-      'Ask Jack anything about home loans and personal loans — first home buyer schemes, '
+      'Ask Frank anything about home loans and personal loans — first home buyer schemes, '
       + 'deposits and LMI, refinancing, how lenders assess you — then book a free 15-minute '
       + 'strategy call with Priya, or ask her to call you back.'));
 
@@ -153,7 +153,7 @@
        call connects. Consent to an AI and to recording should be informed, and on the
        web we can show it rather than rely on them catching a spoken sentence. */
     panel.appendChild(el('p', 'fv-fineprint',
-      'You will be speaking with an AI assistant and the call is recorded. Jack cannot give '
+      'You will be speaking with an AI assistant and the call is recorded. Frank cannot give '
       + 'credit advice, quote rates or estimate borrowing capacity — Priya does that. '
       + 'Prefer a person? Call 0495 040 500.'));
 
