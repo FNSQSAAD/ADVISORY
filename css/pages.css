@@ -549,7 +549,7 @@ blockquote.pullquote{
 }
 
 /* ==================================================================== Frank ===
-   "Meet Frank" — the AI assistant: the header button on every page, and the
+   "Meet Frank", the AI assistant: the header button on every page, and the
    meet-frank.html landing page. Everything is scoped to .btn-frank, .mm-frank and
    .fk-* so it cannot leak into existing pages. The call panel itself is styled by
    css/voice.css; this block only frames it on the landing page. */
@@ -570,8 +570,7 @@ blockquote.pullquote{
 @keyframes fk-ping{0%{box-shadow:0 0 0 0 rgba(168,124,46,.55)}70%,100%{box-shadow:0 0 0 7px rgba(168,124,46,0)}}
 /* The header's buttons and phone number must never wrap. With Meet Frank added, the
    inline links no longer fit beside phone + two buttons below ~1280px (measured: at
-   1180px everything wrapped to two lines), so they fold into the burger menu there —
-   the same thing styles.css already does at 1080px, just earlier. */
+   1180px everything wrapped to two lines), so they fold into the burger menu there, the same thing styles.css already does at 1080px, just earlier. */
 .nav-right .btn,.nav-phone{white-space:nowrap}
 @media(max-width:1280px) and (min-width:721px){
   .nav-links{display:none}
@@ -585,6 +584,10 @@ blockquote.pullquote{
   padding:14px 18px;color:var(--navy);font-weight:600;
 }
 .mobile-menu .mm-frank small{flex-basis:100%;margin-left:18px;font-weight:400;font-size:.8rem;color:var(--ink-dim)}
+
+/* ---- landing page: readable eyebrows (#a87c2e on cream measured 3.54:1; this gold passes
+   4.5:1 on both cream and cream-2) ---- */
+.fk-hero .eyebrow,.fk-limits .eyebrow{color:#7d5a1f}
 
 /* ---- landing page: hero stage around the live call panel ---- */
 #talk{scroll-margin-top:96px}

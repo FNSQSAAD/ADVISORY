@@ -1,4 +1,4 @@
-/* Finance Square — voice widget.
+/* Finance Square, voice widget.
    Lets a visitor talk to Frank, the AI receptionist, from the browser. Same agent and
    same compliance rails as the phone line on 0495 040 500.
 
@@ -10,7 +10,8 @@
 (function () {
   'use strict';
 
-  var API = 'https://fnsq-voice.vercel.app/api/web-call';
+  var ORIGIN = 'https://fnsq-voice.vercel.app';
+  var API = ORIGIN + '/api/web-call';
 
   /* The SDK's UMD build is unusable in a browser: it reaches for Node's
      events.EventEmitter and dies with "Cannot read properties of undefined".
@@ -33,14 +34,36 @@
 
   var ctor = null;
 
+  var sdkPromise = null;
+
+  /* One shared download: warming it on intent and clicking must never fetch it twice.
+     A failed download is forgotten so the next attempt can retry. */
   function loadSdk() {
     if (ctor) return Promise.resolve(ctor);
-    // Dynamic import keeps this file a plain script; nothing downloads until a click.
-    return import(SDK).then(function (m) {
-      if (!m || typeof m.RetellWebClient !== 'function') throw new Error('sdk');
-      ctor = m.RetellWebClient;
-      return ctor;
-    });
+    if (!sdkPromise) {
+      sdkPromise = import(SDK).then(function (m) {
+        if (!m || typeof m.RetellWebClient !== 'function') throw new Error('sdk');
+        ctor = m.RetellWebClient;
+        return ctor;
+      }).catch(function (err) { sdkPromise = null; throw err; });
+    }
+    return sdkPromise;
+  }
+
+  /* Start the ~200KB SDK download the moment a visitor shows intent (hover, focus or
+     touch on the button), so a click has less to wait for. The token request itself is
+     never made early, because each one creates a call record at Retell, but its
+     connection (DNS, TCP, TLS) is opened now so the click skips that handshake. */
+  var warmed = false;
+  function warm() {
+    if (warmed) return;
+    warmed = true;
+    loadSdk().catch(function () { /* retried on click */ });
+    var hint = document.createElement('link');
+    hint.rel = 'preconnect';
+    hint.href = ORIGIN;
+    hint.crossOrigin = 'anonymous';   // the token fetch is CORS, so warm the CORS connection pool
+    document.head.appendChild(hint);
   }
 
   /* ----------------------------------------------------------------- state */
@@ -60,7 +83,7 @@
     if (els.status) {
       els.status.textContent =
         state === 'connecting' ? 'Connecting you to Frank…'
-        : state === 'live' ? 'Connected — go ahead, Frank is listening.'
+        : state === 'live' ? 'Connected. Go ahead, Frank is listening.'
         : state === 'denied' ? 'Your browser blocked the microphone. Allow it, or call 0495 040 500.'
         : state === 'error' ? (detail || 'Could not start the call. Please call 0495 040 500.')
         : '';
@@ -85,23 +108,24 @@
     starting = true;
     setState('connecting');
 
-    loadSdk()
-      .then(function () {
-        return fetch(API, {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ page: location.pathname, referrer: document.referrer || '' })
-        });
-      })
-      .then(function (r) {
-        if (!r.ok) throw new Error('http ' + r.status);
-        return r.json();
-      })
-      .then(function (data) {
+    /* The SDK download and the call token are independent, so fetch them together:
+       doing them one after the other added a whole network round trip to every call. */
+    var token = fetch(API, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ page: location.pathname, referrer: document.referrer || '' })
+    }).then(function (r) {
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    });
+
+    Promise.all([loadSdk(), token])
+      .then(function (both) {
+        var data = both[1];
         if (!data.access_token) throw new Error('no token');
         if (!client) {
           /* Retell's v3 web-call tokens use the "gateway" transport, but the SDK defaults to
-             "livekit" — a mismatch that failed every call with "Error starting call". Pass
+             "livekit", a mismatch that failed every call with "Error starting call". Pass
              the transport the token came with, and default to gateway if it is missing. */
           client = new ctor({ defaultTransport: 'gateway' });
           client.on('call_started', function () { live = true; starting = false; setState('live'); });
@@ -138,13 +162,16 @@
     panel.appendChild(head);
 
     panel.appendChild(el('p', 'fv-lede',
-      'Ask Frank anything about home loans and personal loans — first home buyer schemes, '
-      + 'deposits and LMI, refinancing, how lenders assess you — then book a free 15-minute '
+      'Ask Frank anything about home loans and personal loans: first home buyer schemes, '
+      + 'deposits and LMI, refinancing and how lenders assess you. Then book a free 15-minute '
       + 'strategy call with Priya, or ask her to call you back.'));
 
     var action = el('button', 'fv-action', COPY.idle);
     action.type = 'button';
     action.addEventListener('click', start);
+    ['pointerenter', 'focus', 'touchstart'].forEach(function (ev) {
+      action.addEventListener(ev, warm, { once: true, passive: true });
+    });
     panel.appendChild(action);
 
     panel.appendChild(el('p', 'fv-status'));
@@ -154,7 +181,7 @@
        web we can show it rather than rely on them catching a spoken sentence. */
     panel.appendChild(el('p', 'fv-fineprint',
       'You will be speaking with an AI assistant and the call is recorded. Frank cannot give '
-      + 'credit advice, quote rates or estimate borrowing capacity — Priya does that. '
+      + 'credit advice, quote rates or estimate borrowing capacity. Priya does that. '
       + 'Prefer a person? Call 0495 040 500.'));
 
     els.panel = panel;
