@@ -2,6 +2,7 @@
 // normalised payload to the existing GHL inbound webhook (New Lead Intake).
 const HOOK = 'https://services.leadconnectorhq.com/hooks/JECqHy0cJP2aT9gJyo8q/webhook-trigger/afa2d705-3d71-495d-81c7-88b8f7167b29';
 const otp = require('./_otp.js');
+const direct = require('./_ghl-direct.js');
 
 /* The GHL contact fields these map onto are RADIO/SINGLE_OPTIONS pickers, so a value
    that isn't spelled exactly like an option is silently dropped by GHL. Normalise here
@@ -106,6 +107,7 @@ module.exports = async (req, res) => {
   const payload = JSON.stringify(body);
 
   let lastStatus = 0;
+  let lastBody = '';
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const r = await fetch(HOOK, {
@@ -114,11 +116,32 @@ module.exports = async (req, res) => {
         body: payload
       });
       lastStatus = r.status;
-      if (r.ok) return res.status(200).json({ ok: true });
+      if (r.ok) return res.status(200).json({ ok: true, via: 'webhook' });
+      lastBody = await r.text().catch(() => '');
+      /* A 4xx is GHL refusing the request on purpose (a billing failure is a
+         422), and retrying the same thing will be refused the same way. Stop and
+         go straight to the fallback rather than burning the visitor's time. */
+      if (r.status >= 400 && r.status < 500) break;
     } catch (e) {
       lastStatus = -1;
     }
     await new Promise(r => setTimeout(r, 400 * (attempt + 1)));
+  }
+
+  /* The webhook would not take it. Before telling a visitor who has already
+     verified their mobile that something went wrong, deliver the lead through
+     GHL's REST API, which is not billed per execution and so survives an empty
+     wallet. See api/_ghl-direct.js for the incident that made this necessary. */
+  console.error('lead webhook refused', JSON.stringify({ status: lastStatus, body: lastBody.slice(0, 200) }));
+  if (direct.enabled()) {
+    const d = await direct.deliver(body);
+    if (d.ok) {
+      console.warn('lead delivered via API fallback', JSON.stringify({ contactId: d.contactId, webhookStatus: lastStatus }));
+      return res.status(200).json({ ok: true, via: 'api' });
+    }
+    console.error('lead API fallback FAILED', JSON.stringify(d));
+    // Created but not enrolled still means the lead is in the CRM; say so.
+    if (d.contactId) return res.status(200).json({ ok: true, via: 'api-unenrolled' });
   }
   return res.status(502).json({ ok: false, error: 'upstream', status: lastStatus });
 };
