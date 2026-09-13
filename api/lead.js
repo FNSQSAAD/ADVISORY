@@ -40,6 +40,45 @@ const GOAL = {
   'loan': 'Refinance'
 };
 
+function num(v) { const n = Number(String(v == null ? '' : v).replace(/[^0-9.]/g, '')); return Number.isFinite(n) && n > 0 ? n : NaN; }
+
+// Picklist values must match the GHL field options character for character.
+function loanBracket(amount) {
+  if (!Number.isFinite(amount)) return null;
+  if (amount < 50000) return 'Under $50,000';
+  if (amount < 250000) return '$50,000 – $250,000';
+  if (amount < 500000) return '$250,000 – $500,000';
+  if (amount <= 1000000) return '$500,000 – $1,000,000';
+  return 'Over $1,000,000';
+}
+function incomeBracket(income) {
+  if (income < 50000) return 'Under $50,000';
+  if (income <= 100000) return '$50,000 – $100,000';
+  if (income <= 150000) return '$100,000 – $150,000';
+  return 'Over $150,000';
+}
+
+/* Score bands (max 100): timing 30, loan size 20, deposit or equity 20, employment 15,
+   credit 15. Employment and credit are not asked on the website, so they score
+   their midpoint until the pre-call fact-find fills them in. */
+function fitScore(a) {
+  const TIMING_PTS = { 'ASAP': 30, 'Within 1 month': 22, '1–3 months': 12, '3+ months': 5, 'Just researching': 0 };
+  const t = a.timing in TIMING_PTS ? TIMING_PTS[a.timing] : 15;
+  let loan = NaN;
+  if (Number.isFinite(a.balance)) loan = a.balance;                 // refinance: what they owe
+  else if (Number.isFinite(a.income)) loan = Math.min(a.income * 5, 1500000); // purchase: rough capacity
+  const bracket = loanBracket(loan);
+  const LOAN_PTS = { 'Over $1,000,000': 20, '$500,000 – $1,000,000': 20, '$250,000 – $500,000': 16, '$50,000 – $250,000': 10, 'Under $50,000': 4 };
+  const l = bracket ? LOAN_PTS[bracket] : 12;
+  let d = 10;
+  if (Number.isFinite(a.deposit)) d = a.deposit >= 100000 ? 20 : a.deposit >= 50000 ? 14 : a.deposit >= 20000 ? 6 : 0;
+  else if (Number.isFinite(a.value) && Number.isFinite(a.balance) && a.value > 0) { const eq = (a.value - a.balance) / a.value; d = eq >= 0.2 ? 20 : eq >= 0.1 ? 14 : 6; }
+  else if (a.goal === 'Refinance' || a.goal === 'Business Loan' || a.goal === 'Commercial Loan' || a.goal === 'Equipment Finance') d = 14;
+  const e = 8, c = 8;
+  const score = Math.max(0, Math.min(100, Math.round(t + l + d + e + c)));
+  return { score, band: score >= 70 ? 'Hot' : score >= 40 ? 'Warm' : 'Cold', loanBracket: bracket };
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -104,6 +143,29 @@ module.exports = async (req, res) => {
   if (timing) body.timing = timing;
   if (goal) body.goal = goal;
 
+  /* Campaign attribution. GHL only records UTMs when its own browser script sees
+     the submission, which a server-side webhook lead never gets. So the site sends
+     what it captured on the landing URL (js/chat.js stores it for the visit) and the
+     Receiver maps it onto custom fields where reporting can see it. */
+  const utm = (b.utm && typeof b.utm === 'object') ? b.utm : {};
+  const clean = (v, n) => String(v == null ? '' : v).trim().slice(0, n);
+  if (utm.source) body.utm_source = clean(utm.source, 80);
+  if (utm.medium) body.utm_medium = clean(utm.medium, 80);
+  if (utm.campaign) body.utm_campaign = clean(utm.campaign, 120);
+  if (b.landing_page) body.landing_page = clean(b.landing_page, 200);
+  body.lead_source_detail = source + (utm.source ? ' | ' + clean(utm.source, 40) + (utm.campaign ? ' / ' + clean(utm.campaign, 60) : '') : '');
+
+  /* Fit score. Deterministic 0-100 from the answers the visitor volunteered, so
+     routing no longer hangs on a single timing question. Missing answers score the
+     middle of their band so a short form is not punished. Internal prioritisation
+     only: never shown to the lead, never used to decline anyone. */
+  const fit = fitScore({ timing, goal, income: num(b.income), deposit: num(b.deposit), value: num(b.property_value), balance: num(b.loan_balance) });
+  body.fit_score = fit.score;
+  body.lead_temperature = fit.band;
+  if (fit.loanBracket) body.loan_amount = fit.loanBracket;
+  if (goal) body.finance_type = goal;
+  if (Number.isFinite(num(b.income))) body.household_income = incomeBracket(num(b.income));
+
   const payload = JSON.stringify(body);
 
   let lastStatus = 0;
@@ -145,3 +207,6 @@ module.exports = async (req, res) => {
   }
   return res.status(502).json({ ok: false, error: 'upstream', status: lastStatus });
 };
+
+module.exports.fitScore = fitScore;
+module.exports.loanBracket = loanBracket;

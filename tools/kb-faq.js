@@ -384,7 +384,7 @@ module.exports = [
     topic: 'compliance',
     url: '/terms.html#complaints',
     tags: ['complaint', 'complaints', 'dispute', 'afca', 'ombudsman', 'unhappy'],
-    a: 'Tell us first and we will try to sort it out: 0450 355 604 or info@fnsq.com.au. If you are not satisfied with our response, you can take it to the Australian Financial Complaints Authority, our external dispute resolution scheme, free of charge. AFCA can be reached at afca.org.au or on 1800 931 678. Our AFCA membership number is 94619.'
+    a: 'Tell us first and we will try to sort it out: 0495 040 500 or info@fnsq.com.au. If you are not satisfied with our response, you can take it to the Australian Financial Complaints Authority, our external dispute resolution scheme, free of charge. AFCA can be reached at afca.org.au or on 1800 931 678. Our AFCA membership number is 94619.'
   },
   {
     q: 'Are you licensed?',

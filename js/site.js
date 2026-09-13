@@ -157,6 +157,14 @@
         timing: $('#f-when').value,
         goal: $('#f-goal').value
       };
+      /* Campaign attribution captured on the landing URL by js/chat.js (sessionStorage
+         key fsqCampaign) travels with the lead, since the server-side relay is invisible
+         to GHL's own tracking script. */
+      try {
+        var camp = JSON.parse(sessionStorage.getItem('fsqCampaign') || 'null');
+        if (camp && camp.utm) { payload.utm = camp.utm; payload.landing_page = camp.landingPage; }
+      } catch (e) {}
+      if (!payload.landing_page) payload.landing_page = location.pathname + location.search;
       /* Confirm the mobile before anything reaches GHL. FNSQVerify resolves with
          a token, or with '' when verification is not switched on, so the form
          keeps working either way. */

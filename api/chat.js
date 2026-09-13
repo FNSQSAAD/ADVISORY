@@ -43,6 +43,8 @@ async function submitLead(req, payload) {
     lead_source: payload.lead_source,
     goal: payload.goal,
     timing: payload.timing,
+    utm: payload.utm,
+    landing_page: payload.landing_page,
     // proof the mobile was verified; /api/lead refuses the lead without it
     verification: payload.verification
   };
@@ -75,7 +77,7 @@ module.exports = async (req, res) => {
   if (limited(ip)) {
     return res.status(429).json({
       ok: true,
-      blocks: [{ type: 'text', text: 'You are going a bit fast for me. Give it a moment and try again, or call ' + '0450 355 604' + ' if it is urgent.' }],
+      blocks: [{ type: 'text', text: 'You are going a bit fast for me. Give it a moment and try again, or call ' + '0495 040 500' + ' if it is urgent.' }],
       chips: [], compliance: engine.COMPLIANCE
     });
   }
@@ -102,7 +104,7 @@ module.exports = async (req, res) => {
     console.error('chat engine error:', e && e.stack || e);
     return res.status(200).json({
       ok: true,
-      blocks: [{ type: 'text', text: 'Something went wrong on my end, sorry. Priya is on 0450 355 604, or book a 15-minute call and she will pick it up from there.' }],
+      blocks: [{ type: 'text', text: 'Something went wrong on my end, sorry. Priya is on 0495 040 500, or book a 15-minute call and she will pick it up from there.' }],
       chips: ['Book a call'], compliance: engine.COMPLIANCE,
       action: { type: 'booking', url: engine.BOOKING_URL }
     });
@@ -134,7 +136,7 @@ module.exports = async (req, res) => {
         out.state.step = null; out.state.flow = null;
         out.blocks = [
           { type: 'text', text: 'I could not send your verification code just now, so I have not passed anything on.' },
-          { type: 'card', title: 'Reach Priya directly', items: ['Call 0450 355 604', 'Email info@fnsq.com.au'] }
+          { type: 'card', title: 'Reach Priya directly', items: ['Call 0495 040 500', 'Email info@fnsq.com.au'] }
         ];
         out.chips = [];
       }
@@ -153,7 +155,7 @@ module.exports = async (req, res) => {
       const tries = st ? (st.tries = (st.tries || 0) + 1) : 99;
       if (tries >= 5) {
         out.state.otp = null; out.state.step = null; out.state.flow = null;
-        out.blocks = [{ type: 'text', text: 'That is a few wrong codes, so I have stopped there and sent nothing. Give Priya a call on 0450 355 604 and she will pick it up directly.' }];
+        out.blocks = [{ type: 'text', text: 'That is a few wrong codes, so I have stopped there and sent nothing. Give Priya a call on 0495 040 500 and she will pick it up directly.' }];
         out.chips = [];
       } else {
         out.blocks = [{
@@ -199,7 +201,7 @@ module.exports = async (req, res) => {
         { type: 'text', text: 'I could not get that through to our system just now, and I am not going to tell you it worked when it did not.' },
         {
           type: 'card', title: 'Please use one of these instead', items: [
-            'Call Priya on 0450 355 604',
+            'Call Priya on 0495 040 500',
             'Email info@fnsq.com.au',
             'Book a slot on the calendar below, which goes through a different system'
           ]

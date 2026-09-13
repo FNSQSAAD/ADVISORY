@@ -77,10 +77,22 @@ const VALID = {
     check('goal still mapped', sent.body.goal === 'Home Loan', sent.body.goal);
     check('timing still mapped', sent.body.timing === 'ASAP', sent.body.timing);
     check('mobile still appended to message', /Mobile: 0491570014\./.test(sent.body.message), sent.body.message);
-    // The exact key set the Receiver may read. Two added, none removed.
+    // The exact key set the Receiver may read. Scoring/attribution keys added 2026-09-13, none removed.
     check('payload keys', JSON.stringify(Object.keys(sent.body).sort()) ===
-      JSON.stringify(['email', 'first_name', 'full_name', 'last_name', 'lead_source', 'message', 'phone', 'timing', 'goal'].sort()),
+      JSON.stringify(['email', 'first_name', 'full_name', 'last_name', 'lead_source', 'message', 'phone', 'timing', 'goal', 'lead_source_detail', 'fit_score', 'lead_temperature', 'finance_type'].sort()),
       Object.keys(sent.body));
+    check('fit score is a number in range', Number.isInteger(sent.body.fit_score) && sent.body.fit_score >= 0 && sent.body.fit_score <= 100, sent.body.fit_score);
+    check('temperature is a picklist value', ['Hot', 'Warm', 'Cold'].includes(sent.body.lead_temperature), sent.body.lead_temperature);
+    check('finance type mirrors goal', sent.body.finance_type === 'Home Loan', sent.body.finance_type);
+  }
+  console.log('=== fit score bands ===');
+  {
+    const fs = handler.fitScore;
+    check('ASAP + big purchase + 20% deposit is Hot', fs({ timing: 'ASAP', goal: 'Home Loan', income: 180000, deposit: 150000 }).band === 'Hot');
+    check('researching + small deposit is Cold', fs({ timing: 'Just researching', goal: 'Home Loan', income: 60000, deposit: 5000 }).band === 'Cold');
+    check('1-3 months refinance with equity is Warm', fs({ timing: '1–3 months', goal: 'Refinance', value: 800000, balance: 600000 }).band === 'Warm');
+    check('contact form ASAP with no numbers is Warm (Intake timing rule still makes it hot)', fs({ timing: 'ASAP', goal: 'Home Loan' }).band === 'Warm');
+    check('loan bracket from balance', fs({ timing: 'ASAP', goal: 'Refinance', value: 900000, balance: 640000 }).loanBracket === '$500,000 – $1,000,000');
   }
 
   console.log('=== validation unchanged ===');

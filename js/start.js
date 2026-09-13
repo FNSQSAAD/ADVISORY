@@ -241,8 +241,22 @@ function submitLead(c, el){
     /* Discrete fields for GHL. The buy path asks a timeframe; the loan path never does,
        so it sends none and the intake branch correctly settles on lead-warm. */
     timing: state.values.timeframe || '',
-    goal: state.path || ''
+    goal: state.path || '',
+    /* Structured answers so the relay can score fit and GHL can store them as fields
+       instead of burying them in the message text. */
+    income: state.values.income,
+    deposit: state.values.deposit,
+    expenses: state.values.expenses,
+    property_value: state.values.value,
+    loan_balance: state.values.balance,
+    current_rate: state.unsure.rate ? '' : state.values.rate,
+    review_goal: state.values.goal || ''
   };
+  try {
+    var camp = JSON.parse(sessionStorage.getItem('fsqCampaign') || 'null');
+    if (camp && camp.utm) { payload.utm = camp.utm; payload.landing_page = camp.landingPage; }
+  } catch (e) {}
+  if (!payload.landing_page) payload.landing_page = location.pathname + location.search;
   var done = function(ok){
     if (ok){
       try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: payload.lead_source }); } catch (e) {}

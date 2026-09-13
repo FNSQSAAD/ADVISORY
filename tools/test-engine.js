@@ -179,7 +179,7 @@ console.log('=== 6. Booking ===');
     check('booking widget for: ' + q, /BOOKING https:\/\/api\.leadconnectorhq\.com\/widget\/booking\/jjntJeKyOuid8eFZkm7W/.test(flat(r)), flat(r).slice(0, 80));
   }
   const r = ask('i want to talk to a human');
-  check('handoff offers phone and email', /0450 355 604/.test(flat(r)) && /info@fnsq\.com\.au/.test(flat(r)));
+  check('handoff offers phone and email', /0495 040 500/.test(flat(r)) && /info@fnsq\.com\.au/.test(flat(r)));
   check('handoff sets the action', r.action && r.action.type === 'handoff');
 }
 

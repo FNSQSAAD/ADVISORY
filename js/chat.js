@@ -17,7 +17,7 @@
 
   var API = '/api/chat';
   var STORE = 'fnsqChat';           // sessionStorage: survives page navigation
-  var PHONE_TEL = 'tel:0450355604';
+  var PHONE_TEL = 'tel:+61495040500';
 
   var els = {};
   var state = null;                  // engine state, echoed back each turn
@@ -298,7 +298,7 @@
     }).catch(function () {
       typing(false);
       addBot([
-        { type: 'text', text: 'I lost the connection there, sorry. Try that again in a moment, or call Priya on 0450 355 604.' }
+        { type: 'text', text: 'I lost the connection there, sorry. Try that again in a moment, or call Priya on 0495 040 500.' }
       ], lastCompliance, false);
       setChips(['Try again']);
     }).then(function () {

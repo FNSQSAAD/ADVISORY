@@ -24,7 +24,7 @@ const COMPLIANCE = {
 };
 
 const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/jjntJeKyOuid8eFZkm7W';
-const PHONE = '0450 355 604';
+const PHONE = '0495 040 500';
 const EMAIL = 'info@fnsq.com.au';
 
 /* A default only used to demonstrate a calculation when the visitor has not given
@@ -444,6 +444,8 @@ function buildLeadPayload(lead, transcript) {
     lead_source: source,
     goal: lead.goal,
     timing: lead.timing,
+    utm: Object.keys(utm).length ? utm : undefined,
+    landing_page: lead.landingPage || undefined,
     // Read by api/chat.js only; api/lead.js ignores unknown keys.
     _highIntent: high
   };
