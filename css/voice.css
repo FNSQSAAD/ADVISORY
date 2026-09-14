@@ -73,9 +73,15 @@ body.fv-has-voice:not(.fq-has-chat) .to-top{bottom:90px}
 #fnsq-voice[hidden]{display:none!important}
 body.fv-has-voice:not(.fq-has-chat) #fnsq-voice{bottom:90px}
 
-.fv-head{display:flex;align-items:center;gap:9px;margin:0 0 10px}
+.fv-head{display:flex;align-items:center;gap:11px;margin:0 0 12px}
 .fv-head strong{font-size:15px;font-weight:600;letter-spacing:.01em}
-.fv-dot{width:9px;height:9px;border-radius:50%;background:var(--q-gold);flex:none}
+.fv-av{width:40px;height:40px;border-radius:50%;flex:none;box-shadow:0 4px 10px -4px rgba(30,31,45,.45)}
+.fv-names{display:flex;flex-direction:column;line-height:1.25}
+.fv-names small{font-size:12px;color:var(--q-ink-dim,#4a4b5c)}
+/* live call: a gold ring pulses round Frank's face */
+#fnsq-voice[data-state="live"] .fv-av{animation:fv-av-ring 1.8s ease-out infinite}
+@keyframes fv-av-ring{0%{box-shadow:0 0 0 0 rgba(168,124,46,.55)}100%{box-shadow:0 0 0 9px rgba(168,124,46,0)}}
+@media (prefers-reduced-motion:reduce){#fnsq-voice[data-state="live"] .fv-av{animation:none}}
 
 .fv-lede{margin:0 0 14px;font-size:13.5px;line-height:1.55;color:var(--q-ink-dim,#4a4b5c)}
 

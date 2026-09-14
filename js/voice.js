@@ -79,6 +79,10 @@
   function setState(state, detail) {
     if (!els.panel) return;
     els.panel.setAttribute('data-state', state);
+    /* Mirrored onto <body> so page art outside the panel (Frank's avatar on
+       meet-frank.html) can react to the call. */
+    document.body.setAttribute('data-fv', state);
+    if (state !== 'live') talking(false);
     if (els.action) els.action.textContent = COPY[state] || COPY.idle;
     if (els.status) {
       els.status.textContent =
@@ -91,6 +95,12 @@
     if (els.launch) {
       els.launch.classList.toggle('fv-on', state === 'live' || state === 'connecting');
     }
+  }
+
+  /* body[data-fv-talk] is present while Frank is speaking: it animates his mouth. */
+  function talking(on) {
+    if (on) document.body.setAttribute('data-fv-talk', '');
+    else document.body.removeAttribute('data-fv-talk');
   }
 
   /* ------------------------------------------------------------------ call */
@@ -131,6 +141,8 @@
           client.on('call_started', function () { live = true; starting = false; setState('live'); });
           client.on('call_ended', function () { live = false; starting = false; setState('idle'); });
           client.on('error', function () { stop(); setState('error'); });
+          client.on('agent_start_talking', function () { talking(true); });
+          client.on('agent_stop_talking', function () { talking(false); });
         }
         var cfg = { accessToken: data.access_token, transport: data.transport || 'gateway' };
         if (data.call_id) cfg.callId = data.call_id;
@@ -157,8 +169,18 @@
     panel.setAttribute('data-state', 'idle');
 
     var head = el('div', 'fv-head');
-    head.appendChild(el('span', 'fv-dot'));
-    head.appendChild(el('strong', null, 'Talk to Frank'));
+    /* Frank's face beside the heading. Decorative (alt=""), the heading names him.
+       Root-relative so it resolves from the directory pages (/privacy-policy/ etc). */
+    var av = el('img', 'fv-av');
+    av.src = '/assets/brand/frank-avatar.svg';
+    av.alt = '';
+    av.width = 40;
+    av.height = 40;
+    head.appendChild(av);
+    var names = el('span', 'fv-names');
+    names.appendChild(el('strong', null, 'Talk to Frank'));
+    names.appendChild(el('small', null, 'AI assistant'));
+    head.appendChild(names);
     panel.appendChild(head);
 
     panel.appendChild(el('p', 'fv-lede',

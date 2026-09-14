@@ -19,7 +19,12 @@
 <meta property="og:url" content="https://fnsq.com.au/meet-frank.html">
 <meta property="og:title" content="Meet Frank, Finance Square Group's AI assistant">
 <meta property="og:description" content="Talk to Frank in your browser about home loans and personal loans, then book a free 15-minute strategy call with Priya.">
+<meta property="og:image" content="https://fnsq.com.au/assets/brand/frank-avatar-600.png">
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="600">
+<meta property="og:image:alt" content="Frank, Finance Square Group's AI assistant (illustration)">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fnsq.com.au/assets/brand/frank-avatar-600.png">
 <link rel="stylesheet" href="css/perf.css">
 <link rel="icon" type="image/svg+xml" href="assets/brand/fnsq-logo.svg">
 <link rel="stylesheet" href="css/styles.css">
@@ -121,6 +126,56 @@ gtag('js',new Date());gtag('config','G-8DMYX99373');
     <div class="fk-stage rv d1 in">
       <div class="fk-stage-card">
         <div class="fk-stage-top">
+          <!-- Frank's avatar. Inline (not <img>) so css/pages.css can animate his mouth while he
+               speaks: js/voice.js sets body[data-fv-talk] from the call's talking events.
+               Source of truth for the artwork: assets/brand/frank-avatar.svg. -->
+          <div class="fk-avatar">
+            <svg viewBox="0 0 240 240" width="148" height="148" role="img" aria-label="Frank, Finance Square Group's AI assistant (illustration)">
+              <defs>
+                <clipPath id="fk-av-c"><circle cx="120" cy="120" r="116"/></clipPath>
+                <radialGradient id="fk-av-bg" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#fbf8f1"/><stop offset="1" stop-color="#efe5d2"/></radialGradient>
+                <linearGradient id="fk-av-suit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#373a62"/><stop offset="1" stop-color="#282a47"/></linearGradient>
+              </defs>
+              <circle cx="120" cy="120" r="120" fill="#a87c2e"/>
+              <circle cx="120" cy="120" r="116" fill="url(#fk-av-bg)"/>
+              <g clip-path="url(#fk-av-c)">
+                <path d="M52 240V122a68 68 0 0 1 136 0v118" fill="none" stroke="#a87c2e" stroke-opacity=".35" stroke-width="1.5"/>
+                <path d="M104 146h32v44h-32z" fill="#cf966c"/>
+                <path d="M104 160c10 8 22 8 32 0v-14h-32z" fill="#b97f58" opacity=".55"/>
+                <path d="M14 240c4-34 34-52 78-60l28 28 28-28c44 8 74 26 78 60z" fill="url(#fk-av-suit)"/>
+                <path d="M96 179l24 30 24-30-6-3-18 12-18-12z" fill="#fbf8f1"/>
+                <path d="M113 190h14l-3 10h-8z" fill="#8c6522"/>
+                <path d="M116 200h8l6 32-10 10-10-10z" fill="#a87c2e"/>
+                <path d="M92 180l28 46-14-2-8-22 4-6-14-8z" fill="#1e1f36"/>
+                <path d="M148 180l-28 46 14-2 8-22-4-6 14-8z" fill="#1e1f36"/>
+                <path d="M156 212l5-9 4 5 5-7 3 9z" fill="#a87c2e"/>
+                <ellipse cx="80" cy="116" rx="8" ry="12" fill="#d69c72"/>
+                <ellipse cx="160" cy="116" rx="8" ry="12" fill="#d69c72"/>
+                <path d="M80 104c0-28 18-44 40-44s40 16 40 44v12c0 28-18 46-40 46s-40-18-40-46z" fill="#e3b187"/>
+                <path d="M146 72c10 8 14 20 14 32v12c0 28-18 46-40 46 16-8 26-24 28-46 2-18 0-32-2-44z" fill="#c98f66" opacity=".35"/>
+                <path d="M79 112c-7-30 2-52 20-60 8-8 22-11 36-8 18 4 32 18 30 44-1 8-2 16-4 24-1-10-4-18-8-24-10 8-30 10-46 2-8-4-14-10-16-16-7 8-11 20-12 38z" fill="#2a2436"/>
+                <path d="M91 74c4-12 14-19 26-21 14-2 30 3 38 14-12-6-26-8-40-4-9 2-17 6-24 11z" fill="#433a55"/>
+                <path d="M91 74c6 10 22 17 40 16 10-1 17-4 23-10" fill="none" stroke="#3a3248" stroke-width="2" stroke-linecap="round"/>
+                <path d="M95 100q8-6 17-1M128 99q9-5 17 1" fill="none" stroke="#2a2436" stroke-width="3.6" stroke-linecap="round"/>
+                <g class="fav-blink">
+                  <ellipse cx="104" cy="113" rx="4.6" ry="5.6" fill="#1e1f2d"/>
+                  <ellipse cx="136" cy="113" rx="4.6" ry="5.6" fill="#1e1f2d"/>
+                  <circle cx="105.6" cy="111" r="1.5" fill="#fff"/>
+                  <circle cx="137.6" cy="111" r="1.5" fill="#fff"/>
+                </g>
+                <path d="M120 118q-4 8 1 11" fill="none" stroke="#b97f58" stroke-width="2.8" stroke-linecap="round"/>
+                <circle cx="97" cy="130" r="7" fill="#d9725a" opacity=".16"/>
+                <circle cx="143" cy="130" r="7" fill="#d9725a" opacity=".16"/>
+                <path class="fav-smile" d="M107 138q13 11 26 0" fill="none" stroke="#7a3e2e" stroke-width="3.6" stroke-linecap="round"/>
+                <path class="fav-talk" d="M109 137q11 3 22 0q-2 13-11 13t-11-13z" fill="#7a3e2e" opacity="0"/>
+                <path d="M74 112C68 30 172 30 166 112" fill="none" stroke="#a87c2e" stroke-width="5.5" stroke-linecap="round"/>
+                <rect x="68" y="102" width="15" height="28" rx="7.5" fill="#282a47" stroke="#a87c2e" stroke-width="2.5"/>
+                <rect x="157" y="102" width="15" height="28" rx="7.5" fill="#282a47" stroke="#a87c2e" stroke-width="2.5"/>
+                <path d="M76 128c0 16 8 22 22 22" fill="none" stroke="#282a47" stroke-width="3.6" stroke-linecap="round"/>
+                <rect x="96" y="145.5" width="10" height="9" rx="4.5" fill="#a87c2e"/>
+              </g>
+            </svg>
+          </div>
           <span class="fk-live"><i aria-hidden="true"></i>Available now</span>
           <svg class="fk-wave" viewBox="0 0 120 32" aria-hidden="true" focusable="false">
             <rect x="2" y="12" width="4" height="8" rx="2"/><rect x="12" y="7" width="4" height="18" rx="2"/>

@@ -617,8 +617,28 @@ blockquote.pullquote{
 .fk-wave rect:nth-child(3n){animation-delay:.2s}
 .fk-wave rect:nth-child(3n+1){animation-delay:.45s}
 @keyframes fk-bar{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
+/* ---- Frank's avatar, crowning the arch. js/voice.js mirrors the call onto <body>:
+   data-fv="connecting|live|..." and data-fv-talk while Frank is speaking. ---- */
+.fk-avatar{position:relative;width:148px;height:148px;border-radius:50%;margin-top:-30px}
+.fk-avatar svg{display:block;width:100%;height:100%;filter:drop-shadow(0 16px 26px rgba(10,11,25,.45))}
+.fk-avatar::after{
+  content:"";position:absolute;inset:-9px;border-radius:50%;
+  border:1px solid rgba(168,124,46,.45);pointer-events:none;
+}
+.fav-blink{transform-box:fill-box;transform-origin:center;animation:fav-blink 5.5s infinite}
+@keyframes fav-blink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.1)}}
+.fav-smile,.fav-talk{transition:opacity .12s}
+.fav-talk{transform-box:fill-box;transform-origin:50% 0}
+/* on a call: the ring breathes; while Frank speaks, his mouth moves and the wave quickens */
+body[data-fv="live"] .fk-avatar::after,body[data-fv="connecting"] .fk-avatar::after{animation:fk-ring 1.8s var(--ease) infinite}
+@keyframes fk-ring{0%{transform:scale(.97);opacity:1}100%{transform:scale(1.14);opacity:0}}
+body[data-fv-talk] .fav-smile{opacity:0}
+body[data-fv-talk] .fav-talk{opacity:1;animation:fk-mouth .26s ease-in-out infinite alternate}
+@keyframes fk-mouth{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+body[data-fv-talk] .fk-wave rect{animation-duration:.6s}
 /* the inline panel sits on the navy card: keep it as a cream card, no double frame */
 .fk-stage-card #fnsq-voice.fv-inline{max-width:none;border:0;border-radius:14px}
+.fk-stage-card .fv-av{display:none}   /* the big avatar is right above; no second face in the panel */
 .fk-noscript{color:var(--cream-tx);font-size:.92rem;text-align:center}
 .fk-noscript a{color:var(--gold)}
 
@@ -657,10 +677,11 @@ blockquote.pullquote{
 @media(max-width:640px){
   .fk-cards{grid-template-columns:1fr}
   .fk-stage-card{border-radius:150px 150px 16px 16px;padding:58px 16px 16px}
+  .fk-avatar{width:124px;height:124px;margin-top:-26px}
   .fk-stage::before{display:none}
   .fk-handover{padding:28px 22px}
 }
 @media(prefers-reduced-motion:reduce){
-  .fk-dot,.fk-wave rect{animation:none}
+  .fk-dot,.fk-wave rect,.fav-blink,.fk-avatar::after,.fav-talk{animation:none!important}
   .fk-card:hover,.btn-frank:hover{transform:none}
 }
