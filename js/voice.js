@@ -18,6 +18,7 @@
      jsDelivr's +esm build bundles those shims, so load it as a module instead. */
   var SDK = 'https://cdn.jsdelivr.net/npm/retell-client-js-sdk@3.0.1/+esm';
 
+  var CONSENT_VERSION = 'web-disclaimer-2026-09-14';
   var client = null;      // RetellWebClient instance, created on first call
   var live = false;       // a call is currently connected
   var starting = false;   // guard against double-clicks while connecting
@@ -69,7 +70,9 @@
   /* ----------------------------------------------------------------- state */
 
   var COPY = {
-    idle: 'Talk to us now',
+    /* The start button IS the consent: clicking it accepts the Privacy & Disclaimer
+       shown directly above it, so its label has to say so. */
+    idle: 'I understand, start talking to Frank',
     connecting: 'Connecting…',
     live: 'End call',
     denied: 'Microphone blocked',
@@ -123,7 +126,9 @@
     var token = fetch(API, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ page: location.pathname, referrer: document.referrer || '' })
+      /* consent names the disclaimer version the visitor accepted by clicking. Bump it
+         whenever the Privacy & Disclaimer copy in build() changes. */
+      body: JSON.stringify({ page: location.pathname, referrer: document.referrer || '', consent: CONSENT_VERSION })
     }).then(function (r) {
       if (!r.ok) throw new Error('http ' + r.status);
       return r.json();
@@ -184,11 +189,41 @@
     panel.appendChild(head);
 
     panel.appendChild(el('p', 'fv-lede',
-      'Ask Frank anything about home loans and personal loans: first home buyer schemes, '
-      + 'deposits and LMI, refinancing and how lenders assess you. Then book a free 15-minute '
+      'Ask Frank about home loans and personal loans, then book a free 15-minute '
       + 'strategy call with Priya, or ask her to call you back.'));
 
+    /* Privacy & Disclaimer, shown BEFORE the call and accepted by the start button.
+       Consent to an AI, to recording and to collection must be informed, so it is
+       on screen to read, not only spoken once the call connects. Static copy only. */
+    var consent = el('div', 'fv-consent');
+    consent.id = 'fv-consent';
+    consent.setAttribute('role', 'region');
+    consent.setAttribute('aria-label', 'Privacy and disclaimer');
+    consent.setAttribute('tabindex', '0');   // it can scroll in the floating panel
+    consent.innerHTML =
+        '<h3 class="fv-consent-h">Privacy &amp; Disclaimer</h3>'
+      + '<p>Frank is an AI assistant, not a person and not a broker. He provides general '
+      + 'information only. He does not assess your eligibility, quote rates or repayments, '
+      + 'estimate what you can borrow, or recommend a lender or loan product. Please don&rsquo;t '
+      + 'share your income, deposit or credit history with Frank.</p>'
+      + '<p>This conversation is recorded and transcribed. By selecting &ldquo;I understand&rdquo; '
+      + 'below, you consent to Finance Square Group collecting and processing that recording and '
+      + 'transcript, along with your name and mobile number, to respond to your enquiry and '
+      + 'arrange a call with our broker.</p>'
+      + '<p>We don&rsquo;t sell or rent your information. We share it only with our service '
+      + 'providers and where required or permitted by law. Some of these services process '
+      + 'information outside Australia. Full detail, including how to access, correct or delete '
+      + 'your information, is in our <a href="/privacy-policy/" target="_blank" rel="noopener">'
+      + 'Privacy Policy</a>.</p>';
+    panel.appendChild(consent);
+
+    var optout = el('p', 'fv-optout');
+    optout.innerHTML = 'Prefer not to be recorded? Call <a href="tel:+61495040500">0495 040 500</a> '
+      + 'or <a href="/get-started.html">book a call</a> instead.';
+    panel.appendChild(optout);
+
     var action = el('button', 'fv-action', COPY.idle);
+    action.setAttribute('aria-describedby', 'fv-consent');
     action.type = 'button';
     action.addEventListener('click', start);
     ['pointerenter', 'focus', 'touchstart'].forEach(function (ev) {
@@ -197,14 +232,6 @@
     panel.appendChild(action);
 
     panel.appendChild(el('p', 'fv-status'));
-
-    /* The disclosure is on screen BEFORE the visitor clicks, not only spoken after the
-       call connects. Consent to an AI and to recording should be informed, and on the
-       web we can show it rather than rely on them catching a spoken sentence. */
-    panel.appendChild(el('p', 'fv-fineprint',
-      'You will be speaking with an AI assistant and the call is recorded. Frank cannot give '
-      + 'credit advice, quote rates or estimate borrowing capacity. Priya does that. '
-      + 'Prefer a person? Call 0495 040 500.'));
 
     els.panel = panel;
     els.action = action;
