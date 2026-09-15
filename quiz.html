@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="css/chat.css">
   <link rel="stylesheet" href="css/voice.css">
 <script>
+/* quiz.fnsq.com.au/start (a GoHighLevel funnel step) shows this page full-screen in an
+   iframe. When framed, every link opens in the top window so "Book a chat", the footer and
+   the logo leave the funnel instead of loading the site inside the frame. */
+if(window.self!==window.top){var qzBase=document.createElement('base');qzBase.target='_top';document.head.appendChild(qzBase);}
+</script>
+<script>
 /* Analytics and CRM tracking load after the page is usable, so ~450ms of
    third-party main-thread work stays off the critical path. gtag() is stubbed
    synchronously and its calls queue on dataLayer, so the page_view and any
