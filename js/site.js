@@ -189,7 +189,13 @@
         if (!r.ok) throw new Error('bad');
         try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: payload.lead_source }); } catch (e) {}
         try { sessionStorage.setItem('fsqLeadName', payload.full_name.split(' ')[0]); } catch (e) {}
-        location.href = 'thank-you.html?src=contact';
+        // Google Ads conversion (helper lives in each page's <head>); the redirect waits
+        // for the hit to go out, capped at 1.2s inside the helper.
+        var go = function () { location.href = 'thank-you.html?src=contact'; };
+        try {
+          if (window.fnsqAdsLead) fnsqAdsLead(payload.lead_source, { email: payload.email, phone: payload.phone }, go);
+          else go();
+        } catch (e) { go(); }
       }).catch(function () {
         btn.disabled = false;
         btn.textContent = 'Request My Strategy Call';

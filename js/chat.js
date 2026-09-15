@@ -293,6 +293,10 @@
         // Same analytics event the contact form and funnel fire, so chatbot leads
         // show up alongside them in GA4 rather than as an untracked channel.
         try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: 'Website Chatbot' }); } catch (e) {}
+        try {
+          var ld = (state && state.lead) || {};
+          if (window.fnsqAdsLead) fnsqAdsLead('Website Chatbot', { email: ld.email, phone: ld.phone });
+        } catch (e) {}
       }
       save();
     }).catch(function () {

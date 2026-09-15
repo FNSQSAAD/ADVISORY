@@ -260,6 +260,7 @@ function submitLead(c, el){
   var done = function(ok){
     if (ok){
       try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: payload.lead_source }); } catch (e) {}
+      try { if (window.fnsqAdsLead) fnsqAdsLead(payload.lead_source, { email: payload.email, phone: payload.phone }); } catch (e) {}
       renderResult(); return;
     }
     btn.disabled = false; btn.textContent = 'See my snapshot';
