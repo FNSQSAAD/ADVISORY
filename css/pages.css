@@ -685,3 +685,8 @@ body[data-fv-talk] .fk-wave rect{animation-duration:.6s}
   .fk-dot,.fk-wave rect,.fav-blink,.fk-avatar::after,.fav-talk{animation:none!important}
   .fk-card:hover,.btn-frank:hover{transform:none}
 }
+
+/* /book-a-free-strategy-call/: the GoHighLevel calendar embedded on-site */
+.booking-embed{max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:clamp(8px,2vw,20px)}
+.booking-alt{margin:14px 4px 4px;font-size:.9rem;color:var(--ink-dim);text-align:center}
+.booking-alt a{color:inherit;text-decoration:underline}

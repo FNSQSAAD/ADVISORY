@@ -22,7 +22,31 @@
   var client = null;      // RetellWebClient instance, created on first call
   var live = false;       // a call is currently connected
   var starting = false;   // guard against double-clicks while connecting
+  var callId = null;      // the current/last call, for the lead check below
+  var reported = {};      // call ids already sent to analytics
   var els = {};
+
+  /* Frank saves a lead on the server (save_lead tool), which this page never sees. Once a
+     call ends, ask the voice server whether it became a real lead (reached the GHL intake or
+     booked) and, if so, record the same GA4 + Google Ads conversions a website form does.
+     It answers with hashed contact details only. Retried briefly because the call record
+     can take a few seconds to settle after hang-up. */
+  function reportOutcome(id, attempt) {
+    if (!id || reported[id]) return;
+    fetch(ORIGIN + '/api/web-call-outcome', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ call_id: id })
+    }).then(function (r) { return r.ok ? r.json() : null; }).then(function (o) {
+      if (o && o.lead) {
+        reported[id] = true;
+        try { if (window.gtag) gtag('event', 'generate_lead', { lead_source: 'Frank voice call' }); } catch (e) {}
+        try { if (window.fnsqAdsConversion) fnsqAdsConversion('frank', 'Frank voice call', o.user_data); } catch (e) {}
+      } else if (o && o.found && attempt < 3) {
+        setTimeout(function () { reportOutcome(id, attempt + 1); }, 5000 * (attempt + 1));
+      }
+    }).catch(function () {});
+  }
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -144,13 +168,17 @@
              the transport the token came with, and default to gateway if it is missing. */
           client = new ctor({ defaultTransport: 'gateway' });
           client.on('call_started', function () { live = true; starting = false; setState('live'); });
-          client.on('call_ended', function () { live = false; starting = false; setState('idle'); });
+          client.on('call_ended', function () {
+            live = false; starting = false; setState('idle');
+            var id = callId;
+            setTimeout(function () { reportOutcome(id, 0); }, 2500);
+          });
           client.on('error', function () { stop(); setState('error'); });
           client.on('agent_start_talking', function () { talking(true); });
           client.on('agent_stop_talking', function () { talking(false); });
         }
         var cfg = { accessToken: data.access_token, transport: data.transport || 'gateway' };
-        if (data.call_id) cfg.callId = data.call_id;
+        if (data.call_id) { cfg.callId = data.call_id; callId = data.call_id; }
         if (data.ice_servers) cfg.iceServers = data.ice_servers;
         if (data.url) cfg.url = data.url;
         return client.startCall(cfg);
