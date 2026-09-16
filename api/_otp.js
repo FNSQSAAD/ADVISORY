@@ -30,8 +30,13 @@ const RELAY_URL = process.env.FNSQ_RELAY_URL || 'https://fnsq-ghl-relay-3510-pro
 const CHALLENGE_TTL_MS = 5 * 60 * 1000;    // a code is usable for 5 minutes
 const TOKEN_TTL_MS = 30 * 60 * 1000;       // a verified number stays verified for 30
 
+/* Pause switch. While true, verification is OFF everywhere even though
+   OTP_SECRET stays set in Vercel — leads submit straight through with no SMS
+   code. Flip back to false and redeploy to re-enable 2FA instantly. */
+const VERIFICATION_PAUSED = true;
+
 function secret() { return process.env.OTP_SECRET || ''; }
-function enabled() { return !!secret(); }
+function enabled() { return !VERIFICATION_PAUSED && !!secret(); }
 
 /* Australian mobiles only, in the forms people type them. Returns E.164 or null. */
 function normalisePhone(raw) {
