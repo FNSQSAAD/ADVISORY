@@ -11,6 +11,121 @@
       ],
       "destination": "https://fnsq.com.au/$1",
       "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us{/}?",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us{/}?",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/finance-options-quiz{/}?",
+      "destination": "/quiz.html",
+      "permanent": true
+    },
+    {
+      "source": "/first-home-buyers{/}?",
+      "destination": "/first-home-buyers.html",
+      "permanent": true
+    },
+    {
+      "source": "/services{/}?",
+      "destination": "/#services",
+      "permanent": true
+    },
+    {
+      "source": "/services/asset-financing{/}?",
+      "destination": "/asset-equipment-finance.html",
+      "permanent": true
+    },
+    {
+      "source": "/services/business-loans{/}?",
+      "destination": "/business-commercial-loans.html",
+      "permanent": true
+    },
+    {
+      "source": "/services/commercial-loans{/}?",
+      "destination": "/business-commercial-loans.html",
+      "permanent": true
+    },
+    {
+      "source": "/services/home-loans{/}?",
+      "destination": "/home-loans.html",
+      "permanent": true
+    },
+    {
+      "source": "/services/personal-loans{/}?",
+      "destination": "/personal-loans.html",
+      "permanent": true
+    },
+    {
+      "source": "/services/(.*)",
+      "destination": "/#services",
+      "permanent": true
+    },
+    {
+      "source": "/calculator{/}?",
+      "destination": "/calculators.html",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/borrowing-capacity{/}?",
+      "destination": "/calculators.html#borrowing",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/budget-planner{/}?",
+      "destination": "/calculators.html#budget",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/repayment{/}?",
+      "destination": "/calculators.html#repayment",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/lump-sum-repayment{/}?",
+      "destination": "/calculators.html#lumpsum",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/car-and-truck-loan{/}?",
+      "destination": "/calculators.html#car",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/stamp-duty{/}?",
+      "destination": "/calculators.html#stampduty",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/personal-loan{/}?",
+      "destination": "/calculators.html#personal",
+      "permanent": true
+    },
+    {
+      "source": "/calculator/(.*)",
+      "destination": "/calculators.html",
+      "permanent": true
+    },
+    {
+      "source": "/testimonial(/.*)?",
+      "destination": "/#testimonials",
+      "permanent": true
+    },
+    {
+      "source": "/:page(about|contact|home-loans|first-home-buyers|business-commercial-loans|asset-equipment-finance|personal-loans|calculators|terms|get-started|quiz|meet-frank)",
+      "destination": "/:page.html",
+      "permanent": true
     }
   ],
   "headers": [
