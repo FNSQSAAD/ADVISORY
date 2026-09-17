@@ -13,6 +13,11 @@
       "permanent": true
     },
     {
+      "source": "/:m(sitemap_index|wp-sitemap|page-sitemap|calculator-sitemap|cpt_services-sitemap|wpm-testimonial-sitemap).xml",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
