@@ -64,8 +64,13 @@
         var v = q.get(k);
         if (v) utm[k.replace('utm_', '')] = v.slice(0, 200);
       });
-      var click = q.get('fbclid') || q.get('gclid');
-      if (click) utm.fbclid = click.slice(0, 200);
+      /* Ad click ids are kept under their own names. A Google Ads click carries only
+         gclid (auto-tagging adds no UTMs), so it has to survive on its own for the
+         lead to be attributable to the ad and importable back into Google Ads. */
+      ['gclid', 'gbraid', 'wbraid', 'fbclid'].forEach(function (k) {
+        var v = q.get(k);
+        if (v) utm[k] = v.slice(0, 200);
+      });
       if (!Object.keys(utm).length) return null;
       var rec = { utm: utm, landingPage: (location.pathname + location.search).slice(0, 300) };
       sessionStorage.setItem(CAMP_KEY, JSON.stringify(rec));
@@ -489,6 +494,12 @@
     var saved = load();
     if (saved && saved.opened && saved.history && saved.history.length) open();
   }
+
+  /* Capture the landing URL's campaign data now, not when the chat is first used.
+     The contact form and the Get Started funnel read the same sessionStorage key,
+     so an ad visitor who never opens the chat still has their click recorded
+     before they navigate away from the landing page. */
+  campaign();
 
   /* Wait for idle so the widget never competes with the page's own paint. */
   function start() {

@@ -147,13 +147,25 @@ module.exports = async (req, res) => {
      the submission, which a server-side webhook lead never gets. So the site sends
      what it captured on the landing URL (js/chat.js stores it for the visit) and the
      Receiver maps it onto custom fields where reporting can see it. */
-  const utm = (b.utm && typeof b.utm === 'object') ? b.utm : {};
+  const utm = (b.utm && typeof b.utm === 'object') ? Object.assign({}, b.utm) : {};
   const clean = (v, n) => String(v == null ? '' : v).trim().slice(0, n);
+  /* Google Ads auto-tagging appends only a click id, never UTMs. Without this a paid
+     click reaches GHL looking organic. The raw id is kept too, so the lead can later
+     be uploaded to Google Ads as an offline conversion. */
+  const gclid = clean(utm.gclid, 200);
+  const gbraid = clean(utm.gbraid, 200);
+  const wbraid = clean(utm.wbraid, 200);
+  const googleClick = gclid || gbraid || wbraid;
+  if (googleClick && !utm.source) { utm.source = 'google'; utm.medium = utm.medium || 'cpc'; }
   if (utm.source) body.utm_source = clean(utm.source, 80);
   if (utm.medium) body.utm_medium = clean(utm.medium, 80);
   if (utm.campaign) body.utm_campaign = clean(utm.campaign, 120);
+  if (gclid) body.gclid = gclid;
+  if (gbraid) body.gbraid = gbraid;
+  if (wbraid) body.wbraid = wbraid;
   if (b.landing_page) body.landing_page = clean(b.landing_page, 200);
   body.lead_source_detail = source + (utm.source ? ' | ' + clean(utm.source, 40) + (utm.campaign ? ' / ' + clean(utm.campaign, 60) : '') : '');
+  if (googleClick && body.message.indexOf(googleClick) === -1) body.message +=' Google Ads click: ' + (gclid ? 'gclid=' + gclid : gbraid ? 'gbraid=' + gbraid : 'wbraid=' + wbraid) + '.';
 
   /* Fit score. Deterministic 0-100 from the answers the visitor volunteered, so
      routing no longer hangs on a single timing question. Missing answers score the

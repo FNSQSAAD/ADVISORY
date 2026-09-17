@@ -424,7 +424,9 @@ function buildLeadPayload(lead, transcript) {
   const utmBits = ['source', 'medium', 'campaign', 'content', 'term']
     .filter(k => utm[k])
     .map(k => k + '=' + String(utm[k]).slice(0, 120));
-  if (utm.fbclid) utmBits.push('fbclid=' + String(utm.fbclid).slice(0, 60));
+  ['gclid', 'gbraid', 'wbraid', 'fbclid'].forEach(k => {
+    if (utm[k]) utmBits.push(k + '=' + String(utm[k]).slice(0, 200));
+  });
   if (utmBits.length) lines.push('Campaign: ' + utmBits.join(' ') + '.');
   if (lead.landingPage) lines.push('Landed on: ' + String(lead.landingPage).slice(0, 200) + '.');
 
