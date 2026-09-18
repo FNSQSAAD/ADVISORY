@@ -60,35 +60,42 @@ window.fbq('track', 'PageView');
    site.js, start.js, chat.js, voice.js and nineteen HTML files — so Meta sees
    every lead path that exists today, and any new one added later, for free.
 
-     kind      Meta event    fires when
-     lead      Lead          contact form, Get Started funnel or chatbot, after
-                             /api/lead has accepted the lead
-     frank     Contact       a Frank browser call that reached the GHL intake
-     booking   Schedule      a GoHighLevel calendar booking completed
-     call      PhoneClick    a tap on any tel: link
+     kind      Meta event   fires when
+     lead      Lead         contact form, Get Started funnel or chatbot, after
+                            /api/lead has accepted the lead
+     frank     Lead         a Frank browser call that reached the GHL intake.
+                            js/voice.js only reports this once the call became a
+                            real lead, so it clears the same bar as a form and
+                            belongs in the same event
+     booking   Schedule     a GoHighLevel calendar booking completed
+     call      Contact      a tap on any tel: link
 
-   'call' is deliberately a CUSTOM event rather than a standard one. A tap on a
-   phone link is intent, not contact, and it is high volume — as a standard
-   event it would inflate a conversion event and could be optimised against by
-   accident. As a custom event it is still fully usable for audiences and
-   custom conversions. This mirrors the site's own note that the phone click is
-   a secondary, reporting-only action in Google Ads.
+   Everything that captured a person's details lands on Lead, which keeps one
+   well populated optimisation event rather than splitting conversion volume
+   across several — that matters for getting out of Meta's learning phase.
+   Contact therefore means exactly one thing, "tried to phone us", and is sent
+   WITHOUT a value so an intent signal can never be mistaken for revenue.
 
-   Segmentation deliberately rides on distinct EVENT NAMES rather than custom
-   parameters, because this dataset has Meta's "Data restrictions - Core setup"
-   applied, which may strip custom parameters (it is already truncating URLs
-   after the domain).
+   Everything rides on Meta STANDARD events. This dataset has Meta's "Data
+   restrictions - Core setup" applied, and custom events are silently dropped by
+   it: verified on 18 Sep 2026 by firing trackCustom PhoneClick and a control
+   custom event, both of which left the browser and never arrived, while the
+   standard events sent in the same moment all processed. The same regime also
+   strips custom parameters and truncates URLs after the domain, so per-path
+   detail cannot be carried in parameters either. If that restriction is ever
+   lifted, phone taps can move to their own custom event again.
 
    The Meta event is queued BEFORE the original helper runs, so the beacon is
    away before the helper's redirect can start. Every step is wrapped in
    try/catch: a Meta failure must never break a Google Ads conversion or stall
    the redirect that follows a form submit. */
 (function () {
+  var VALUED = { value: FNSQ_LEAD_VALUE, currency: FNSQ_LEAD_CURRENCY };
   var EVENTS = {
-    lead:    ['track',       'Lead'],
-    frank:   ['track',       'Contact'],
-    booking: ['track',       'Schedule'],
-    call:    ['trackCustom', 'PhoneClick']
+    lead:    ['Lead',     VALUED],
+    frank:   ['Lead',     VALUED],
+    booking: ['Schedule', VALUED],
+    call:    ['Contact',  {}]
   };
 
   /* Advanced matching. fbq hashes plaintext with SHA-256 in the browser before
@@ -119,9 +126,7 @@ window.fbq('track', 'PageView');
         if (ev) {
           var am = advancedMatch(user);
           if (am) window.fbq('init', FNSQ_PIXEL_ID, am);
-          window.fbq(ev[0], ev[1], ev[0] === 'track'
-            ? { value: FNSQ_LEAD_VALUE, currency: FNSQ_LEAD_CURRENCY }
-            : {});
+          window.fbq('track', ev[0], ev[1]);
         }
       } catch (e) {}
       return orig.apply(this, arguments);
