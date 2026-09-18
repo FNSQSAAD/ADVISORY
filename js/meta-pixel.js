@@ -91,6 +91,7 @@ window.fbq('track', 'PageView');
    the redirect that follows a form submit. */
 (function () {
   var VALUED = { value: FNSQ_LEAD_VALUE, currency: FNSQ_LEAD_CURRENCY };
+  var lastMatchKey = null;
   var EVENTS = {
     lead:    ['Lead',     VALUED],
     frank:   ['Lead',     VALUED],
@@ -125,7 +126,15 @@ window.fbq('track', 'PageView');
         var ev = EVENTS[kind];
         if (ev) {
           var am = advancedMatch(user);
-          if (am) window.fbq('init', FNSQ_PIXEL_ID, am);
+          /* Re-initialising with user data is Meta's documented way to attach
+             manual advanced matching after page load, but repeating it for the
+             same person makes fbevents log "Duplicate Pixel ID" — which reads
+             exactly like a second pixel install to anyone auditing later. Only
+             re-init when the details actually change. */
+          if (am) {
+            var key = am.em + '|' + am.ph;
+            if (key !== lastMatchKey) { lastMatchKey = key; window.fbq('init', FNSQ_PIXEL_ID, am); }
+          }
           window.fbq('track', ev[0], ev[1]);
         }
       } catch (e) {}
